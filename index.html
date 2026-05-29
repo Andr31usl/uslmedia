@@ -2387,43 +2387,52 @@ html {
         <p class="anim anim-3" style="color:var(--muted);font-weight:300;font-size:0.95rem;">Proiecte reale, rezultate reale. Fiecare videoclip are un scop — să crești.</p>
     </div>
 <div class="video-grid anim anim-4">
-  
- <div class="video-grid anim anim-4">
   <style>
-    .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; width: 100%; }
-    .video-wrap { width: 100%; overflow: hidden; border-radius: 12px; background: #000; }
-    .video-wrap video { width: 100%; height: auto; display: block; }
-    @media (max-width: 768px) { .video-grid { grid-template-columns: 1fr; } }
-  </style>
+  /* Stiluri specifice doar pentru portofoliu */
+  #page-portofoliu .video-grid { 
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 20px; 
+    width: 100%; 
+  }
+  #page-portofoliu .video-wrap { 
+    width: 100%; 
+    border-radius: 12px; 
+    overflow: hidden; 
+    background: #000; 
+  }
+  #page-portofoliu .video-wrap video { 
+    width: 100%; 
+    height: auto; 
+    display: block; 
+  }
+  /* Ajustare pentru telefon */
+  @media (max-width: 768px) { 
+    #page-portofoliu .video-grid { grid-template-columns: 1fr; } 
+  }
+</style>
 
+<div class="video-grid anim anim-4">
   <div class="video-card">
     <div class="video-wrap">
-      <video controls playsinline>
-        <source src="1.mp4" type="video/mp4">
-      </video>
+      <video controls playsinline><source src="1.mp4" type="video/mp4"></video>
     </div>
     <div class="video-info"><p class="video-title">Cupa LazarxIoanid</p></div>
   </div>
-
   <div class="video-card">
     <div class="video-wrap">
-      <video controls playsinline>
-        <source src="2.mp4" type="video/mp4">
-      </video>
+      <video controls playsinline><source src="2.mp4" type="video/mp4"></video>
     </div>
     <div class="video-info"><p class="video-title">Rotary — Leadership for Youth</p></div>
   </div>
-
   <div class="video-card">
     <div class="video-wrap">
-      <video controls playsinline>
-        <source src="3.mp4" type="video/mp4">
-      </video>
+      <video controls playsinline><source src="3.mp4" type="video/mp4"></video>
     </div>
     <div class="video-info"><p class="video-title">Dynamic Reel</p></div>
   </div>
 </div>
-
+  
 </div>  
 
 </div>
