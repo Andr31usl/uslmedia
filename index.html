@@ -2388,6 +2388,13 @@ html {
         <h1 class="page-h1 anim anim-2" style="font-size:clamp(2.5rem,5vw,4rem);">Portofoliu</h1>
         <p class="anim anim-3" style="color:var(--muted);font-weight:300;font-size:0.95rem;">Proiecte reale, rezultate reale. Fiecare videoclip are un scop — să crești.</p>
     </div>
+<style>
+  .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+  .video-wrap { width: 100%; overflow: hidden; border-radius: 12px; }
+  .video-wrap video { width: 100%; height: auto; display: block; }
+  @media (max-width: 768px) { .video-grid { grid-template-columns: 1fr; } }
+</style>
+
 <div class="video-grid anim anim-4">
   <div class="video-card">
     <div class="video-wrap">
@@ -2416,7 +2423,6 @@ html {
     <div class="video-info"><p class="video-title">Dynamic Reel</p></div>
   </div>
 </div>
-
 </div>
         </div>
         </div>
