@@ -25,8 +25,7 @@
 
 html, body {
   width: 100%;
-  min-height: 100vh;
-  height: auto;
+  min-height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
   scroll-behavior: smooth;
@@ -174,10 +173,9 @@ nav {
 
 /* PAGE SYSTEM */
 .page-wrapper {
-  position: relative;
-  width: 100%;
-  min-height: 100vh;
-  overflow: visible;
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
   z-index: 1;
 }
 
@@ -1723,8 +1721,8 @@ nav {
 
   .despre-grid { grid-template-columns: 1fr; gap: 2rem; }
   .values-grid { grid-template-columns: 1fr 1fr; }
-  .video-grid { grid-template-columns: 1fr; gap: 1rem; }
-  .video-card { max-width: 420px; width: 100%; margin: 0 auto; }
+  .video-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+  .video-card { max-width: 100%; }
   .pkg-grid { grid-template-columns: 1fr; }
   .field-row { grid-template-columns: 1fr; }
   .colab-field-row { grid-template-columns: 1fr; }
@@ -2093,7 +2091,7 @@ html {
         <span class="line2">ANDREI</span>
       </h1>
       <p class="home-sub">
-       Ca numele meu, totul este usor, chiar si marketingul tau!Filmez și editez conținut video scurt care transformă afaceri în branduri vizibile. Lucrez doar cu businessuri în care văd potențial real — pentru că rezultatele contează mai mult decât numărul de clienți.
+        Filmez și editez conținut video scurt care transformă afaceri în branduri vizibile. Lucrez doar cu businessuri în care văd potențial real — pentru că rezultatele contează mai mult decât numărul de clienți.
       </p>
       <div class="home-btns">
         <button class="btn-primary" onclick="navigateTo('despre')">Despre mine</button>
@@ -2103,6 +2101,7 @@ html {
 
       <div class="float-badge">
         <div class="float-badge-title">Ce ofer</div>
+        <div class="equip-item"><span class="equip-dot"></span>Gimbal Stabilizator</div>
         <div class="equip-item"><span class="equip-dot"></span>Filmare profesionistă</div>
         <div class="equip-item"><span class="equip-dot"></span>Editare completă</div>
         <div class="equip-item"><span class="equip-dot"></span>Script inclus</div>
@@ -2146,7 +2145,7 @@ html {
 
       <div class="despre-photo-row anim anim-3">
         <div class="despre-photo-wrap">
-          <img src="" alt="Ușurelu Andrei — USL MEDIA" class="despre-photo">
+
         </div>
         <div class="despre-text-col">
           <p>Mă numesc <strong>Ușurelu Andrei</strong> și sunt un content creator din București specializat în filmare și editare video scurtă pentru social media.</p>
@@ -2386,46 +2385,37 @@ html {
         <div class="page-label anim anim-1">Munca vorbește</div>
         <h1 class="page-h1 anim anim-2" style="font-size:clamp(2.5rem,5vw,4rem);">Portofoliu</h1>
         <p class="anim anim-3" style="color:var(--muted);font-weight:300;font-size:0.95rem;">Proiecte reale, rezultate reale. Fiecare videoclip are un scop — să crești.</p>
-    </div>
-<div class="video-grid anim anim-4">
-  
-  <div class="video-card">
-    <div class="video-wrap">
-      <video controls preload="metadata" playsinline>
-        <source src="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/1.mp4" type="video/mp4">
-      </video>
-    </div>
-    <div class="video-info">
-      <p class="video-title">Cupa LazarxIoanid</p>
-    </div>
-  </div>
-
-  <div class="video-card">
-    <div class="video-wrap">
-      <video controls preload="metadata" playsinline>
-        <source src="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/2.mp4" type="video/mp4">
-      </video>
-    </div>
-    <div class="video-info">
-      <p class="video-title">Rotary — Leadership for Youth</p>
-    </div>
-  </div>
-
-  <div class="video-card">
-    <div class="video-wrap">
-      <video controls preload="metadata" playsinline>
-        <source src="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/3.mp4" type="video/mp4">
-      </video>
-    </div>
-    <div class="video-info">
-      <p class="video-title">Dynamic Reel</p>
-    </div>
-  </div>
-
-</div>  
-
-</div>
+      </div>
+      <div class="video-grid anim anim-4">
+        <div class="video-card">
+          <div class="video-wrap">
+            <video controls preload="metadata" playsinline>
+              <source src="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/1.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="video-info">
+            <p class="video-title">Cupa LazarxIoanid</p>
+            
+          </div>
         </div>
+        <div class="video-card">
+          <div class="video-wrap">
+<video controls preload="metadata" playsinline><source src="" type="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/2.mp4"></video>
+          </div>
+          <div class="video-info">
+            <p class="video-title">Rotary — Leadership for Youth</p>
+          </div>
+        </div>
+        <div class="video-card">
+          <div class="video-wrap">
+            <video controls preload="metadata" playsinline>
+              <source src="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/3.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="video-info">
+            <p class="video-title">Dynamic Reel</p>
+            
+          </div>
         </div>
       </div>
     </div>
