@@ -39,22 +39,25 @@ body {
   cursor: none;
 }
 
-/* NORMAL CURSOR */
-.cursor {
-  display: none !important;
-}
-
+/* Cursor normal */
 body {
   cursor: auto !important;
 }
-  /* Mâna pentru elemente clickable */
+
+/* Mâna pe elementele interactive */
 a,
 button,
+[onclick],
 [role="button"],
-input[type="submit"],
-input[type="button"],
-.clickable {
-  cursor: pointer;
+.btn,
+.button,
+.card,
+nav a,
+.menu-item,
+input,
+select,
+textarea {
+  cursor: pointer !important;
 }
 /* NOISE OVERLAY */
 body::after {
