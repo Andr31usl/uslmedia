@@ -39,30 +39,6 @@ body {
   cursor: none;
 }
 
-/* CUSTOM CURSOR */
-.cursor {
-  position: fixed;
-  width: 10px; height: 10px;
-  background: var(--blue-bright);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: width 0.2s, height 0.2s, background 0.2s;
-  mix-blend-mode: screen;
-}
-.cursor-ring {
-  position: fixed;
-  width: 36px; height: 36px;
-  border: 1px solid rgba(45,106,224,0.5);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9998;
-  transform: translate(-50%, -50%);
-  transition: all 0.12s ease-out;
-}
-body:hover .cursor { opacity: 1; }
-
 /* NOISE OVERLAY */
 body::after {
   content: '';
