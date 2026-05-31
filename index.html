@@ -118,7 +118,14 @@ nav {
   cursor: none;
 }
 .logo span { color: var(--blue-glow); }
-
+.logo .subtext {
+    font-size: 0.5em;       /* Va fi mai mic față de textul principal */
+    font-weight: 400;       /* Mai subțire față de logo */
+    letter-spacing: 0.1em;
+    color: var(--white);
+    margin-top: 2px;        /* Spațiu mic sub "USL MEDIA" */
+    text-transform: uppercase;
+}
 .nav-links {
   display: flex;
   align-items: center;
@@ -2035,7 +2042,10 @@ html {
 
 <!-- NAV -->
 <nav>
-  <a class="logo" href="#" onclick="navigateTo('home'); return false;">USL <span>MEDIA</span></a>
+  <a class="logo" href="#" onclick="navigateTo('home'); return false;">
+    USL <span>MEDIA</span>
+    <span class="subtext">DIGITAL GROWTH AGENCY</span>
+</a>
   <ul class="nav-links">
     <li><a href="#" onclick="navigateTo('home'); return false;" id="nav-home" class="active">Home</a></li>
     <li><a href="#" onclick="navigateTo('despre'); return false;" id="nav-despre">Despre</a></li>
@@ -2613,7 +2623,7 @@ html {
           <svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>
         </div>
         <h3>Mesaj trimis!</h3>
-        <p>Te contactez în maxim 24h. Mulțumesc!</p>
+        <p>Te contactez în maxim 2h. Mulțumesc!</p>
       </div>
 
     </div>
@@ -2819,7 +2829,7 @@ html {
             <svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>
           </div>
           <h3>Mesaj trimis!</h3>
-          <p>Te contactez în maxim 24h. Mulțumesc!</p>
+          <p>Te contactez în maxim 2h. Mulțumesc!</p>
         </div>
 
       </div>
