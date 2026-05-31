@@ -38,7 +38,18 @@ body {
   color: var(--white);
   cursor: none;
 }
-
+/* CUSTOM CURSOR */
+.cursor {
+  position: fixed;
+  width: 10px; height: 10px;
+  background: var(--blue-bright);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s, height 0.2s, background 0.2s;
+  mix-blend-mode: screen;
+}
 /* NOISE OVERLAY */
 body::after {
   content: '';
