@@ -3209,6 +3209,24 @@ html {
       showPage(savedPage);
     }
   });
+  // 1. ACEASTA ESTE SOLUȚIA: La fiecare click pe navigație, salvăm pagina în memorie
+  document.querySelectorAll('nav a').forEach(link => {
+    link.addEventListener('click', function() {
+      const pageId = this.getAttribute('onclick'); // Luăm codul din onclick
+      if (pageId) {
+        localStorage.setItem('usl_page_activ', pageId);
+      }
+    });
+  });
+
+  // 2. La refresh, citim memoria și activăm pagina
+  window.addEventListener('load', function() {
+    const saved = localStorage.getItem('usl_page_activ');
+    if (saved) {
+      // Executăm funcția care schimbă pagina (ex: showPage('despre'))
+      eval(saved); 
+    }
+  });
 </script>
 </body>
 </html>
