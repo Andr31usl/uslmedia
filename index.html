@@ -459,16 +459,21 @@ nav {
   .despre-aside-inline {
     grid-template-columns: 1fr;
   }
-  .footer-center {
-    display: none;
-  }
-  .page-footer {
+.page-footer {
+    display: flex;
     justify-content: center;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 12px; /* Spațiu între elemente */
     text-align: center;
-    padding: 1rem 1.25rem;
-    font-size: 0.72rem;
+    padding: 1.5rem 1rem;
+    font-size: 0.75rem;
+  }
+
+  .footer-center {
+    display: flex; /* Afișăm elementele */
+    flex-direction: column; /* Le așezăm unul sub altul */
+    gap: 8px; /* Spațiu între link-ul de IG și email */
+    align-items: center;
   }
 }
 
