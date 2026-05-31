@@ -3169,5 +3169,34 @@ html {
     setTimeout(() => { window.location.reload(); }, 3000);
   }
 </script>
+<script>
+  // Salvează pagina activă când dai click pe meniu
+  document.addEventListener('click', function(e) {
+    if (e.target.matches('nav a')) {
+      const target = e.target.getAttribute('href');
+      if (target && target.startsWith('#')) {
+        localStorage.setItem('usl_active_page', target);
+      }
+    }
+  });
+
+  // La încărcarea paginii, verifică ce era activ
+  window.addEventListener('load', function() {
+    const savedPage = localStorage.getItem('usl_active_page');
+    if (savedPage) {
+      // Ascunde paginile active actuale
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      // Activează pagina salvată
+      const target = document.querySelector(savedPage);
+      if (target) target.classList.add('active');
+      
+      // Actualizează meniul (opțional, dacă ai clasa 'active' pe link-uri)
+      document.querySelectorAll('nav a').forEach(a => {
+        a.classList.remove('active');
+        if (a.getAttribute('href') === savedPage) a.classList.add('active');
+      });
+    }
+  });
+</script>
 </body>
 </html>
