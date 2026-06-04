@@ -5,17 +5,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>USL MEDIA — DIGITAL GROWTH AGENCY-USURELU ANDREI</title>
+    <title>USL MEDIA — DIGITAL GROWTH AGENCY | Ușurelu Andrei</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="USL MEDIA — Digital Growth Agency fondată de Ușurelu Andrei. Creăm conținut video modern pentru businessuri care vor să crească organic și să transforme atenția în clienți reali.">
+    <meta name="author" content="Ușurelu Andrei">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph (Facebook, WhatsApp, LinkedIn) -->
+    <meta property="og:title" content="USL MEDIA — DIGITAL GROWTH AGENCY | Ușurelu Andrei">
+    <meta property="og:description" content="Agenție de Digital Growth fondată de Ușurelu Andrei. Content video premium pentru businessuri ambițioase.">
+    <meta property="og:image" content="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/sigla.png">
+    <meta property="og:url" content="https://uslmedia.ro">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="USL MEDIA — Ușurelu Andrei">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/portofoliu%20site/sigla.pgn.png">
+    <link rel="icon" type="image/png" href="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/sigla.png">
+    <link rel="shortcut icon" type="image/png" href="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/sigla.png">
 
-    <!-- Logo pentru Google -->
+    <!-- Logo + Organizație pentru Google -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Organization",
-      "name": "USL MEDIA — DIGITAL GROWTH AGENCY — UȘURELU ANDREI",
+      "name": "USL MEDIA — DIGITAL GROWTH AGENCY — Ușurelu Andrei",
+      "alternateName": "USL Media",
       "url": "https://uslmedia.ro",
       "logo": {
         "@type": "ImageObject",
@@ -28,10 +43,15 @@
         "@type": "Person",
         "name": "Ușurelu Andrei"
       },
-      "description": "USL MEDIA este o agenție de Digital Growth fondată de Ușurelu Andrei, specializată în content video, social media și creștere organică.",
+      "description": "Agenție de Digital Growth fondată de Ușurelu Andrei, specializată în content video, social media și creștere organică pentru businessuri.",
       "sameAs": [
         "https://www.instagram.com/usl.media"
-      ]
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "uslmedia.contact@gmail.com",
+        "contactType": "customer service"
+      }
     }
     </script>
 
@@ -3467,7 +3487,6 @@ html {
   (function restorePageOnLoad() {
     const saved = localStorage.getItem('usl_current_page');
     if (saved && saved !== 'home' && document.getElementById('page-' + saved)) {
-      // Schimbăm direct fără animație (pagina tocmai s-a încărcat)
       document.getElementById('page-home').classList.remove('active');
       document.getElementById('page-' + saved).classList.add('active');
       currentPage = saved;
