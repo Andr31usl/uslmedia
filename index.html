@@ -5,53 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>USL MEDIA — DIGITAL GROWTH AGENCY | Ușurelu Andrei</title>
-
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="USL MEDIA — Servicii premium. Creez conținut video modern pentru businessuri care vor să arate profesionist, să crească organic și să transforme atenția în clienți reali.">
-    <meta name="author" content="Ușurelu Andrei">
-    <meta name="robots" content="index, follow">
-
-    <!-- Open Graph (Facebook, WhatsApp, LinkedIn) -->
-    <meta property="og:title" content="USL MEDIA — DIGITAL GROWTH AGENCY | Ușurelu Andrei">
-    <meta property="og:description" content="Agenție de Digital Growth fondată de Ușurelu Andrei. Content video premium pentru businessuri ambițioase.">
-    <meta property="og:image" content="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/sigla.pgn.png">
-    <meta property="og:url" content="https://uslmedia.ro">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="USL MEDIA — Ușurelu Andrei">
+    <title>USL MEDIA — DIGITAL GROWTH AGENCY</title>
+    <meta name="description" content="Creez conținut video modern pentru businessuri care vor să arate profesionist, să crească organic și să transforme atenția în clienți reali.">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/sigla.pgn.png">
-    <link rel="shortcut icon" type="image/png" href="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/sigla.pgn.png">
+    <link rel="icon" type="image/png" href="/portofoliu%20site/sigla.pgn.png">
 
-    <!-- Logo + Organizație pentru Google -->
+    <!-- Logo pentru Google -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Organization",
-      "name": "USL MEDIA — DIGITAL GROWTH AGENCY — Ușurelu Andrei",
-      "alternateName": "USL Media",
+      "name": "USL Media",
       "url": "https://uslmedia.ro",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/sigla.png",
-        "width": 512,
-        "height": 512
-      },
-      "image": "https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/sigla.png",
-      "founder": {
-        "@type": "Person",
-        "name": "Ușurelu Andrei"
-      },
-      "description": "Agenție de Digital Growth fondată de Ușurelu Andrei, specializată în content video, social media și creștere organică pentru businessuri.",
-      "sameAs": [
-        "https://www.instagram.com/usl.media"
-      ],
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "email": "uslmedia.contact@gmail.com",
-        "contactType": "customer service"
-      }
+      "logo": "https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/sigla.pgn.png",
+      "description": "Creez conținut video modern pentru businessuri care vor să arate profesionist, să crească organic și să transforme atenția în clienți reali."
     }
     </script>
 
@@ -3475,30 +3443,66 @@ html {
     document.getElementById('colabCustomSuccessWrap').style.display = 'block';
     setTimeout(() => { window.location.reload(); }, 3000);
   }
-  // ── PERSISTENȚĂ PAGINĂ LA REFRESH ──────────────────────────────────────────
-  // Salvează pagina curentă de fiecare dată când navigateTo este apelat
-  const _origNavigateTo = navigateTo;
-  navigateTo = function(page, isBack) {
-    localStorage.setItem('usl_current_page', page);
-    return _origNavigateTo(page, isBack);
-  };
-
-  // La refresh, restaurează pagina pe care erai
-  (function restorePageOnLoad() {
-    const saved = localStorage.getItem('usl_current_page');
-    if (saved && saved !== 'home' && document.getElementById('page-' + saved)) {
-      document.getElementById('page-home').classList.remove('active');
-      document.getElementById('page-' + saved).classList.add('active');
-      currentPage = saved;
-      document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-      const navEl = document.getElementById('nav-' + saved);
-      if (navEl) navEl.classList.add('active');
-      document.querySelectorAll('.mobile-drawer-links a').forEach(a => a.classList.remove('active'));
-      const mobEl = document.getElementById('mob-' + saved);
-      if (mobEl) mobEl.classList.add('active');
+  // Salvează pagina activă când dai click pe meniu
+  document.addEventListener('click', function(e) {
+    if (e.target.matches('nav a')) {
+      const target = e.target.getAttribute('href');
+      if (target && target.startsWith('#')) {
+        localStorage.setItem('usl_active_page', target);
+      }
     }
-  })();
-  // ────────────────────────────────────────────────────────────────────────────
+  });
+  // Funcția care schimbă paginile și salvează starea
+  function showPage(pageId) {
+    // 1. Ascunde toate paginile
+    document.querySelectorAll('.page').forEach(page => {
+      page.classList.remove('active');
+    });
+
+    // 2. Afișează pagina selectată
+    const targetPage = document.getElementById(pageId);
+    if (targetPage) {
+      targetPage.classList.add('active');
+    }
+
+    // 3. Salvează în browser care pagină este activă
+    localStorage.setItem('uslMedia_activePage', pageId);
+
+    // 4. Actualizează stilul meniului (opțional, dacă ai clasa 'active' pe link-uri)
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('onclick') && link.getAttribute('onclick').includes(pageId)) {
+        link.classList.add('active');
+      }
+    });
+  }
+
+  // La încărcarea paginii, verifică dacă avem o pagină salvată
+  window.addEventListener('load', () => {
+    const savedPage = localStorage.getItem('uslMedia_activePage');
+    if (savedPage) {
+      showPage(savedPage);
+    }
+  });
+  // 1. ACEASTA ESTE SOLUȚIA: La fiecare click pe navigație, salvăm pagina în memorie
+  document.querySelectorAll('nav a').forEach(link => {
+    link.addEventListener('click', function() {
+      const pageId = this.getAttribute('onclick'); // Luăm codul din onclick
+      if (pageId) {
+        localStorage.setItem('usl_page_activ', pageId);
+      }
+    });
+  });
+
+  // 2. La refresh, citim memoria și activăm pagina
+  window.addEventListener('load', function() {
+    const saved = localStorage.getItem('usl_page_activ');
+    if (saved) {
+      // Extragem doar numele paginii din onclick (ex: "navigateTo('despre'); return false;" -> "despre")
+      const match = saved.match(/navigateTo\('([^']+)'\)/);
+      if (match) navigateTo(match[1]);
+    }
+  });
 </script>
 </body>
 </html>
