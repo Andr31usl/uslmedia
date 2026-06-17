@@ -9,7 +9,7 @@
 <!-- Favicon -->
 <link rel="icon" type="image/png" href="/portofoliu%20site/sigla.pgn.png" />
 
-<!-- Logo pentru Google -->
+<!-- Schema Organization -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -32,14 +32,14 @@
     overflow-y: auto;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
-    background: #000; /* fully black background */
+    background: #000; /* black background */
     font-family: 'DM Sans', sans-serif;
     color: #fff;
   }
 
   /* Cursor styles (unchanged) */
   body {
-    cursor: none; /* hide default cursor for custom cursor effect */
+    cursor: none;
   }
   #cursor, #cursorRing {
     position: fixed;
@@ -67,33 +67,21 @@
   .orb-2 { width: 400px; height: 400px; background: rgba(4,6,8,0.9); bottom: -100px; left: -100px; }
 
   /* Navigation styles (unchanged) */
-  nav { /* unchanged styles */ }
-  .logo { /* unchanged styles */ }
-  /* ... (rest of your existing CSS remains unchanged) */
+  nav { /* ... your existing nav styles ... */ }
+  /* ... rest of your styles ... */
 
-  /* Make videos in portofoliu section bigger and in 4x4 grid */
-  #page-portofoliu .video-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
+  /* Center all stats and testimonials in home page */
+  #page-home .home-stats,
+  #page-home .testimonials-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
   }
-  #page-portofoliu .video-card {
-    aspect-ratio: 16 / 9;
-    max-height: 600px;
-    cursor: pointer;
-    position: relative;
+  #page-home .home-stats {
+    gap: 3rem;
+    padding: 2rem 3rem;
   }
-  #page-portofoliu .video-wrap {
-    padding-top: 56.25%; /* 16:9 ratio */
-    position: relative;
-  }
-  #page-portofoliu video {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-  }
-
-  /* Testimonials section styling - center all content */
   #page-home .testimonials-wrap {
     max-width: 900px;
     margin: 0 auto;
@@ -101,24 +89,7 @@
     text-align: center;
   }
 
-  /* Testimonial items style */
-  .testimonial-item {
-    background: rgba(255,255,255,0.05);
-    padding: 1.5rem;
-    border-radius: 16px;
-    border: 1px solid rgba(255,255,255,0.1);
-    font-style: italic;
-  }
-
-  /* Stats styling (centered) */
-  #page-home .home-stats {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 3rem;
-    padding: 2rem 3rem;
-    flex-wrap: wrap;
-  }
+  /* Stats item styles */
   .stat-item {
     text-align: center;
   }
@@ -133,7 +104,44 @@
     color: #93B8F0;
   }
 
-  /* Hover overlay for videos with big play button */
+  /* Testimonials styling */
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  .testimonial-item {
+    background: rgba(255,255,255,0.05);
+    padding: 1.5rem;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.1);
+    font-style: italic;
+  }
+
+  /* Portfolio grid 4x4 */
+  #page-portofoliu .video-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+  #page-portofoliu .video-card {
+    aspect-ratio: 16 / 9;
+    max-height: 600px;
+    cursor: pointer;
+    position: relative;
+  }
+  #page-portofoliu .video-wrap {
+    padding-top: 56.25%; /* 16:9 aspect ratio */
+    position: relative;
+  }
+  #page-portofoliu video {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+  }
+
+  /* Hover overlay with big play button */
   .video-card::after {
     content: '';
     position: absolute;
@@ -148,12 +156,10 @@
     z-index: 2;
     transition: all 0.3s;
   }
-
   .video-card:hover::after {
     display: flex;
   }
-
-  /* Big play icon inside overlay */
+  /* Big play icon */
   .play-button {
     position: absolute;
     top: 50%; left: 50%;
@@ -169,7 +175,7 @@
     width: 40px; height: 40px; fill: #fff;
   }
 
-  /* Video modal overlay with blur background */
+  /* Modal overlay for video playback */
   .video-popup {
     position: fixed;
     top: 0; left: 0;
@@ -194,16 +200,18 @@
 </head>
 <body>
 
-<!-- Your existing code remains, just add the following sections inside the body -->
+<!-- Your existing header/navigation code remains unchanged -->
 
-<!-- HOME PAGE content (existing) -->
+<!-- START OF YOUR PAGE CONTENT -->
+
+<!-- HOME PAGE -->
 <div class="page active" id="page-home">
   <div class="home-hero">
     <!-- existing hero content -->
     <!-- ... -->
   </div>
 
-  <!-- Testimonials section in Home -->
+  <!-- Testimonials added -->
   <div class="testimonials-wrap">
     <div class="page-label anim anim-1" style="margin-bottom:1rem;">Ce spun clienții</div>
     <h1 class="page-h1 anim anim-2" style="margin-bottom:2rem;">Testimoniale</h1>
@@ -217,13 +225,13 @@
     </div>
   </div>
 
-  <!-- Stats in Home, centered -->
-  <div class="home-stats" style="display:flex; justify-content:center; align-items:center; gap:3rem; flex-wrap:wrap;">
+  <!-- Stats - centered -->
+  <div class="home-stats" style="margin:0 auto; max-width:900px; gap:3rem; padding:2rem 3rem;">
     <div class="stat-item">
       <div class="stat-num">6<span>+</span></div>
       <div class="stat-lbl">Luni de experiență</div>
     </div>
-    <!-- Removed the "3x" stat -->
+    <!-- Removed "3x" stat -->
     <div class="stat-item">
       <div class="stat-num">10<span>+</span></div>
       <div class="stat-lbl">Clienți mulțumiți</div>
@@ -244,9 +252,10 @@
       <h1 class="page-h1 anim anim-2" style="font-size:clamp(2.5rem,5vw,4rem);">Portofoliu</h1>
       <p class="anim anim-3" style="color:var(--muted);font-weight:300;font-size:0.95rem;">Proiecte reale, rezultate reale. Fiecare videoclip are un scop — să crești.</p>
     </div>
-    <!-- 4x4 video grid -->
+    <!-- 4x4 grid of videos -->
     <div class="video-grid">
-      <!-- Repeat these blocks for 16 videos -->
+      <!-- 16 video items -->
+      <!-- Example video blocks: -->
       <div class="video-card" onclick="playVideoInModal(this)">
         <div class="video-wrap">
           <video controls preload="metadata" playsinline>
@@ -258,8 +267,7 @@
           <svg class="play-icon" viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19" /></svg>
         </div>
       </div>
-      <!-- Add other 15 videos similarly to make total 16 -->
-      <!-- Example: -->
+      <!-- Repeat for remaining 15 videos, you can duplicate and change the source -->
       <div class="video-card" onclick="playVideoInModal(this)">
         <div class="video-wrap">
           <video controls preload="metadata" playsinline>
@@ -271,43 +279,82 @@
           <svg class="play-icon" viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19" /></svg>
         </div>
       </div>
-      <!-- Repeat for 16 videos -->
+      <!-- Add remaining 14 videos here -->
+      <!-- For brevity, only 2 are shown; you should add 14 more similar blocks -->
     </div>
   </div>
 </div>
 
-<!-- Modal for video playback -->
-<div class="video-popup" style="display:none;">
-  <video controls></video>
+<!-- Modal overlay for video playback -->
+<div class="video-popup" style="display:none;" id="videoModal">
+  <video src="" controls autoplay></video>
 </div>
 
-<!-- JavaScript for modal, hover, and other interactions -->
+<!-- Your existing footer and scripts -->
+<!-- ... -->
+
 <script>
-  // existing scripts ...
-  // Play video in modal
+  // Cursor code remains unchanged
+  const cursor = document.getElementById('cursor');
+  const cursorRing = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx + 'px'; cursor.style.top = my + 'px'; });
+  function animRing() {
+    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+    cursorRing.style.left = rx + 'px'; cursorRing.style.top = ry + 'px';
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+
+  // Existing navigation code remains unchanged
+  let currentPage = 'home';
+  let isTransitioning = false;
+
+  // ... existing nav code ...
+
+  // Stop all videos
+  function stopAllVideos() {
+    document.querySelectorAll('video').forEach(v => { v.pause(); v.currentTime = 0; });
+  }
+
+  function navigateTo(page, isBack = false) {
+    // ... existing navigate code ...
+  }
+
+  // Video modal
   function playVideoInModal(btn) {
     const card = btn.closest('.video-card');
     const videoEl = card.querySelector('video');
     const src = videoEl.querySelector('source').src;
-    const overlay = document.createElement('div');
-    overlay.className = 'video-popup';
-    overlay.style.display = 'flex';
-    overlay.innerHTML = '<video src="' + src + '" controls autoplay></video>';
-    document.body.appendChild(overlay);
+
+    // Show modal overlay
+    const modal = document.getElementById('videoModal');
+    modal.style.display = 'flex';
+    modal.querySelector('video').src = src;
     document.body.classList.add('blurred');
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay || e.target.tagName === 'VIDEO') {
-        overlay.remove();
-        document.body.classList.remove('blurred');
-      }
-    });
+
+    // Close on click outside
+    modal.onclick = () => {
+      modal.style.display = 'none';
+      document.body.classList.remove('blurred');
+    };
   }
 
-  // Optional: enable clicking anywhere on video card to trigger modal
+  // Add event listeners to video cards
   document.querySelectorAll('.video-card').forEach(card => {
     card.addEventListener('click', () => {
-      const btn = card.querySelector('.play-button');
-      if (btn) { playVideoInModal(card); }
+      playVideoInModal(card);
     });
   });
+
+  // Optional: prevent event bubbling when clicking play button
+  document.querySelectorAll('.play-button').forEach(btn => {
+    btn.onclick = (e) => {
+      e.stopPropagation();
+      playVideoInModal(btn.closest('.video-card'));
+    };
+  });
 </script>
+
+</body>
+</html>
