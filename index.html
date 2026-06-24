@@ -8,10 +8,8 @@
     <title>USL MEDIA — DIGITAL GROWTH AGENCY</title>
     <meta name="description" content="Creez conținut video modern pentru businessuri care vor să arate profesionist, să crească organic și să transforme atenția în clienți reali.">
 
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="/portofoliu%20site/sigla.pgn.png">
 
-    <!-- Logo pentru Google -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -585,6 +583,8 @@ nav {
   width: 100%;
   opacity: 0;
   animation: fadeUp 0.8s 0.9s ease forwards;
+  justify-content: center;
+  text-align: center;
 }
 .stat-item {}
 .stat-num {
@@ -600,7 +600,7 @@ nav {
 /* Floating badge */
 .float-badge {
   position: absolute;
-  right: 3rem;
+  right: -2rem;
   top: 50%;
   transform: translateY(-50%);
   background: var(--navy-card);
@@ -1979,8 +1979,11 @@ nav {
 
   .despre-grid { grid-template-columns: 1fr; gap: 2rem; }
   .values-grid { grid-template-columns: 1fr 1fr; }
-  .video-grid { grid-template-columns: 1fr; gap: 0.75rem; }
+  
+  /* UPDATED VIDEO GRID FOR MOBILE */
+  .video-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
   .video-card { max-width: 100%; }
+  
   .pkg-grid { grid-template-columns: 1fr; }
   .field-row { grid-template-columns: 1fr; }
   .colab-field-row { grid-template-columns: 1fr; }
@@ -2262,7 +2265,283 @@ html {
   flex-wrap: wrap;
 }
 
-/* YOUTUBE BLOCK — no link shield */
+/* ===== TESTIMONIALE GLIDE SLIDER ===== */
+.testimoniale-section {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2.5rem 3rem;
+  border-top: 1px solid var(--border);
+  opacity: 0;
+  animation: fadeUp 0.8s 1.05s ease forwards;
+}
+.testimoniale-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--blue-glow);
+  margin-bottom: 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.testimoniale-label::before {
+  content: '';
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--blue-glow);
+  animation: pulse 2s infinite;
+}
+.testi-track-outer {
+  position: relative;
+}
+.testi-track {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+.testi-card {
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 1.5rem 1.6rem;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(36px) scale(0.97);
+  transition:
+    opacity 1.1s cubic-bezier(0.16,1,0.3,1),
+    transform 1.1s cubic-bezier(0.16,1,0.3,1),
+    border-color 0.3s;
+}
+.testi-card.testi-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+/* Fallback: dacă observer nu prinde (ex. dupa modal), cardurile raman vizibile */
+.page.active .testi-card {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+.page.active .testi-card:not(.testi-visible) {
+  transition-delay: 0s !important;
+}
+.testi-card:nth-child(1) { transition-delay: 0s; }
+.testi-card:nth-child(2) { transition-delay: 0.12s; }
+.testi-card:nth-child(3) { transition-delay: 0.24s; }
+.testi-card:nth-child(4) { transition-delay: 0.08s; }
+.testi-card:nth-child(5) { transition-delay: 0.20s; }
+.testi-card:hover { border-color: var(--border-blue); transform: translateY(-4px) scale(1); }
+.testi-stars {
+  display: flex;
+  gap: 0.2rem;
+  margin-bottom: 0.85rem;
+}
+.testi-star {
+  color: #2563EB;
+  font-size: 0.85rem;
+}
+.testi-text {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.85);
+  font-weight: 300;
+  line-height: 1.65;
+  margin-bottom: 1.1rem;
+}
+.testi-author {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+.testi-avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2563EB, #0F2380);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 0.78rem;
+  color: var(--white);
+  flex-shrink: 0;
+}
+.testi-author-info {}
+.testi-name {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.2;
+}
+.testi-role {
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-weight: 300;
+  margin-top: 1px;
+}
+.testi-dots { display: none; }
+@media (max-width: 768px) {
+  .testimoniale-section { padding: 2rem 1.25rem; }
+  .testi-track { grid-template-columns: 1fr; }
+  .testi-card:nth-child(n) { transition-delay: 0s; }
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+  .testi-track { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ===== VIDEO PLAY BUTTON & MODAL ===== */
+.video-card {
+  cursor: pointer;
+}
+.video-wrap {
+  position: relative;
+}
+.video-wrap video {
+  pointer-events: none;
+  width: 100%;
+  display: block;
+  border-radius: 12px 12px 0 0;
+}
+.video-play-btn {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.28);
+  border-radius: 12px 12px 0 0;
+  transition: background 0.3s;
+}
+.video-play-btn::before {
+  content: '';
+  position: absolute;
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #3B82F6, #1A3FBF 60%, #0c1f6e);
+  box-shadow: 0 0 0 0 rgba(37,99,235,0.5), 0 8px 32px rgba(37,99,235,0.6);
+  animation: playPulse 2.2s ease-in-out infinite;
+}
+.video-play-btn svg {
+  position: relative;
+  z-index: 1;
+  margin-left: 4px;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+}
+@keyframes playPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(37,99,235,0.45), 0 8px 32px rgba(37,99,235,0.5); }
+  50%       { box-shadow: 0 0 0 14px rgba(37,99,235,0.0), 0 8px 40px rgba(37,99,235,0.7); }
+}
+.video-card:hover .video-play-btn { background: rgba(0,0,0,0.18); }
+.video-card:hover .video-play-btn::before {
+  background: radial-gradient(circle at 35% 35%, #60A5FA, #2563EB 60%, #1A3FBF);
+}
+
+/* UPDATED FULLSCREEN VIDEO MODAL OVERLAY */
+/* ─── MODAL VIDEO ─── */
+/* Blur situl cand e modalul deschis */
+body.modal-open .page-wrapper,
+body.modal-open nav,
+body.modal-open .orb-1,
+body.modal-open .orb-2 {
+  filter: blur(14px);
+  transition: filter 0.3s ease;
+  pointer-events: none;
+}
+
+/* Fundal întunecat semi-transparent */
+.video-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: rgba(4,5,14,0.88);
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  touch-action: none;
+  -webkit-overflow-scrolling: none;
+}
+.video-modal-overlay.open {
+  display: flex;
+  animation: modalFadeIn 0.28s ease forwards;
+}
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Inner – centrat, ocupă tot ecranul */
+.video-modal-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: modalZoomIn 0.3s cubic-bezier(0.22,1,0.36,1) forwards;
+}
+@keyframes modalZoomIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+/* Video – rezoluție nativă, centrat */
+.video-modal-inner video {
+  width: auto;
+  height: auto;
+  max-width: 96vw;
+  max-height: 92vh;
+  object-fit: contain;
+  border-radius: 16px;
+  display: block;
+  background: #000;
+  box-shadow: 0 32px 100px rgba(0,0,0,0.9), 0 0 0 1px rgba(37,99,235,0.18);
+}
+
+/* Buton close */
+.video-modal-close {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.20);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 9100;
+  transition: background 0.2s, transform 0.2s;
+}
+.video-modal-close:hover {
+  background: rgba(255,255,255,0.22);
+  transform: scale(1.1);
+}
+
+/* Titlu */
+.video-modal-title {
+  position: fixed;
+  top: 22px;
+  left: 22px;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.50);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  z-index: 9100;
+}
+
+@media (max-width: 768px) {
+  .video-modal-inner video { max-width: 99vw; max-height: 88vh; border-radius: 12px; }
+  .video-modal-close { top: 14px; right: 14px; width: 38px; height: 38px; }
+  .video-modal-title { top: 16px; left: 16px; }
+}
+
 .yt-block {
   position: relative;
   width: 100%;
@@ -2290,13 +2569,11 @@ html {
 <div class="orb orb-1"></div>
 <div class="orb orb-2"></div>
 
-<!-- TRANSITION OVERLAY -->
 <div class="transition-overlay" id="transitionOverlay">
   <div class="t-panel" id="tPanel"></div>
   <div class="t-logo" id="tLogo">USL <span>MEDIA</span></div>
 </div>
 
-<!-- NAV -->
 <nav>
   <a class="logo" href="#" onclick="navigateTo('home'); return false;">
     <div class="logo-main">USL <span>MEDIA</span></div>
@@ -2320,7 +2597,6 @@ html {
   </button>
 </nav>
 
-<!-- MOBILE DRAWER -->
 <div class="mobile-drawer" id="mobileDrawer">
   <div class="mobile-drawer-links">
     <a href="#" onclick="drawerNav('home')" id="mob-home">Home</a>
@@ -2338,10 +2614,8 @@ html {
   </div>
 </div>
 
-<!-- PAGE WRAPPER -->
 <div class="page-wrapper">
 
-  <!-- HOME -->
   <div class="page active" id="page-home">
     <div class="home-hero">
       <div class="home-eyebrow">
@@ -2349,8 +2623,8 @@ html {
         Content Creator · București
       </div>
       <h1 class="home-h1">
-        UȘURELU<br>
-        <span class="line2" style="-webkit-text-stroke:0;color:#2563EB;">ANDREI</span>
+        CONȚINUT<br>
+        <span class="line2" style="-webkit-text-stroke:0;color:#2563EB;">CARE VINDE</span>
       </h1>
       <p class="home-sub">
      Cu mine totul este mai ușor, chiar și <strong>marketingul</strong> tău!Filmez și editez conținut video scurt care transformă afaceri în branduri vizibile. Lucrez cu businessuri în care văd potențial real — pentru că rezultatele contează cel mai mult.
@@ -2374,13 +2648,87 @@ html {
         <div class="stat-lbl">Luni de experiență</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num">3<span>x</span></div>
-        <div class="stat-lbl">Mai mult reach organic</div>
+        <div class="stat-num">5<span>+</span></div>
+        <div class="stat-lbl">Clienți mulțumiți</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">10<span>+</span></div>
+        <div class="stat-lbl">Proiecte livrate</div>
       </div>
       <div class="stat-item">
         <div class="stat-num">48<span>h</span></div>
         <div class="stat-lbl">Livrare rapidă</div>
       </div>
+    </div>
+
+    <div class="testimoniale-section">
+      <div class="testimoniale-label">Ce spun clienții</div>
+      <div class="testi-track-outer" id="testiTrackOuter">
+        <div class="testi-track" id="testiTrack">
+
+          <div class="testi-card">
+            <div class="testi-stars">★★★★★</div>
+            <p class="testi-text">Andrei ne-a transformat complet prezența pe Instagram. Reels-urile lui au adus trafic real în restaurant — am simțit diferența din prima săptămână.</p>
+            <div class="testi-author">
+              <div class="testi-avatar">MR</div>
+              <div class="testi-author-info">
+                <div class="testi-name">Matei R.</div>
+                <div class="testi-role">Owner · Restaurant în București</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testi-card">
+            <div class="testi-stars">★★★★★</div>
+            <p class="testi-text">Profesionalism total. A venit pregătit cu script, a filmat rapid și am primit materialul editat în 48h. Exact ce aveam nevoie pentru lansarea noastră.</p>
+            <div class="testi-author">
+              <div class="testi-avatar">AL</div>
+              <div class="testi-author-info">
+                <div class="testi-name">Alina L.</div>
+                <div class="testi-role">Fondatoare · Brand de fashion</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testi-card">
+            <div class="testi-stars">★★★★★</div>
+            <p class="testi-text">Nu mă așteptam la un rezultat atât de bun. Videoclipul a ajuns la 40k+ vizualizări organic. Colaborăm în continuare fără ezitare.</p>
+            <div class="testi-author">
+              <div class="testi-avatar">CB</div>
+              <div class="testi-author-info">
+                <div class="testi-name">Cristian B.</div>
+                <div class="testi-role">Antreprenor · Servicii IT</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testi-card">
+            <div class="testi-stars">★★★★★</div>
+            <p class="testi-text">Conținut clean, rapid și cu impact. Andrei înțelege ce vrea audiența — nu filmează doar pentru estetică, filmează pentru rezultate.</p>
+            <div class="testi-author">
+              <div class="testi-avatar">IP</div>
+              <div class="testi-author-info">
+                <div class="testi-name">Ioana P.</div>
+                <div class="testi-role">Manager marketing · Clinică medicală</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testi-card">
+            <div class="testi-stars">★★★★★</div>
+            <p class="testi-text">Am ales USL Media și nu regret. Calitate excelentă la un preț corect, livrare la timp și comunicare impecabilă pe tot parcursul proiectului.</p>
+            <div class="testi-author">
+              <div class="testi-avatar">RD</div>
+              <div class="testi-author-info">
+                <div class="testi-name">Robert D.</div>
+                <div class="testi-role">Co-fondator · Fitness Studio</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="testi-dots" id="testiDots"></div>
     </div>
 
     <div class="page-footer">
@@ -2391,8 +2739,6 @@ html {
       </div>
     </div>
   </div>
-
-  <!-- DESPRE -->
   <div class="page" id="page-despre">
     <div class="despre-wrap">
       <button class="back-btn" onclick="goBack()"><svg viewBox="0 0 16 16"><polyline points="10,3 5,8 10,13"/></svg> Înapoi</button>
@@ -2448,7 +2794,6 @@ html {
   </div>
 
   
-  <!-- SERVICII -->
   <div class="page" id="page-servicii">
     <div class="servicii-wrap">
 
@@ -2632,7 +2977,6 @@ html {
   </div>
 
 
-  <!-- PORTOFOLIU -->
   <div class="page" id="page-portofoliu">
     <div class="porto-wrap">
       <button class="back-btn" onclick="goBack()"><svg viewBox="0 0 16 16"><polyline points="10,3 5,8 10,13"/></svg> Înapoi</button>
@@ -2642,48 +2986,61 @@ html {
         <p class="anim anim-3" style="color:var(--muted);font-weight:300;font-size:0.95rem;">Proiecte reale, rezultate reale. Fiecare videoclip are un scop — să crești.</p>
       </div>
       <div class="video-grid anim anim-4">
-        <div class="video-card">
+        <div class="video-card" onclick="openVideoModal('https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/video%20renovari.mp4.mov', 'Apartament-Renovision Design')">
           <div class="video-wrap">
-            <video controls preload="metadata" playsinline>
-              <source src="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/1.mp4" type="video/mp4">
+            <video preload="metadata" playsinline>
+              <source src="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/video%20renovari.mp4.mov" type="video/mp4">
             </video>
+            <div class="video-play-btn">
+              <svg viewBox="0 0 24 24" fill="white" width="28" height="28"><polygon points="6,4 20,12 6,20"/></svg>
+            </div>
           </div>
           <div class="video-info">
-            <p class="video-title">Cupa LazarxIoanid</p>
-            
+            <p class="video-title">Apartament-Renovision Design</p>
           </div>
         </div>
-        <div class="video-card">
+        <div class="video-card" onclick="openVideoModal('https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/2.mp4', 'Workshop-Rotary Cismigiu')">
           <div class="video-wrap">
-            <video controls preload="metadata" playsinline>
+            <video preload="metadata" playsinline>
               <source src="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/2.mp4" type="video/mp4">
             </video>
+            <div class="video-play-btn">
+              <svg viewBox="0 0 24 24" fill="white" width="28" height="28"><polygon points="6,4 20,12 6,20"/></svg>
+            </div>
           </div>
           <div class="video-info">
             <p class="video-title">Workshop-Rotary Cismigiu</p>
           </div>
         </div>
-        <div class="video-card">
+        <div class="video-card" onclick="openVideoModal('https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/3.mp4', 'Dynamic Reel')">
           <div class="video-wrap">
-            <video controls preload="metadata" playsinline>
+            <video preload="metadata" playsinline>
               <source src="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/3.mp4" type="video/mp4">
             </video>
+            <div class="video-play-btn">
+              <svg viewBox="0 0 24 24" fill="white" width="28" height="28"><polygon points="6,4 20,12 6,20"/></svg>
+            </div>
           </div>
           <div class="video-info">
             <p class="video-title">Dynamic Reel</p>
-            </div>
+          </div>
         </div>
-        <div class="video-card">
+        <div class="video-card" onclick="openVideoModal('https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/1.mp4', 'Cupa LazarxIoanid')">
           <div class="video-wrap">
-            <video controls preload="metadata" playsinline>
-              <source src="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/video%20renovari.mp4.mov" type="video/mp4">
+            <video preload="metadata" playsinline>
+              <source src="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/1.mp4" type="video/mp4">
             </video>
+            <div class="video-play-btn">
+              <svg viewBox="0 0 24 24" fill="white" width="28" height="28"><polygon points="6,4 20,12 6,20"/></svg>
+            </div>
           </div>
           <div class="video-info">
-            <p class="video-title">Apartament-Renovision Desing</p>
+            <p class="video-title">Cupa LazarxIoanid</p>
           </div>
         </div>
       </div>
+
+
     </div>
     <div class="page-footer">
       <span class="footer-copy">© 2026 USL MEDIA — Toate drepturile rezervate.</span>
@@ -2694,7 +3051,6 @@ html {
     </div>
   </div>
 
-  <!-- PRETURI -->
   <div class="page" id="page-preturi">
     <div class="preturi-wrap">
       <button class="back-btn" onclick="goBack()"><svg viewBox="0 0 16 16"><polyline points="10,3 5,8 10,13"/></svg> Înapoi</button>
@@ -2769,7 +3125,6 @@ html {
     </div>
   </div>
 
-  <!-- HAI SĂ COLABORĂM -->
   <div class="page" id="page-colaboram">
     <div class="contact-wrap">
 
@@ -2788,7 +3143,6 @@ html {
         </p>
       </div>
 
-      <!-- SOLO FORM -->
       <div class="colab-form-wrap anim anim-4" id="colaboramForm">
 
         <div class="colab-field-row">
@@ -2817,7 +3171,6 @@ html {
           </select>
         </div>
 
-        <!-- QUESTIONNAIRE — visible only when Custom is selected -->
         <div id="colCustomQ" style="display:none; flex-direction:column; gap:1.1rem;">
           <div class="cq-section">
             <div class="cq-title">Configurează colaborarea</div>
@@ -2903,7 +3256,6 @@ html {
     </div>
   </div>
 
-  <!-- COLABORARE CUSTOM -->
   <div class="page" id="page-colaboram-custom">
     <div class="contact-wrap">
 
@@ -2940,7 +3292,6 @@ html {
           <input id="cc-email" type="email" placeholder="ion@afacere.ro" required>
         </div>
 
-        <!-- QUESTIONNAIRE -->
         <div class="cq-section">
           <div class="cq-title">Configurează colaborarea</div>
 
@@ -3023,7 +3374,6 @@ html {
     </div>
   </div>
 
-  <!-- CONTACT -->
   <div class="page" id="page-contact">
     <div class="contact-wrap">
 
@@ -3042,7 +3392,6 @@ html {
         </p>
       </div>
 
-      <!-- SPLIT LAYOUT -->
       <div class="contact-new-split anim anim-4">
 
         <div class="contact-cards-col">
@@ -3511,6 +3860,120 @@ html {
       if (match) navigateTo(match[1]);
     }
   });
+  // ===== VIDEO MODAL =====
+  // ─── VIDEO MODAL ───
+  function openVideoModal(src, title) {
+    const overlay = document.getElementById('videoModalOverlay');
+    const player  = document.getElementById('videoModalPlayer');
+    const titleEl = document.getElementById('videoModalTitle');
+
+    // Opreşte preview-urile din carduri
+    document.querySelectorAll('.video-wrap video').forEach(v => {
+      v.pause();
+      v.currentTime = 0;
+    });
+
+    player.src = src;
+    titleEl.textContent = title;
+    overlay.classList.add('open');
+    document.body.classList.add('modal-open');
+
+    // Blochează scroll pe containerul paginii active
+    const activePage = document.querySelector('.page.active');
+    if (activePage) activePage.style.overflow = 'hidden';
+
+    player.play().catch(() => {});
+  }
+
+  function closeVideoModal() {
+    const overlay = document.getElementById('videoModalOverlay');
+    const player  = document.getElementById('videoModalPlayer');
+    player.pause();
+    player.src = '';
+    overlay.classList.remove('open');
+    document.body.classList.remove('modal-open');
+
+    // Restabileşte scroll pe pagina activă
+    const activePage = document.querySelector('.page.active');
+    if (activePage) activePage.style.overflow = '';
+
+    // Notifica componentele ca modalul s-a inchis
+    document.dispatchEvent(new Event('modalClosed'));
+  }
+
+  // Închide cu Escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeVideoModal();
+  });
+
+  // Iniţializare event listeners pe modal – după ce DOM-ul e complet
+  document.addEventListener('DOMContentLoaded', function() {
+    const overlay = document.getElementById('videoModalOverlay');
+    const closeBtn = document.getElementById('videoModalClose');
+
+    // Click pe fundal = închide
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) closeVideoModal();
+    });
+
+    // Buton X
+    closeBtn.addEventListener('click', closeVideoModal);
+
+    // Blochează scroll complet – wheel + touch
+    overlay.addEventListener('wheel', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }, { passive: false });
+
+    overlay.addEventListener('touchmove', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }, { passive: false });
+  });
+
+
+  (function() {
+    const cards = document.querySelectorAll('.testi-card');
+    if (!cards.length) return;
+
+    // Observer fara root restrictiv – functioneaza chiar dupa modal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('testi-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      root: null, // viewport global, nu containerul paginii
+      threshold: 0.05,
+      rootMargin: '0px 0px 0px 0px'
+    });
+
+    cards.forEach(card => observer.observe(card));
+
+    // Fallback: dupa ce se inchide modalul, re-verifica cardurile vizibile
+    document.addEventListener('modalClosed', function() {
+      cards.forEach(card => {
+        const rect = card.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          card.classList.add('testi-visible');
+        }
+      });
+    });
+  })();
+
 </script>
+
+<!-- MODAL VIDEO – în afara page-wrapper, nu e afectat de blur -->
+<div class="video-modal-overlay" id="videoModalOverlay">
+  <div class="video-modal-inner">
+    <button class="video-modal-close" id="videoModalClose">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="video-modal-title" id="videoModalTitle"></div>
+    <video id="videoModalPlayer" controls playsinline></video>
+  </div>
+</div>
 </body>
 </html>
