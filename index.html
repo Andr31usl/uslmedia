@@ -2888,7 +2888,9 @@ body.modal-open .orb-2 {
             </div>
           </div>
             <div class="testi-dots" id="testiDots"></div>
-    </div>
+        </div><!-- /testi-track -->
+      </div><!-- /testi-track-outer -->
+    </div><!-- /testimoniale-section -->
 
     <div class="page-footer">
       <span class="footer-copy">© 2026 USL MEDIA — Toate drepturile rezervate.</span>
@@ -3959,66 +3961,7 @@ body.modal-open .orb-2 {
     document.getElementById('colabCustomSuccessWrap').style.display = 'block';
     setTimeout(() => { window.location.reload(); }, 3000);
   }
-  // Salvează pagina activă când dai click pe meniu
-  document.addEventListener('click', function(e) {
-    if (e.target.matches('nav a')) {
-      const target = e.target.getAttribute('href');
-      if (target && target.startsWith('#')) {
-        localStorage.setItem('usl_active_page', target);
-      }
-    }
-  });
-  // Funcția care schimbă paginile și salvează starea
-  function showPage(pageId) {
-    // 1. Ascunde toate paginile
-    document.querySelectorAll('.page').forEach(page => {
-      page.classList.remove('active');
-    });
-
-    // 2. Afișează pagina selectată
-    const targetPage = document.getElementById(pageId);
-    if (targetPage) {
-      targetPage.classList.add('active');
-    }
-
-    // 3. Salvează în browser care pagină este activă
-    localStorage.setItem('uslMedia_activePage', pageId);
-
-    // 4. Actualizează stilul meniului (opțional, dacă ai clasa 'active' pe link-uri)
-    document.querySelectorAll('.nav-links a').forEach(link => {
-      link.classList.remove('active');
-      if (link.getAttribute('onclick') && link.getAttribute('onclick').includes(pageId)) {
-        link.classList.add('active');
-      }
-    });
-  }
-
-  // La încărcarea paginii, verifică dacă avem o pagină salvată
-  window.addEventListener('load', () => {
-    const savedPage = localStorage.getItem('uslMedia_activePage');
-    if (savedPage) {
-      showPage(savedPage);
-    }
-  });
-  // 1. ACEASTA ESTE SOLUȚIA: La fiecare click pe navigație, salvăm pagina în memorie
-  document.querySelectorAll('nav a').forEach(link => {
-    link.addEventListener('click', function() {
-      const pageId = this.getAttribute('onclick'); // Luăm codul din onclick
-      if (pageId) {
-        localStorage.setItem('usl_page_activ', pageId);
-      }
-    });
-  });
-
-  // 2. La refresh, citim memoria și activăm pagina
-  window.addEventListener('load', function() {
-    const saved = localStorage.getItem('usl_page_activ');
-    if (saved) {
-      // Extragem doar numele paginii din onclick (ex: "navigateTo('despre'); return false;" -> "despre")
-      const match = saved.match(/navigateTo\('([^']+)'\)/);
-      if (match) navigateTo(match[1]);
-    }
-  });
+  // (navigateTo handles all page switching — no duplicate showPage needed)
   // ===== VIDEO MODAL =====
   // ─── VIDEO MODAL ───
   function openVideoModal(src, title) {
