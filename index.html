@@ -4115,6 +4115,18 @@ body.modal-open .orb-2 {
           return;
         }
 
+        // Trimite email pe Formspree
+        fetch('https://formspree.io/f/xqejabpp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            _replyto: email,
+            email: email,
+            sursa: 'Newsletter Popup',
+            mesaj: 'Abonat nou la newsletter: ' + email
+          })
+        }).catch(function() {});
+
         // Arata succes
         document.getElementById('nlFormContent').style.display = 'none';
         var success = document.getElementById('nlSuccess');
