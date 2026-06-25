@@ -10,6 +10,9 @@
 
     <link rel="icon" type="image/png" href="/portofoliu%20site/sigla.pgn.png">
 
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>emailjs.init('Qq3cNQFw--KVvQi-J');</script>
+
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -3800,7 +3803,7 @@ body.modal-open .orb-2 {
     }
 
     try {
-      await fetch('https://formspree.io/f/xqejabpp', {
+      await fetch('https://formspree.io/f/xlgyglbo', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify(payload)
@@ -3827,7 +3830,7 @@ body.modal-open .orb-2 {
     btn.textContent = 'Se trimite...';
 
     try {
-      await fetch('https://formspree.io/f/xqejabpp', {
+      await fetch('https://formspree.io/f/xlgyglbo', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({
@@ -3941,7 +3944,7 @@ body.modal-open .orb-2 {
     btn.textContent = 'Se trimite...';
 
     try {
-      await fetch('https://formspree.io/f/xqejabpp', {
+      await fetch('https://formspree.io/f/xlgyglbo', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({
@@ -4089,57 +4092,51 @@ body.modal-open .orb-2 {
     // Deschide dupa 30 secunde
     var timer = setTimeout(openNl, 30000);
 
-    document.addEventListener('DOMContentLoaded', function() {
-      var backdrop = document.getElementById('nlBackdrop');
-      var closeBtn = document.getElementById('nlClose');
-      var submitBtn = document.getElementById('nlSubmit');
-      var emailInput = document.getElementById('nlEmail');
+    // DOM e deja incarcat (scriptul e la sfarsitul paginii), atasam direct
+    var backdrop = document.getElementById('nlBackdrop');
+    var closeBtn = document.getElementById('nlClose');
+    var submitBtn = document.getElementById('nlSubmit');
+    var emailInput = document.getElementById('nlEmail');
 
-      // Inchide la X
-      closeBtn.addEventListener('click', closeNl);
+    // Inchide la X
+    closeBtn.addEventListener('click', closeNl);
 
-      // Inchide la click pe fundal
-      backdrop.addEventListener('click', function(e) {
-        if (e.target === backdrop) closeNl();
+    // Inchide la click pe fundal
+    backdrop.addEventListener('click', function(e) {
+      if (e.target === backdrop) closeNl();
+    });
+
+    // Submit
+    submitBtn.addEventListener('click', function() {
+      var email = emailInput.value.trim();
+      var valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+      if (!valid) {
+        emailInput.style.borderColor = 'rgba(239,68,68,0.6)';
+        emailInput.focus();
+        setTimeout(function() { emailInput.style.borderColor = ''; }, 2000);
+        return;
+      }
+
+      // Trimite email prin EmailJS
+      emailjs.send('service_388u2vq', 'template_izp45s8', {
+        email: email,
+        sursa: 'Newsletter Popup',
+        mesaj: 'Abonat nou la newsletter: ' + email
       });
 
-      // Submit
-      submitBtn.addEventListener('click', function() {
-        var email = emailInput.value.trim();
-        var valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      // Arata succes
+      document.getElementById('nlFormContent').style.display = 'none';
+      var success = document.getElementById('nlSuccess');
+      success.style.display = 'flex';
 
-        if (!valid) {
-          emailInput.style.borderColor = 'rgba(239,68,68,0.6)';
-          emailInput.focus();
-          setTimeout(function() { emailInput.style.borderColor = ''; }, 2000);
-          return;
-        }
+      // Inchide automat dupa 3s
+      setTimeout(closeNl, 3000);
+    });
 
-        // Trimite email pe Formspree
-        fetch('https://formspree.io/f/xqejabpp', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify({
-            _replyto: email,
-            email: email,
-            sursa: 'Newsletter Popup',
-            mesaj: 'Abonat nou la newsletter: ' + email
-          })
-        }).catch(function() {});
-
-        // Arata succes
-        document.getElementById('nlFormContent').style.display = 'none';
-        var success = document.getElementById('nlSuccess');
-        success.style.display = 'flex';
-
-        // Inchide automat dupa 3s
-        setTimeout(closeNl, 3000);
-      });
-
-      // Enter pe input
-      emailInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') submitBtn.click();
-      });
+    // Enter pe input
+    emailInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') submitBtn.click();
     });
   })();
 
