@@ -4069,44 +4069,39 @@ body.modal-open .orb-2 {
   })();
 
 
-  // ─── NEWSLETTER POPUP ───
-  (function() {
+  // NEWSLETTER POPUP
+  window.addEventListener('load', function() {
     var DISMISSED_KEY = 'nl_dismissed';
 
-    // Nu arata daca userul l-a inchis deja
     if (localStorage.getItem(DISMISSED_KEY)) return;
 
+    var backdrop   = document.getElementById('nlBackdrop');
+    var closeBtn   = document.getElementById('nlClose');
+    var submitBtn  = document.getElementById('nlSubmit');
+    var emailInput = document.getElementById('nlEmail');
+
+    if (!backdrop || !closeBtn || !submitBtn || !emailInput) return;
+
     function openNl() {
-      document.getElementById('nlBackdrop').classList.add('nl-open');
+      backdrop.classList.add('nl-open');
     }
     function closeNl() {
-      var bd = document.getElementById('nlBackdrop');
-      bd.style.animation = 'nlFadeIn 0.25s ease reverse forwards';
+      backdrop.style.animation = 'nlFadeIn 0.25s ease reverse forwards';
       setTimeout(function() {
-        bd.classList.remove('nl-open');
-        bd.style.animation = '';
+        backdrop.classList.remove('nl-open');
+        backdrop.style.animation = '';
       }, 220);
       localStorage.setItem(DISMISSED_KEY, '1');
     }
 
-    // Deschide dupa 30 secunde
-    var timer = setTimeout(openNl, 5000);
+    setTimeout(openNl, 30000);
 
-    // DOM e deja incarcat (scriptul e la sfarsitul paginii), atasam direct
-    var backdrop = document.getElementById('nlBackdrop');
-    var closeBtn = document.getElementById('nlClose');
-    var submitBtn = document.getElementById('nlSubmit');
-    var emailInput = document.getElementById('nlEmail');
-
-    // Inchide la X
     closeBtn.addEventListener('click', closeNl);
 
-    // Inchide la click pe fundal
     backdrop.addEventListener('click', function(e) {
       if (e.target === backdrop) closeNl();
     });
 
-    // Submit
     submitBtn.addEventListener('click', function() {
       var email = emailInput.value.trim();
       var valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -4118,27 +4113,22 @@ body.modal-open .orb-2 {
         return;
       }
 
-      // Trimite email prin EmailJS
       emailjs.send('service_388u2vq', 'template_izp45s8', {
         email: email,
         sursa: 'Newsletter Popup',
         mesaj: 'Abonat nou la newsletter: ' + email
       });
 
-      // Arata succes
       document.getElementById('nlFormContent').style.display = 'none';
-      var success = document.getElementById('nlSuccess');
-      success.style.display = 'flex';
+      document.getElementById('nlSuccess').style.display = 'flex';
 
-      // Inchide automat dupa 3s
       setTimeout(closeNl, 3000);
     });
 
-    // Enter pe input
     emailInput.addEventListener('keydown', function(e) {
       if (e.key === 'Enter') submitBtn.click();
     });
-  })();
+  });
 
 </script>
 
