@@ -43,6 +43,8 @@
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 .nl-backdrop.nl-open {
   display: flex;
@@ -4070,66 +4072,72 @@ body.modal-open .orb-2 {
 
 
   // NEWSLETTER POPUP
-  window.addEventListener('load', function() {
-    var DISMISSED_KEY = 'nl_dismissed';
+  (function() {
+    function initNewsletter() {
+      var backdrop   = document.getElementById('nlBackdrop');
+      var closeBtn   = document.getElementById('nlClose');
+      var submitBtn  = document.getElementById('nlSubmit');
+      var emailInput = document.getElementById('nlEmail');
 
-    if (localStorage.getItem(DISMISSED_KEY)) return;
-
-    var backdrop   = document.getElementById('nlBackdrop');
-    var closeBtn   = document.getElementById('nlClose');
-    var submitBtn  = document.getElementById('nlSubmit');
-    var emailInput = document.getElementById('nlEmail');
-
-    if (!backdrop || !closeBtn || !submitBtn || !emailInput) return;
-
-    function openNl() {
-      backdrop.classList.add('nl-open');
-    }
-    function closeNl() {
-      backdrop.style.animation = 'nlFadeIn 0.25s ease reverse forwards';
-      setTimeout(function() {
-        backdrop.classList.remove('nl-open');
-        backdrop.style.animation = '';
-      }, 220);
-      localStorage.setItem(DISMISSED_KEY, '1');
-    }
-
-    setTimeout(openNl, 5000);
-
-    closeBtn.addEventListener('click', closeNl);
-
-    backdrop.addEventListener('click', function(e) {
-      if (e.target === backdrop) closeNl();
-    });
-
-    submitBtn.addEventListener('click', function() {
-      var email = emailInput.value.trim();
-      var valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
-      if (!valid) {
-        emailInput.style.borderColor = 'rgba(239,68,68,0.6)';
-        emailInput.focus();
-        setTimeout(function() { emailInput.style.borderColor = ''; }, 2000);
+      if (!backdrop || !closeBtn || !submitBtn || !emailInput) {
+        console.warn('Newsletter: elemente lipsa');
         return;
       }
 
-      emailjs.send('service_388u2vq', 'template_izp45s8', {
-        email: email,
-        sursa: 'Newsletter Popup',
-        mesaj: 'Abonat nou la newsletter: ' + email
+      function openNl() {
+        backdrop.style.display = 'flex';
+        backdrop.style.opacity = '0';
+        setTimeout(function() { backdrop.style.opacity = '1'; }, 10);
+      }
+      function closeNl() {
+        backdrop.style.opacity = '0';
+        setTimeout(function() { backdrop.style.display = 'none'; }, 300);
+      }
+
+      setTimeout(openNl, 30000);
+
+      closeBtn.addEventListener('click', closeNl);
+
+      backdrop.addEventListener('click', function(e) {
+        if (e.target === backdrop) closeNl();
       });
 
-      document.getElementById('nlFormContent').style.display = 'none';
-      document.getElementById('nlSuccess').style.display = 'flex';
+      submitBtn.addEventListener('click', function() {
+        var email = emailInput.value.trim();
+        var valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        if (!valid) {
+          emailInput.style.borderColor = 'rgba(239,68,68,0.6)';
+          emailInput.focus();
+          setTimeout(function() { emailInput.style.borderColor = ''; }, 2000);
+          return;
+        }
+        // Notificare pentru tine
+        emailjs.send('service_388u2vq', 'template_izp45s8', {
+          email: email,
+          sursa: 'Newsletter Popup',
+          mesaj: 'Abonat nou la newsletter: ' + email
+        });
+        // Welcome email pentru abonat
+        emailjs.send('service_388u2vq', 'template_e5vzaj8', {
+          email: email,
+          name: email
+        });
+        document.getElementById('nlFormContent').style.display = 'none';
+        document.getElementById('nlSuccess').style.display = 'flex';
+        setTimeout(closeNl, 3000);
+      });
 
-      setTimeout(closeNl, 3000);
-    });
+      emailInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') submitBtn.click();
+      });
+    }
 
-    emailInput.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') submitBtn.click();
-    });
-  });
-
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initNewsletter);
+    } else {
+      initNewsletter();
+    }
+  })();
 </script>
 
 <!-- MODAL VIDEO – în afara page-wrapper, nu e afectat de blur -->
