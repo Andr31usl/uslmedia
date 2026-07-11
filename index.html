@@ -888,16 +888,25 @@ nav {
   .despre-aside-inline {
     grid-template-columns: 1fr;
   }
-  .footer-center {
-    display: none;
-  }
   .page-footer {
-    justify-content: center;
-    flex-direction: column;
-    gap: 0.4rem;
+    padding: 2.6rem 1.5rem 1.4rem;
+    gap: 2rem;
+  }
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 2.2rem;
     text-align: center;
-    padding: 1rem 1.25rem;
-    font-size: 0.72rem;
+  }
+  .footer-brand { max-width: 100%; }
+  .footer-logo { justify-content: center; }
+  .footer-links { align-items: center; }
+  .footer-links a:hover { transform: none; }
+  .footer-socials { justify-content: center; }
+  .footer-cta { max-width: 100%; }
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.4rem;
   }
 }
 
@@ -2002,42 +2011,171 @@ nav {
 .page.active .anim-5 { animation-delay: 0.45s; }
 .page.active .anim-6 { animation-delay: 0.55s; }
 
-/* FOOTER */
+/* ===== FOOTER (rich, 3 coloane) ===== */
 .page-footer {
   border-top: 1px solid var(--border);
-  padding: 1.2rem 3rem;
+  padding: 3.2rem 3rem 1.6rem;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.78rem;
+  flex-direction: column;
+  gap: 2.4rem;
   color: rgba(255,255,255,0.82);
   font-weight: 300;
   max-width: 100%;
   flex-shrink: 0;
   margin-top: auto;
-}
-.footer-center {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  background: linear-gradient(180deg, transparent, rgba(37,99,235,0.03));
 }
 
-.footer-copy { color: rgba(255,255,255,0.82); font-size: 0.78rem; }
-.footer-contact { color: rgba(255,255,255,0.82); font-size: 0.78rem; }
-.footer-ig {
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr;
+  gap: 2.5rem 3rem;
+  max-width: 1180px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* --- Coloana brand --- */
+.footer-brand { max-width: 380px; }
+.footer-logo {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  color: rgba(255,255,255,0.82);
-  font-size: 0.78rem;
+  gap: 0.7rem;
   text-decoration: none;
-  transition: color 0.2s;
+  margin-bottom: 1.1rem;
 }
-.footer-ig:hover { color: var(--white); }
-.footer-ig svg { flex-shrink: 0; }
+.footer-logo-badge {
+  width: 40px; height: 40px;
+  border-radius: 11px;
+  background: #000;
+  border: 1px solid rgba(255,255,255,0.12);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.45);
+  flex-shrink: 0;
+}
+.footer-logo-badge img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.footer-logo-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: 0.03em;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.footer-desc {
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 1.15rem;
+}
+.footer-tagline {
+  font-family: 'Syne', sans-serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(147,184,240,0.55);
+}
+
+/* --- Coloane link-uri / social --- */
+.footer-heading {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 1.3rem;
+}
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+.footer-links a {
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  font-size: 0.92rem;
+  transition: color 0.2s, transform 0.2s;
+  width: fit-content;
+}
+.footer-links a:hover {
+  color: var(--white);
+  transform: translateX(3px);
+}
+
+/* --- Social --- */
+.footer-socials {
+  display: flex;
+  gap: 0.7rem;
+  margin-bottom: 1.6rem;
+}
+.footer-social {
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,0.75);
+  text-decoration: none;
+  transition: background 0.25s, border-color 0.25s, transform 0.25s, color 0.25s;
+}
+.footer-social:hover {
+  background: rgba(37,99,235,0.15);
+  border-color: var(--border-blue);
+  color: var(--white);
+  transform: translateY(-3px);
+}
+.footer-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 220px;
+  padding: 0.85rem 1.6rem;
+  border-radius: 100px;
+  background: var(--gradient) !important;
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(37,99,235,0.4);
+  transition: transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s;
+}
+.footer-cta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(37,99,235,0.55);
+}
+
+/* --- Bară de jos --- */
+.footer-bottom {
+  border-top: 1px solid var(--border);
+  padding-top: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem 1.5rem;
+  max-width: 1180px;
+  width: 100%;
+  margin: 0 auto;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.45);
+}
+.footer-bottom a { color: inherit; text-decoration: none; transition: color 0.2s; }
+.footer-bottom a:hover { color: var(--white); }
 
 /* HAMBURGER BUTTON */
 .hamburger {
@@ -2752,6 +2890,46 @@ body.modal-open .orb-2 {
   z-index: 2;
   background: transparent;
 }
+
+/* ============================================================
+   MOBIL — SCROLL CONTINUU (doar sub 768px)
+   Pe desktop site-ul rămâne neschimbat: pagini separate cu
+   tranziție animată. Pe telefon, toate secțiunile se pun una
+   sub alta și se navighează prin scroll normal al paginii.
+   ============================================================ */
+@media (max-width: 768px) {
+  .page-wrapper {
+    position: relative;
+    inset: auto;
+    overflow: visible;
+    padding-top: 72px;
+    z-index: 1;
+  }
+  .page {
+    position: relative !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: all !important;
+    transform: none !important;
+    overflow: visible !important;
+    padding-top: 0 !important;
+    min-height: 0 !important;
+    height: auto !important;
+    transition: none !important;
+  }
+  /* Hero-ul de start umple primul ecran, restul curge natural */
+  #page-home .home-hero {
+    min-height: calc(100vh - 72px);
+    min-height: calc(100svh - 72px);
+    justify-content: center;
+  }
+  /* Nu mai are sens tranziția full-screen de "wipe" între pagini */
+  .transition-overlay { display: none !important; }
+  /* Nu mai e nevoie de buton "Înapoi" — se scrollează liber */
+  .back-btn { display: none !important; }
+  /* Un singur footer, la finalul întregului site (nu unul per secțiune) */
+  .page:not(#page-contact) .page-footer { display: none !important; }
+}
 </style>
 </head>
 <body>
@@ -2898,10 +3076,50 @@ body.modal-open .orb-2 {
     </div><!-- /testimoniale-section -->
 
     <div class="page-footer">
-      <span class="footer-copy">© 2026 USL MEDIA — Toate drepturile rezervate.</span>
-      <div class="footer-center">
-        <a href="https://www.instagram.com/andr31.usl/?__pwa=1" target="_blank" class="footer-ig"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg> @usl.media</a>
-        <span class="footer-contact">contact: uslmedia.contact@gmail.com</span>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="footer-logo" href="#" onclick="navigateTo('home'); return false;">
+            <span class="footer-logo-badge">
+              <img src="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/sigla.pgn.png" alt="USL Media" />
+            </span>
+            <span class="footer-logo-name">USL MEDIA</span>
+          </a>
+          <p class="footer-desc">Conținut video modern pentru businessuri care vor să arate profesionist, să crească organic și să transforme atenția în clienți reali. Din București.</p>
+          <p class="footer-tagline">"Conținut care vinde."</p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Navigare</h4>
+          <ul class="footer-links">
+            <li><a href="#" onclick="navigateTo('home'); return false;">Acasă</a></li>
+            <li><a href="#" onclick="navigateTo('despre'); return false;">Despre</a></li>
+            <li><a href="#" onclick="navigateTo('servicii'); return false;">Servicii</a></li>
+            <li><a href="#" onclick="navigateTo('portofoliu'); return false;">Portofoliu</a></li>
+            <li><a href="#" onclick="navigateTo('preturi'); return false;">Prețuri</a></li>
+            <li><a href="#" onclick="navigateTo('contact'); return false;">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Social Media</h4>
+          <div class="footer-socials">
+            <a href="https://www.instagram.com/andr31.usl/?__pwa=1" target="_blank" rel="noopener" class="footer-social" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a href="#" onclick="return false;" class="footer-social" aria-label="TikTok">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M16.5 3a5.6 5.6 0 0 0 4.5 4.9v3a8.6 8.6 0 0 1-4.5-1.3v6.2a6.3 6.3 0 1 1-6.3-6.3c.34 0 .67.03 1 .09v3.16a3.2 3.2 0 1 0 2.3 3.05V3h3z"/></svg>
+            </a>
+            <a href="#" onclick="return false;" class="footer-social" aria-label="YouTube">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-2C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.41 19c1.71.46 8.59.46 8.59.46s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor" stroke="none"/></svg>
+            </a>
+          </div>
+          <button class="footer-cta" onclick="navigateTo('colaboram')">Cere ofertă</button>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 USL MEDIA — Toate drepturile rezervate.</span>
+        <a href="mailto:uslmedia.contact@gmail.com">contact: uslmedia.contact@gmail.com</a>
       </div>
     </div>
   </div>
@@ -2951,10 +3169,50 @@ body.modal-open .orb-2 {
       </div>
     </div>
     <div class="page-footer">
-      <span class="footer-copy">© 2026 USL MEDIA — Toate drepturile rezervate.</span>
-      <div class="footer-center">
-        <a href="https://www.instagram.com/andr31.usl/?__pwa=1" target="_blank" class="footer-ig"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg> @usl.media</a>
-        <span class="footer-contact">contact: uslmedia.contact@gmail.com</span>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="footer-logo" href="#" onclick="navigateTo('home'); return false;">
+            <span class="footer-logo-badge">
+              <img src="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/sigla.pgn.png" alt="USL Media" />
+            </span>
+            <span class="footer-logo-name">USL MEDIA</span>
+          </a>
+          <p class="footer-desc">Conținut video modern pentru businessuri care vor să arate profesionist, să crească organic și să transforme atenția în clienți reali. Din București.</p>
+          <p class="footer-tagline">"Conținut care vinde."</p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Navigare</h4>
+          <ul class="footer-links">
+            <li><a href="#" onclick="navigateTo('home'); return false;">Acasă</a></li>
+            <li><a href="#" onclick="navigateTo('despre'); return false;">Despre</a></li>
+            <li><a href="#" onclick="navigateTo('servicii'); return false;">Servicii</a></li>
+            <li><a href="#" onclick="navigateTo('portofoliu'); return false;">Portofoliu</a></li>
+            <li><a href="#" onclick="navigateTo('preturi'); return false;">Prețuri</a></li>
+            <li><a href="#" onclick="navigateTo('contact'); return false;">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Social Media</h4>
+          <div class="footer-socials">
+            <a href="https://www.instagram.com/andr31.usl/?__pwa=1" target="_blank" rel="noopener" class="footer-social" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a href="#" onclick="return false;" class="footer-social" aria-label="TikTok">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M16.5 3a5.6 5.6 0 0 0 4.5 4.9v3a8.6 8.6 0 0 1-4.5-1.3v6.2a6.3 6.3 0 1 1-6.3-6.3c.34 0 .67.03 1 .09v3.16a3.2 3.2 0 1 0 2.3 3.05V3h3z"/></svg>
+            </a>
+            <a href="#" onclick="return false;" class="footer-social" aria-label="YouTube">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-2C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.41 19c1.71.46 8.59.46 8.59.46s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor" stroke="none"/></svg>
+            </a>
+          </div>
+          <button class="footer-cta" onclick="navigateTo('colaboram')">Cere ofertă</button>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 USL MEDIA — Toate drepturile rezervate.</span>
+        <a href="mailto:uslmedia.contact@gmail.com">contact: uslmedia.contact@gmail.com</a>
       </div>
     </div>
   </div>
@@ -3134,10 +3392,50 @@ body.modal-open .orb-2 {
     </div>
 
     <div class="page-footer">
-      <span class="footer-copy">© 2026 USL MEDIA — Toate drepturile rezervate.</span>
-      <div class="footer-center">
-        <a href="https://www.instagram.com/andr31.usl/?__pwa=1" target="_blank" class="footer-ig"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg> @usl.media</a>
-        <span class="footer-contact">contact: uslmedia.contact@gmail.com</span>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="footer-logo" href="#" onclick="navigateTo('home'); return false;">
+            <span class="footer-logo-badge">
+              <img src="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/sigla.pgn.png" alt="USL Media" />
+            </span>
+            <span class="footer-logo-name">USL MEDIA</span>
+          </a>
+          <p class="footer-desc">Conținut video modern pentru businessuri care vor să arate profesionist, să crească organic și să transforme atenția în clienți reali. Din București.</p>
+          <p class="footer-tagline">"Conținut care vinde."</p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Navigare</h4>
+          <ul class="footer-links">
+            <li><a href="#" onclick="navigateTo('home'); return false;">Acasă</a></li>
+            <li><a href="#" onclick="navigateTo('despre'); return false;">Despre</a></li>
+            <li><a href="#" onclick="navigateTo('servicii'); return false;">Servicii</a></li>
+            <li><a href="#" onclick="navigateTo('portofoliu'); return false;">Portofoliu</a></li>
+            <li><a href="#" onclick="navigateTo('preturi'); return false;">Prețuri</a></li>
+            <li><a href="#" onclick="navigateTo('contact'); return false;">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Social Media</h4>
+          <div class="footer-socials">
+            <a href="https://www.instagram.com/andr31.usl/?__pwa=1" target="_blank" rel="noopener" class="footer-social" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a href="#" onclick="return false;" class="footer-social" aria-label="TikTok">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M16.5 3a5.6 5.6 0 0 0 4.5 4.9v3a8.6 8.6 0 0 1-4.5-1.3v6.2a6.3 6.3 0 1 1-6.3-6.3c.34 0 .67.03 1 .09v3.16a3.2 3.2 0 1 0 2.3 3.05V3h3z"/></svg>
+            </a>
+            <a href="#" onclick="return false;" class="footer-social" aria-label="YouTube">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-2C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.41 19c1.71.46 8.59.46 8.59.46s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor" stroke="none"/></svg>
+            </a>
+          </div>
+          <button class="footer-cta" onclick="navigateTo('colaboram')">Cere ofertă</button>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 USL MEDIA — Toate drepturile rezervate.</span>
+        <a href="mailto:uslmedia.contact@gmail.com">contact: uslmedia.contact@gmail.com</a>
       </div>
     </div>
   </div>
@@ -3209,10 +3507,50 @@ body.modal-open .orb-2 {
 
     </div>
     <div class="page-footer">
-      <span class="footer-copy">© 2026 USL MEDIA — Toate drepturile rezervate.</span>
-      <div class="footer-center">
-        <a href="https://www.instagram.com/andr31.usl/?__pwa=1" target="_blank" class="footer-ig"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg> @usl.media</a>
-        <span class="footer-contact">contact: uslmedia.contact@gmail.com</span>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="footer-logo" href="#" onclick="navigateTo('home'); return false;">
+            <span class="footer-logo-badge">
+              <img src="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/sigla.pgn.png" alt="USL Media" />
+            </span>
+            <span class="footer-logo-name">USL MEDIA</span>
+          </a>
+          <p class="footer-desc">Conținut video modern pentru businessuri care vor să arate profesionist, să crească organic și să transforme atenția în clienți reali. Din București.</p>
+          <p class="footer-tagline">"Conținut care vinde."</p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Navigare</h4>
+          <ul class="footer-links">
+            <li><a href="#" onclick="navigateTo('home'); return false;">Acasă</a></li>
+            <li><a href="#" onclick="navigateTo('despre'); return false;">Despre</a></li>
+            <li><a href="#" onclick="navigateTo('servicii'); return false;">Servicii</a></li>
+            <li><a href="#" onclick="navigateTo('portofoliu'); return false;">Portofoliu</a></li>
+            <li><a href="#" onclick="navigateTo('preturi'); return false;">Prețuri</a></li>
+            <li><a href="#" onclick="navigateTo('contact'); return false;">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Social Media</h4>
+          <div class="footer-socials">
+            <a href="https://www.instagram.com/andr31.usl/?__pwa=1" target="_blank" rel="noopener" class="footer-social" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a href="#" onclick="return false;" class="footer-social" aria-label="TikTok">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M16.5 3a5.6 5.6 0 0 0 4.5 4.9v3a8.6 8.6 0 0 1-4.5-1.3v6.2a6.3 6.3 0 1 1-6.3-6.3c.34 0 .67.03 1 .09v3.16a3.2 3.2 0 1 0 2.3 3.05V3h3z"/></svg>
+            </a>
+            <a href="#" onclick="return false;" class="footer-social" aria-label="YouTube">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-2C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.41 19c1.71.46 8.59.46 8.59.46s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor" stroke="none"/></svg>
+            </a>
+          </div>
+          <button class="footer-cta" onclick="navigateTo('colaboram')">Cere ofertă</button>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 USL MEDIA — Toate drepturile rezervate.</span>
+        <a href="mailto:uslmedia.contact@gmail.com">contact: uslmedia.contact@gmail.com</a>
       </div>
     </div>
   </div>
@@ -3283,10 +3621,50 @@ body.modal-open .orb-2 {
       </div>
     </div>
     <div class="page-footer">
-      <span class="footer-copy">© 2026 USL MEDIA — Toate drepturile rezervate.</span>
-      <div class="footer-center">
-        <a href="https://www.instagram.com/andr31.usl/?__pwa=1" target="_blank" class="footer-ig"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg> @usl.media</a>
-        <span class="footer-contact">contact: uslmedia.contact@gmail.com</span>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="footer-logo" href="#" onclick="navigateTo('home'); return false;">
+            <span class="footer-logo-badge">
+              <img src="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/sigla.pgn.png" alt="USL Media" />
+            </span>
+            <span class="footer-logo-name">USL MEDIA</span>
+          </a>
+          <p class="footer-desc">Conținut video modern pentru businessuri care vor să arate profesionist, să crească organic și să transforme atenția în clienți reali. Din București.</p>
+          <p class="footer-tagline">"Conținut care vinde."</p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Navigare</h4>
+          <ul class="footer-links">
+            <li><a href="#" onclick="navigateTo('home'); return false;">Acasă</a></li>
+            <li><a href="#" onclick="navigateTo('despre'); return false;">Despre</a></li>
+            <li><a href="#" onclick="navigateTo('servicii'); return false;">Servicii</a></li>
+            <li><a href="#" onclick="navigateTo('portofoliu'); return false;">Portofoliu</a></li>
+            <li><a href="#" onclick="navigateTo('preturi'); return false;">Prețuri</a></li>
+            <li><a href="#" onclick="navigateTo('contact'); return false;">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Social Media</h4>
+          <div class="footer-socials">
+            <a href="https://www.instagram.com/andr31.usl/?__pwa=1" target="_blank" rel="noopener" class="footer-social" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a href="#" onclick="return false;" class="footer-social" aria-label="TikTok">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M16.5 3a5.6 5.6 0 0 0 4.5 4.9v3a8.6 8.6 0 0 1-4.5-1.3v6.2a6.3 6.3 0 1 1-6.3-6.3c.34 0 .67.03 1 .09v3.16a3.2 3.2 0 1 0 2.3 3.05V3h3z"/></svg>
+            </a>
+            <a href="#" onclick="return false;" class="footer-social" aria-label="YouTube">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-2C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.41 19c1.71.46 8.59.46 8.59.46s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor" stroke="none"/></svg>
+            </a>
+          </div>
+          <button class="footer-cta" onclick="navigateTo('colaboram')">Cere ofertă</button>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 USL MEDIA — Toate drepturile rezervate.</span>
+        <a href="mailto:uslmedia.contact@gmail.com">contact: uslmedia.contact@gmail.com</a>
       </div>
     </div>
   </div>
@@ -3414,10 +3792,50 @@ body.modal-open .orb-2 {
 
     </div>
     <div class="page-footer">
-      <span class="footer-copy">© 2026 USL MEDIA — Toate drepturile rezervate.</span>
-      <div class="footer-center">
-        <a href="https://www.instagram.com/andr31.usl/?__pwa=1" target="_blank" class="footer-ig"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg> @usl.media</a>
-        <span class="footer-contact">contact: uslmedia.contact@gmail.com</span>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="footer-logo" href="#" onclick="navigateTo('home'); return false;">
+            <span class="footer-logo-badge">
+              <img src="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/sigla.pgn.png" alt="USL Media" />
+            </span>
+            <span class="footer-logo-name">USL MEDIA</span>
+          </a>
+          <p class="footer-desc">Conținut video modern pentru businessuri care vor să arate profesionist, să crească organic și să transforme atenția în clienți reali. Din București.</p>
+          <p class="footer-tagline">"Conținut care vinde."</p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Navigare</h4>
+          <ul class="footer-links">
+            <li><a href="#" onclick="navigateTo('home'); return false;">Acasă</a></li>
+            <li><a href="#" onclick="navigateTo('despre'); return false;">Despre</a></li>
+            <li><a href="#" onclick="navigateTo('servicii'); return false;">Servicii</a></li>
+            <li><a href="#" onclick="navigateTo('portofoliu'); return false;">Portofoliu</a></li>
+            <li><a href="#" onclick="navigateTo('preturi'); return false;">Prețuri</a></li>
+            <li><a href="#" onclick="navigateTo('contact'); return false;">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Social Media</h4>
+          <div class="footer-socials">
+            <a href="https://www.instagram.com/andr31.usl/?__pwa=1" target="_blank" rel="noopener" class="footer-social" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a href="#" onclick="return false;" class="footer-social" aria-label="TikTok">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M16.5 3a5.6 5.6 0 0 0 4.5 4.9v3a8.6 8.6 0 0 1-4.5-1.3v6.2a6.3 6.3 0 1 1-6.3-6.3c.34 0 .67.03 1 .09v3.16a3.2 3.2 0 1 0 2.3 3.05V3h3z"/></svg>
+            </a>
+            <a href="#" onclick="return false;" class="footer-social" aria-label="YouTube">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-2C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.41 19c1.71.46 8.59.46 8.59.46s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor" stroke="none"/></svg>
+            </a>
+          </div>
+          <button class="footer-cta" onclick="navigateTo('colaboram')">Cere ofertă</button>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 USL MEDIA — Toate drepturile rezervate.</span>
+        <a href="mailto:uslmedia.contact@gmail.com">contact: uslmedia.contact@gmail.com</a>
       </div>
     </div>
   </div>
@@ -3532,10 +3950,50 @@ body.modal-open .orb-2 {
 
     </div>
     <div class="page-footer">
-      <span class="footer-copy">© 2026 USL MEDIA — Toate drepturile rezervate.</span>
-      <div class="footer-center">
-        <a href="https://www.instagram.com/andr31.usl/?__pwa=1" target="_blank" class="footer-ig"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg> @usl.media</a>
-        <span class="footer-contact">contact: uslmedia.contact@gmail.com</span>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="footer-logo" href="#" onclick="navigateTo('home'); return false;">
+            <span class="footer-logo-badge">
+              <img src="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/sigla.pgn.png" alt="USL Media" />
+            </span>
+            <span class="footer-logo-name">USL MEDIA</span>
+          </a>
+          <p class="footer-desc">Conținut video modern pentru businessuri care vor să arate profesionist, să crească organic și să transforme atenția în clienți reali. Din București.</p>
+          <p class="footer-tagline">"Conținut care vinde."</p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Navigare</h4>
+          <ul class="footer-links">
+            <li><a href="#" onclick="navigateTo('home'); return false;">Acasă</a></li>
+            <li><a href="#" onclick="navigateTo('despre'); return false;">Despre</a></li>
+            <li><a href="#" onclick="navigateTo('servicii'); return false;">Servicii</a></li>
+            <li><a href="#" onclick="navigateTo('portofoliu'); return false;">Portofoliu</a></li>
+            <li><a href="#" onclick="navigateTo('preturi'); return false;">Prețuri</a></li>
+            <li><a href="#" onclick="navigateTo('contact'); return false;">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Social Media</h4>
+          <div class="footer-socials">
+            <a href="https://www.instagram.com/andr31.usl/?__pwa=1" target="_blank" rel="noopener" class="footer-social" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a href="#" onclick="return false;" class="footer-social" aria-label="TikTok">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M16.5 3a5.6 5.6 0 0 0 4.5 4.9v3a8.6 8.6 0 0 1-4.5-1.3v6.2a6.3 6.3 0 1 1-6.3-6.3c.34 0 .67.03 1 .09v3.16a3.2 3.2 0 1 0 2.3 3.05V3h3z"/></svg>
+            </a>
+            <a href="#" onclick="return false;" class="footer-social" aria-label="YouTube">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-2C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.41 19c1.71.46 8.59.46 8.59.46s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor" stroke="none"/></svg>
+            </a>
+          </div>
+          <button class="footer-cta" onclick="navigateTo('colaboram')">Cere ofertă</button>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 USL MEDIA — Toate drepturile rezervate.</span>
+        <a href="mailto:uslmedia.contact@gmail.com">contact: uslmedia.contact@gmail.com</a>
       </div>
     </div>
   </div>
@@ -3621,10 +4079,50 @@ body.modal-open .orb-2 {
 
     </div>
     <div class="page-footer">
-      <span class="footer-copy">© 2026 USL MEDIA — Toate drepturile rezervate.</span>
-      <div class="footer-center">
-        <a href="https://www.instagram.com/andr31.usl/?__pwa=1" target="_blank" class="footer-ig"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg> @usl.media</a>
-        <span class="footer-contact">contact: uslmedia.contact@gmail.com</span>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="footer-logo" href="#" onclick="navigateTo('home'); return false;">
+            <span class="footer-logo-badge">
+              <img src="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/sigla.pgn.png" alt="USL Media" />
+            </span>
+            <span class="footer-logo-name">USL MEDIA</span>
+          </a>
+          <p class="footer-desc">Conținut video modern pentru businessuri care vor să arate profesionist, să crească organic și să transforme atenția în clienți reali. Din București.</p>
+          <p class="footer-tagline">"Conținut care vinde."</p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Navigare</h4>
+          <ul class="footer-links">
+            <li><a href="#" onclick="navigateTo('home'); return false;">Acasă</a></li>
+            <li><a href="#" onclick="navigateTo('despre'); return false;">Despre</a></li>
+            <li><a href="#" onclick="navigateTo('servicii'); return false;">Servicii</a></li>
+            <li><a href="#" onclick="navigateTo('portofoliu'); return false;">Portofoliu</a></li>
+            <li><a href="#" onclick="navigateTo('preturi'); return false;">Prețuri</a></li>
+            <li><a href="#" onclick="navigateTo('contact'); return false;">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Social Media</h4>
+          <div class="footer-socials">
+            <a href="https://www.instagram.com/andr31.usl/?__pwa=1" target="_blank" rel="noopener" class="footer-social" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a href="#" onclick="return false;" class="footer-social" aria-label="TikTok">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M16.5 3a5.6 5.6 0 0 0 4.5 4.9v3a8.6 8.6 0 0 1-4.5-1.3v6.2a6.3 6.3 0 1 1-6.3-6.3c.34 0 .67.03 1 .09v3.16a3.2 3.2 0 1 0 2.3 3.05V3h3z"/></svg>
+            </a>
+            <a href="#" onclick="return false;" class="footer-social" aria-label="YouTube">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-2C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.41 19c1.71.46 8.59.46 8.59.46s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor" stroke="none"/></svg>
+            </a>
+          </div>
+          <button class="footer-cta" onclick="navigateTo('colaboram')">Cere ofertă</button>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 USL MEDIA — Toate drepturile rezervate.</span>
+        <a href="mailto:uslmedia.contact@gmail.com">contact: uslmedia.contact@gmail.com</a>
       </div>
     </div>
   </div>
@@ -3680,7 +4178,39 @@ body.modal-open .orb-2 {
     document.querySelectorAll('video').forEach(v => { v.pause(); v.currentTime = 0; });
   }
 
+  // Detectează dacă suntem în modul "telefon" (scroll continuu)
+  function isMobileNav() {
+    return window.matchMedia('(max-width: 768px)').matches;
+  }
+
+  // Sincronizează link-urile active din meniu (desktop nav + drawer mobil)
+  function setActivePage(page) {
+    currentPage = page;
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    const navA = document.getElementById('nav-' + page);
+    if (navA) navA.classList.add('active');
+    document.querySelectorAll('.mobile-drawer-links a').forEach(a => a.classList.remove('active'));
+    const mobA = document.getElementById('mob-' + page);
+    if (mobA) mobA.classList.add('active');
+  }
+
+  // Pe telefon nu mai comutăm pagini — facem scroll lin către secțiune
+  function scrollToPageMobile(page) {
+    const targetEl = document.getElementById('page-' + page);
+    if (!targetEl) return;
+    stopAllVideos();
+    const navBar = document.querySelector('nav');
+    const offset = navBar ? navBar.offsetHeight : 72;
+    const top = targetEl.getBoundingClientRect().top + window.pageYOffset - offset + 1;
+    window.scrollTo({ top: top, behavior: 'smooth' });
+    setActivePage(page);
+  }
+
   function navigateTo(page, isBack = false) {
+    if (isMobileNav()) {
+      scrollToPageMobile(page);
+      return;
+    }
     if (page === currentPage || isTransitioning) return;
     isTransitioning = true;
 
@@ -4070,6 +4600,24 @@ body.modal-open .orb-2 {
     });
   })();
 
+
+  // SCROLL-SPY MOBIL — ține meniul sincronizat în timpul scroll-ului liber
+  (function() {
+    if (!isMobileNav()) return;
+    const ids = ['home','despre','servicii','portofoliu','preturi','colaboram','colaboram-custom','contact'];
+    const sections = ids.map(id => document.getElementById('page-' + id)).filter(Boolean);
+    if (!sections.length) return;
+
+    const spy = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          setActivePage(entry.target.id.replace('page-', ''));
+        }
+      });
+    }, { root: null, threshold: 0, rootMargin: '-45% 0px -45% 0px' });
+
+    sections.forEach(function(sec) { spy.observe(sec); });
+  })();
 
   // NEWSLETTER POPUP
   (function() {
