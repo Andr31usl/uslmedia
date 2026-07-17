@@ -368,11 +368,9 @@
 /* Page h1 strong */
 .page-h1 strong { color: #4A90F0 !important; }
 
-/* Grid overlay tint */
+/* Grid overlay tint (dezactivat) */
 body::before {
-  background-image:
-    linear-gradient(rgba(37,99,235,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(37,99,235,0.03) 1px, transparent 1px) !important;
+  background-image: none !important;
 }
 
 /* Home eyebrow color */
@@ -477,15 +475,11 @@ body::after {
   opacity: 0.4;
 }
 
-/* GRID PATTERN */
+/* GRID PATTERN (dezactivat) */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image:
-    linear-gradient(rgba(37,99,235,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(37,99,235,0.04) 1px, transparent 1px);
-  background-size: 70px 70px;
   pointer-events: none;
   z-index: 0;
 }
