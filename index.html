@@ -2894,6 +2894,21 @@ body.modal-open .orb-2 {
   .video-modal-title { top: 16px; left: 16px; }
 }
 
+/* ─── IMAGE LIGHTBOX (folosește același overlay/blur ca modalul video) ─── */
+.img-modal-pic {
+  width: auto;
+  height: auto;
+  max-width: 90vw;
+  max-height: 88vh;
+  object-fit: contain;
+  border-radius: 16px;
+  display: block;
+  background: #000;
+  box-shadow: 0 32px 100px rgba(0,0,0,0.9), 0 0 0 1px rgba(37,99,235,0.18);
+}
+.cert-img { cursor: zoom-in; transition: opacity 0.2s; }
+.cert-img:hover { opacity: 0.9; }
+
 .yt-block {
   position: relative;
   width: 100%;
@@ -3193,7 +3208,7 @@ body.modal-open .orb-2 {
       <div class="cert-section anim anim-5">
         <div class="page-label" style="margin-bottom:1.25rem;">Certificări</div>
         <div class="cert-card">
-          <img src="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/certificat-hubspot-marketing.png" alt="HubSpot Academy — Digital Marketing Certified" class="cert-img">
+          <img src="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/certificat-hubspot-marketing.png" alt="HubSpot Academy — Digital Marketing Certified" class="cert-img" onclick="openImageModal(this.src, this.alt)">
           <div class="cert-info">
             <div class="cert-title">Digital Marketing Certified</div>
             <div class="cert-issuer">HubSpot Academy</div>
@@ -4573,9 +4588,39 @@ body.modal-open .orb-2 {
     document.dispatchEvent(new Event('modalClosed'));
   }
 
+  // ===== IMAGE LIGHTBOX =====
+  function openImageModal(src, alt) {
+    const overlay = document.getElementById('imgModalOverlay');
+    const pic = document.getElementById('imgModalPic');
+
+    pic.src = src;
+    pic.alt = alt || '';
+    overlay.classList.add('open');
+    document.body.classList.add('modal-open');
+
+    const activePage = document.querySelector('.page.active');
+    if (activePage) activePage.style.overflow = 'hidden';
+  }
+
+  function closeImageModal() {
+    const overlay = document.getElementById('imgModalOverlay');
+    const pic = document.getElementById('imgModalPic');
+    overlay.classList.remove('open');
+    pic.src = '';
+    document.body.classList.remove('modal-open');
+
+    const activePage = document.querySelector('.page.active');
+    if (activePage) activePage.style.overflow = '';
+
+    document.dispatchEvent(new Event('modalClosed'));
+  }
+
   // Închide cu Escape
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeVideoModal();
+    if (e.key === 'Escape') {
+      closeVideoModal();
+      closeImageModal();
+    }
   });
 
   // Iniţializare event listeners pe modal – după ce DOM-ul e complet
@@ -4598,6 +4643,26 @@ body.modal-open .orb-2 {
     }, { passive: false });
 
     overlay.addEventListener('touchmove', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }, { passive: false });
+
+    // ─── Lightbox imagine ───
+    const imgOverlay = document.getElementById('imgModalOverlay');
+    const imgCloseBtn = document.getElementById('imgModalClose');
+
+    imgOverlay.addEventListener('click', function(e) {
+      if (e.target === imgOverlay) closeImageModal();
+    });
+
+    imgCloseBtn.addEventListener('click', closeImageModal);
+
+    imgOverlay.addEventListener('wheel', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }, { passive: false });
+
+    imgOverlay.addEventListener('touchmove', function(e) {
       e.preventDefault();
       e.stopPropagation();
     }, { passive: false });
@@ -4731,6 +4796,16 @@ body.modal-open .orb-2 {
     </button>
     <div class="video-modal-title" id="videoModalTitle"></div>
     <video id="videoModalPlayer" controls playsinline></video>
+  </div>
+</div>
+
+<!-- MODAL IMAGINE (lightbox) – în afara page-wrapper, nu e afectat de blur -->
+<div class="video-modal-overlay" id="imgModalOverlay">
+  <div class="video-modal-inner">
+    <button class="video-modal-close" id="imgModalClose">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <img id="imgModalPic" class="img-modal-pic" src="" alt="">
   </div>
 </div>
 
