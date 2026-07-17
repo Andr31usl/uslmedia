@@ -990,6 +990,28 @@ nav {
 .value-title { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--white); margin-bottom: 0.4rem; }
 .value-desc { font-size: 0.82rem; color: var(--muted); font-weight: 300; line-height: 1.55; }
 
+.cert-section { margin-top: 3rem; }
+.cert-card {
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 1.75rem;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 1.75rem;
+  align-items: center;
+  transition: border-color 0.3s;
+}
+.cert-card:hover { border-color: var(--border-blue); }
+.cert-img { width: 100%; border-radius: 12px; display: block; border: 1px solid var(--border); }
+.cert-title { font-family: 'Syne', sans-serif; font-size: 1.15rem; font-weight: 700; color: var(--white); margin-bottom: 0.35rem; }
+.cert-issuer { font-size: 0.78rem; color: var(--blue-glow); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.75rem; }
+.cert-desc { font-size: 0.87rem; color: rgba(255,255,255,0.75); font-weight: 300; line-height: 1.6; margin-bottom: 0.75rem; }
+.cert-meta { font-size: 0.78rem; color: var(--muted); font-weight: 300; }
+@media (max-width: 640px) {
+  .cert-card { grid-template-columns: 1fr; text-align: center; }
+}
+
 
 /* ===== SERVICII PAGE ===== */
 .servicii-wrap {
@@ -3165,6 +3187,19 @@ body.modal-open .orb-2 {
           <div class="value-icon">📈</div>
           <div class="value-title">Focus pe Rezultate</div>
           <div class="value-desc">Conținut creat strategic pentru reach organic maxim pe fiecare platformă.</div>
+        </div>
+      </div>
+
+      <div class="cert-section anim anim-5">
+        <div class="page-label" style="margin-bottom:1.25rem;">Certificări</div>
+        <div class="cert-card">
+          <img src="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/certificat-hubspot-marketing.png" alt="HubSpot Academy — Digital Marketing Certified" class="cert-img">
+          <div class="cert-info">
+            <div class="cert-title">Digital Marketing Certified</div>
+            <div class="cert-issuer">HubSpot Academy</div>
+            <p class="cert-desc">Certificare în aplicarea practicilor de marketing digital cu mindset inbound: conținut optimizat SEO, optimizare website, strategie social media, video marketing, publicitate și măsurarea rezultatelor.</p>
+            <div class="cert-meta">Valabil: 28 iun 2026 – 28 iul 2027</div>
+          </div>
         </div>
       </div>
     </div>
