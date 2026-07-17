@@ -497,10 +497,18 @@ body::before {
   filter: blur(140px);
   pointer-events: none;
   z-index: 0;
-  transition: all 1.5s ease;
 }
-.orb-1 { width: 600px; height: 600px; background: rgba(37,99,235,0.15); top: -200px; right: -150px; }
-.orb-2 { width: 400px; height: 400px; background: rgba(4,6,8,0.9); bottom: -100px; left: -100px; }
+.orb-1 { width: 600px; height: 600px; background: rgba(37,99,235,0.15); top: -200px; right: -150px; animation: orbFloat1 16s ease-in-out infinite; }
+.orb-2 { width: 400px; height: 400px; background: rgba(37,99,235,0.12); bottom: -100px; left: -100px; animation: orbFloat2 20s ease-in-out infinite; }
+
+@keyframes orbFloat1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-60px, 50px) scale(1.08); }
+}
+@keyframes orbFloat2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(50px, -40px) scale(1.1); }
+}
 
 /* NAV */
 nav {
@@ -3121,7 +3129,7 @@ body.modal-open .orb-2 {
             </span>
             <span class="footer-logo-name">USL MEDIA</span>
           </a>
-          <p class="footer-desc">Conținut video modern pentru businessuri care vor să arate profesionist, să crească organic și să transforme atenția în clienți reali. Din București.</p>
+          <p class="footer-desc">Conținut video modern pentru businessuri care vor să arate profesionist, să crească organic și să transforme atenția în clienți reali.</p>
           <p class="footer-tagline">"Conținut care vinde."</p>
         </div>
 
@@ -3227,7 +3235,7 @@ body.modal-open .orb-2 {
             </span>
             <span class="footer-logo-name">USL MEDIA</span>
           </a>
-          <p class="footer-desc">Conținut video modern pentru businessuri care vor să arate profesionist, să crească organic și să transforme atenția în clienți reali. Din București.</p>
+          <p class="footer-desc">Conținut video modern pentru businessuri care vor să arate profesionist, să crească organic și să transforme atenția în clienți reali.</p>
           <p class="footer-tagline">"Conținut care vinde."</p>
         </div>
 
@@ -3450,7 +3458,7 @@ body.modal-open .orb-2 {
             </span>
             <span class="footer-logo-name">USL MEDIA</span>
           </a>
-          <p class="footer-desc">Conținut video modern pentru businessuri care vor să arate profesionist, să crească organic și să transforme atenția în clienți reali. Din București.</p>
+          <p class="footer-desc">Conținut video modern pentru businessuri care vor să arate profesionist, să crească organic și să transforme atenția în clienți reali.</p>
           <p class="footer-tagline">"Conținut care vinde."</p>
         </div>
 
@@ -3565,7 +3573,7 @@ body.modal-open .orb-2 {
             </span>
             <span class="footer-logo-name">USL MEDIA</span>
           </a>
-          <p class="footer-desc">Conținut video modern pentru businessuri care vor să arate profesionist, să crească organic și să transforme atenția în clienți reali. Din București.</p>
+          <p class="footer-desc">Conținut video modern pentru businessuri care vor să arate profesionist, să crească organic și să transforme atenția în clienți reali.</p>
           <p class="footer-tagline">"Conținut care vinde."</p>
         </div>
 
@@ -3850,7 +3858,7 @@ body.modal-open .orb-2 {
             </span>
             <span class="footer-logo-name">USL MEDIA</span>
           </a>
-          <p class="footer-desc">Conținut video modern pentru businessuri care vor să arate profesionist, să crească organic și să transforme atenția în clienți reali. Din București.</p>
+          <p class="footer-desc">Conținut video modern pentru businessuri care vor să arate profesionist, să crească organic și să transforme atenția în clienți reali.</p>
           <p class="footer-tagline">"Conținut care vinde."</p>
         </div>
 
@@ -4008,7 +4016,7 @@ body.modal-open .orb-2 {
             </span>
             <span class="footer-logo-name">USL MEDIA</span>
           </a>
-          <p class="footer-desc">Conținut video modern pentru businessuri care vor să arate profesionist, să crească organic și să transforme atenția în clienți reali. Din București.</p>
+          <p class="footer-desc">Conținut video modern pentru businessuri care vor să arate profesionist, să crească organic și să transforme atenția în clienți reali.</p>
           <p class="footer-tagline">"Conținut care vinde."</p>
         </div>
 
@@ -4137,7 +4145,7 @@ body.modal-open .orb-2 {
             </span>
             <span class="footer-logo-name">USL MEDIA</span>
           </a>
-          <p class="footer-desc">Conținut video modern pentru businessuri care vor să arate profesionist, să crească organic și să transforme atenția în clienți reali. Din București.</p>
+          <p class="footer-desc">Conținut video modern pentru businessuri care vor să arate profesionist, să crească organic și să transforme atenția în clienți reali.</p>
           <p class="footer-tagline">"Conținut care vinde."</p>
         </div>
 
