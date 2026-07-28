@@ -2979,6 +2979,35 @@ body.modal-open .orb-2 {
   .back-btn { display: none !important; }
   /* Un singur footer, la finalul întregului site (nu unul per secțiune) */
   .page:not(#page-contact) .page-footer { display: none !important; }
+
+  /* Formularele "Hai să colaborăm" și "Colaborare custom" nu fac parte
+     din scroll-ul continuu — se deschid ca fereastră separată, doar
+     la click, și au propriul buton "Înapoi". */
+  #page-colaboram,
+  #page-colaboram-custom {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 2000 !important;
+    overflow-y: auto !important;
+    background: var(--black);
+    padding-top: 72px !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+  #page-colaboram.mobile-form-open,
+  #page-colaboram-custom.mobile-form-open {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: all !important;
+  }
+  #page-colaboram .back-btn,
+  #page-colaboram-custom .back-btn {
+    display: inline-flex !important;
+  }
+  body.mobile-form-lock {
+    overflow: hidden !important;
+  }
 }
 </style>
 </head>
@@ -4327,8 +4356,41 @@ body.modal-open .orb-2 {
     setActivePage(page);
   }
 
+  // "Hai să colaborăm" și "Colaborare custom" nu fac parte din scroll-ul
+  // continuu de pe telefon — se deschid ca fereastră separată, la click.
+  function isMobileFormPage(page) {
+    return page === 'colaboram' || page === 'colaboram-custom';
+  }
+
+  function mobileFormNavigate(page, isBack) {
+    stopAllVideos();
+    if (!isBack) {
+      navHistory.push(page);
+      navFuture = [];
+      window.history.pushState({ page }, '', '');
+    }
+    if (isMobileFormPage(currentPage)) {
+      document.getElementById('page-' + currentPage).classList.remove('mobile-form-open');
+    }
+    if (isMobileFormPage(page)) {
+      const el = document.getElementById('page-' + page);
+      el.classList.add('mobile-form-open');
+      el.scrollTop = 0;
+      document.body.classList.add('mobile-form-lock');
+      setActivePage(page);
+    } else {
+      document.body.classList.remove('mobile-form-lock');
+      scrollToPageMobile(page);
+    }
+    currentPage = page;
+  }
+
   function navigateTo(page, isBack = false) {
     if (isMobileNav()) {
+      if (isMobileFormPage(page) || isMobileFormPage(currentPage)) {
+        mobileFormNavigate(page, isBack);
+        return;
+      }
       scrollToPageMobile(page);
       return;
     }
@@ -4775,7 +4837,7 @@ body.modal-open .orb-2 {
   // SCROLL-SPY MOBIL — ține meniul sincronizat în timpul scroll-ului liber
   (function() {
     if (!isMobileNav()) return;
-    const ids = ['home','despre','servicii','portofoliu','preturi','colaboram','colaboram-custom','contact'];
+    const ids = ['home','despre','servicii','portofoliu','preturi','contact'];
     const sections = ids.map(id => document.getElementById('page-' + id)).filter(Boolean);
     if (!sections.length) return;
 
