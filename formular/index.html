@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chestionar Client — USL MEDIA</title>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500&display=swap');
+
+  :root {
+    --black: #070b14;
+    --white: #eef2f8;
+    --accent: #3b82f6;
+    --accent-glow: #1d4ed8;
+    --accent-bg: #0f1f3d;
+    --grey: #101624;
+    --mid: #192035;
+    --text-dim: #6b7a99;
+    --border: #1e2d4a;
+    --error: #f87171;
+    --green: #34d399;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 48px;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: var(--black);
+    z-index: 100;
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: 0.12em;
+    color: var(--white);
+    text-transform: uppercase;
+  }
+  .logo span { color: var(--accent); }
+
+  .progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+  }
+
+  .progress-bar {
+    width: 140px; height: 2px;
+    background: var(--mid);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 72px 24px 120px;
+  }
+
+  .step { display: none; animation: fadeIn 0.3s ease; }
+  .step.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .step-label {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+    font-weight: 500;
+  }
+
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(24px, 5vw, 38px);
+    line-height: 1.15;
+    margin-bottom: 10px;
+    color: var(--white);
+  }
+  h2 em { font-style: normal; color: var(--accent); }
+
+  .sub {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 36px;
+    line-height: 1.7;
+  }
+
+  /* OPTIONS */
+  .options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .options.single { grid-template-columns: 1fr; }
+  .options.three  { grid-template-columns: 1fr 1fr 1fr; }
+
+  .opt {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    background: var(--grey);
+    user-select: none;
+  }
+  .opt:hover { border-color: #2d4a7a; background: var(--mid); }
+  .opt.selected { border-color: var(--accent); background: var(--accent-bg); }
+
+  .opt .opt-icon { font-size: 20px; margin-bottom: 6px; display: block; }
+  .opt .opt-label {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 3px;
+    color: var(--white);
+    padding-right: 22px;
+  }
+  .opt .opt-desc { font-size: 11px; color: var(--text-dim); line-height: 1.5; }
+
+  .opt .check {
+    position: absolute;
+    top: 12px; right: 12px;
+    width: 16px; height: 16px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px;
+    transition: all 0.2s;
+  }
+  .opt.selected .check { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  /* FIRMA FIELD - slide down */
+  .firma-wrap {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    margin-bottom: 0;
+    transition: max-height 0.35s ease, opacity 0.3s ease, margin-bottom 0.35s ease;
+  }
+  .firma-wrap.visible {
+    max-height: 80px;
+    opacity: 1;
+    margin-bottom: 16px;
+  }
+  .firma-wrap input {
+    width: 100%;
+    background: var(--mid);
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+    padding: 14px 16px;
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .firma-wrap input:focus { border-color: var(--accent-glow); }
+  .firma-wrap input::placeholder { color: var(--text-dim); }
+
+  /* CUSTOM FIELD (Altul) - slide down */
+  .custom-wrap {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    margin-bottom: 0;
+    transition: max-height 0.35s ease, opacity 0.3s ease, margin-bottom 0.35s ease;
+  }
+  .custom-wrap.visible {
+    max-height: 80px;
+    opacity: 1;
+    margin-bottom: 16px;
+  }
+  .custom-wrap input {
+    width: 100%;
+    background: var(--mid);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .custom-wrap input:focus { border-color: var(--accent); }
+  .custom-wrap input::placeholder { color: var(--text-dim); }
+
+  /* VOLUME */
+  .vol-track { display: flex; gap: 10px; margin-bottom: 14px; }
+  .vol-opt {
+    flex: 1;
+    padding: 16px 8px;
+    text-align: center;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    background: var(--grey);
+    transition: all 0.2s;
+    font-size: 13px;
+    color: var(--text-dim);
+    user-select: none;
+  }
+  .vol-opt:hover { border-color: #2d4a7a; color: var(--white); }
+  .vol-opt.selected { border-color: var(--accent); background: var(--accent-bg); color: var(--accent); font-weight: 500; }
+  .vol-opt strong { display: block; font-size: 20px; margin-bottom: 4px; font-family: 'Syne', sans-serif; }
+
+  .custom-vol-wrap { display: none; margin-bottom: 14px; }
+  .custom-vol-wrap.visible { display: block; }
+  .custom-vol-wrap input {
+    width: 100%;
+    background: var(--mid);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .custom-vol-wrap input:focus { border-color: var(--accent); }
+  .custom-vol-wrap input::placeholder { color: var(--text-dim); }
+
+  /* TEXTAREA */
+  .main-textarea {
+    width: 100%;
+    background: var(--grey);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    resize: vertical;
+    min-height: 130px;
+    outline: none;
+    transition: border-color 0.2s;
+    margin-bottom: 12px;
+  }
+  .main-textarea:focus { border-color: var(--accent); }
+  .main-textarea::placeholder { color: var(--text-dim); }
+
+  /* CONTACT */
+  .contact-fields { display: grid; gap: 10px; margin-bottom: 12px; }
+  .contact-fields input {
+    width: 100%;
+    background: var(--grey);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 15px 18px;
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .contact-fields input:focus { border-color: var(--accent); }
+  .contact-fields input::placeholder { color: var(--text-dim); }
+  .contact-fields input.field-error { border-color: var(--error); }
+
+  /* ERROR */
+  .err-msg { display: none; color: var(--error); font-size: 12px; margin-top: 6px; margin-bottom: 8px; }
+  .err-msg.visible { display: block; }
+
+  /* NAV */
+  .nav { display: flex; gap: 10px; align-items: center; margin-top: 24px; }
+
+  .btn-next {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    padding: 15px 34px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-next:hover { background: var(--accent-glow); transform: translateY(-1px); }
+
+  .btn-back {
+    background: transparent;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 15px 22px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-back:hover { color: var(--white); border-color: #3b5a8a; }
+
+  /* SUMMARY */
+  .sum-grid { display: grid; gap: 10px; margin-bottom: 24px; }
+  .sum-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 14px 18px;
+    background: var(--grey);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    gap: 20px;
+  }
+  .sum-key { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em; flex-shrink: 0; padding-top: 1px; }
+  .sum-val { font-size: 13px; color: var(--white); text-align: right; line-height: 1.6; }
+
+  .send-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 18px 32px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    margin-bottom: 12px;
+  }
+  .send-btn:hover:not(:disabled) { background: var(--accent-glow); transform: translateY(-1px); }
+  .send-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  .success-box {
+    display: none;
+    text-align: center;
+    padding: 48px 24px;
+    background: var(--grey);
+    border: 1px solid #1a3a2a;
+    border-radius: 12px;
+    margin-bottom: 24px;
+  }
+  .success-box.visible { display: block; }
+  .success-icon { font-size: 48px; margin-bottom: 16px; }
+  .success-box h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 22px;
+    color: var(--green);
+    margin-bottom: 10px;
+  }
+  .success-box p { font-size: 14px; color: var(--text-dim); line-height: 1.7; }
+
+  .hint { font-size: 12px; color: var(--text-dim); margin-bottom: 20px; line-height: 1.7; }
+
+  .btn-restart {
+    background: transparent;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-size: 11px;
+    cursor: pointer;
+    letter-spacing: 0.06em;
+    transition: all 0.2s;
+  }
+  .btn-restart:hover { color: var(--white); border-color: #3b5a8a; }
+
+  .spinner {
+    width: 16px; height: 16px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    display: none;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  @media (max-width: 560px) {
+    header { padding: 18px 18px; }
+    .container { padding: 52px 16px 90px; }
+    .options { grid-template-columns: 1fr; }
+    .options.three { grid-template-columns: 1fr 1fr; }
+    .vol-track { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">USL<span>.</span>MEDIA</div>
+  <div class="progress-wrap">
+    <span id="step-counter">1 / 9</span>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill" style="width:11%"></div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- STEP 1 -->
+  <div class="step active" id="step-1">
+    <div class="step-label">Pasul 1 — Business</div>
+    <h2>Cu ce se ocupă <em>businessul tău?</em></h2>
+    <p class="sub">Ajută-mă să înțeleg domeniul tău ca să pregătesc conținut potrivit.</p>
+    <div class="options single">
+      <div class="opt" data-key="business" data-val="Restaurant / Cafenea / Food" onclick="pickBusiness(this)">
+        <span class="opt-icon">🍽️</span>
+        <div class="opt-label">Food & Horeca</div>
+        <div class="opt-desc">Restaurant, cafenea, bar, catering</div>
+        <div class="check">✓</div>
+      </div>
+      <div class="opt" data-key="business" data-val="Servicii" onclick="pickBusiness(this)">
+        <span class="opt-icon">🔧</span>
+        <div class="opt-label">Servicii</div>
+        <div class="opt-desc">Renovări, auto, IT, curățenie etc.</div>
+        <div class="check">✓</div>
+      </div>
+      <div class="opt" data-key="business" data-val="Comerț / E-commerce / Retail" onclick="pickBusiness(this)">
+        <span class="opt-icon">🛍️</span>
+        <div class="opt-label">Retail / E-commerce</div>
+        <div class="opt-desc">Produse fizice sau online</div>
+        <div class="check">✓</div>
+      </div>
+      <div class="opt" data-key="business" data-val="Sport / Fitness / Wellness" onclick="pickBusiness(this)">
+        <span class="opt-icon">💪</span>
+        <div class="opt-label">Sport & Wellness</div>
+        <div class="opt-desc">Sală, nutriție, coaching, yoga</div>
+        <div class="check">✓</div>
+      </div>
+      <div class="opt" data-key="business" data-val="Educație / Cursuri / Events" onclick="pickBusiness(this)">
+        <span class="opt-icon">🎓</span>
+        <div class="opt-label">Educație & Events</div>
+        <div class="opt-desc">Cursuri, training, evenimente</div>
+        <div class="check">✓</div>
+      </div>
+      <div class="opt" data-key="business" data-val="__custom__" onclick="pickBusiness(this)">
+        <span class="opt-icon">✦</span>
+        <div class="opt-label">Altul</div>
+        <div class="opt-desc">Beauty, imobiliare, personal brand etc.</div>
+        <div class="check">✓</div>
+      </div>
+    </div>
+    <div class="custom-wrap" id="custom-business-wrap">
+      <input type="text" id="custom-business-input" placeholder="Descrie domeniul tău..." />
+    </div>
+    <div class="firma-wrap" id="firma-wrap">
+      <input type="text" id="firma-input" placeholder="Numele firmei / brandului tău *" />
+    </div>
+    <div class="err-msg" id="err-1">Te rog selectează domeniul și completează numele firmei.</div>
+    <div class="nav">
+      <button class="btn-next" onclick="step1Next()">Continuă →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step" id="step-2">
+    <div class="step-label">Pasul 2 — Platforme</div>
+    <h2>Unde vrei să <em>postezi?</em></h2>
+    <p class="sub">Poți alege mai multe. Optimizez conținutul pentru fiecare platformă.</p>
+    <div class="options three">
+      <div class="opt" data-key="platform" data-val="TikTok" onclick="toggleMulti(this,'platform')">
+        <span class="opt-icon">🎵</span>
+        <div class="opt-label">TikTok</div>
+        <div class="check">✓</div>
+      </div>
+      <div class="opt" data-key="platform" data-val="Instagram Reels" onclick="toggleMulti(this,'platform')">
+        <span class="opt-icon">📸</span>
+        <div class="opt-label">Instagram</div>
+        <div class="check">✓</div>
+      </div>
+      <div class="opt" data-key="platform" data-val="YouTube Shorts" onclick="toggleMulti(this,'platform')">
+        <span class="opt-icon">▶️</span>
+        <div class="opt-label">YouTube Shorts</div>
+        <div class="check">✓</div>
+      </div>
+    </div>
+    <div class="err-msg" id="err-2">Te rog selectează cel puțin o platformă.</div>
+    <div class="nav">
+      <button class="btn-back" onclick="goBack(2)">← Înapoi</button>
+      <button class="btn-next" onclick="nextMulti(2,'platform')">Continuă →</button>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step" id="step-3">
+    <div class="step-label">Pasul 3 — Obiectiv</div>
+    <h2>Ce vrei să <em>obții</em> din conținut?</h2>
+    <p class="sub">Poți alege mai multe obiective.</p>
+    <div class="options single">
+      <div class="opt" data-key="obiectiv" data-val="Atragere clienți noi" onclick="toggleMulti(this,'obiectiv')">
+        <div class="opt-label">🎯 Atragere clienți noi</div>
+        <div class="opt-desc">Video-urile să aducă oameni care nu te știau</div>
+        <div class="check">✓</div>
+      </div>
+      <div class="opt" data-key="obiectiv" data-val="Autoritate & Brand personal" onclick="toggleMulti(this,'obiectiv')">
+        <div class="opt-label">👑 Autoritate & Brand personal</div>
+        <div class="opt-desc">Să fii primul la care se gândesc în domeniul tău</div>
+        <div class="check">✓</div>
+      </div>
+      <div class="opt" data-key="obiectiv" data-val="Vizibilitate & Reach organic" onclick="toggleMulti(this,'obiectiv')">
+        <div class="opt-label">📈 Vizibilitate & Reach organic</div>
+        <div class="opt-desc">Să fii văzut de cât mai mulți oameni</div>
+        <div class="check">✓</div>
+      </div>
+      <div class="opt" data-key="obiectiv" data-val="Campanii & Reclame plătite" onclick="toggleMulti(this,'obiectiv')">
+        <div class="opt-label">💰 Campanii & Reclame</div>
+        <div class="opt-desc">Materiale video pentru ads Meta / TikTok</div>
+        <div class="check">✓</div>
+      </div>
+      <div class="opt" data-key="obiectiv" data-val="__obiectiv_custom__" onclick="toggleMultiCustom(this,'obiectiv')">
+        <div class="opt-label">✦ Alt obiectiv</div>
+        <div class="opt-desc">Scrie tu ce ai în minte</div>
+        <div class="check">✓</div>
+      </div>
+    </div>
+    <div class="custom-wrap" id="custom-obiectiv-wrap">
+      <input type="text" id="custom-obiectiv-input" placeholder="Descrie obiectivul tău..." />
+    </div>
+    <div class="err-msg" id="err-3">Te rog selectează cel puțin un obiectiv.</div>
+    <div class="nav">
+      <button class="btn-back" onclick="goBack(3)">← Înapoi</button>
+      <button class="btn-next" onclick="nextMulti(3,'obiectiv')">Continuă →</button>
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="step" id="step-4">
+    <div class="step-label">Pasul 4 — Prezență online</div>
+    <h2>Cum arată <em>prezența ta online</em> acum?</h2>
+    <p class="sub">Fără judecată — vreau să știu de unde plecăm.</p>
+    <div class="options single">
+      <div class="opt" data-key="prezenta" data-val="Abia la început — nu postez sau aproape deloc" onclick="pickOne(this)">
+        <div class="opt-label">🌱 Abia la început</div>
+        <div class="opt-desc">Nu am cont activ sau postez foarte rar</div>
+        <div class="check">✓</div>
+      </div>
+      <div class="opt" data-key="prezenta" data-val="Postez ocazional, fără strategie clară" onclick="pickOne(this)">
+        <div class="opt-label">⚡ Postez ocazional</div>
+        <div class="opt-desc">Am conținut, dar fără consistență sau direcție</div>
+        <div class="check">✓</div>
+      </div>
+      <div class="opt" data-key="prezenta" data-val="Postez constant, dar conținutul nu performează" onclick="pickOne(this)">
+        <div class="opt-label">📊 Activ, dar fără rezultate</div>
+        <div class="opt-desc">Postez des, dar reach-ul și engagement-ul sunt slabe</div>
+        <div class="check">✓</div>
+      </div>
+      <div class="opt" data-key="prezenta" data-val="Prezență bună — vreau să urc un nivel" onclick="pickOne(this)">
+        <div class="opt-label">🚀 Vreau să scal</div>
+        <div class="opt-desc">Merge bine, dar vreau conținut mai profesionist</div>
+        <div class="check">✓</div>
+      </div>
+    </div>
+    <div class="err-msg" id="err-4">Te rog selectează o opțiune.</div>
+    <div class="nav">
+      <button class="btn-back" onclick="goBack(4)">← Înapoi</button>
+      <button class="btn-next" onclick="nextOne(4,'prezenta')">Continuă →</button>
+    </div>
+  </div>
+
+  <!-- STEP 5 -->
+  <div class="step" id="step-5">
+    <div class="step-label">Pasul 5 — Filmare</div>
+    <h2>Unde are loc <em>filmarea?</em></h2>
+    <p class="sub">Mă ajută să planific echipamentul și logistica.</p>
+    <div class="options">
+      <div class="opt" data-key="filmare" data-val="Interior" onclick="pickOne(this)">
+        <span class="opt-icon">🏠</span>
+        <div class="opt-label">Interior</div>
+        <div class="opt-desc">La tine la sediu, birou, magazin, sală</div>
+        <div class="check">✓</div>
+      </div>
+      <div class="opt" data-key="filmare" data-val="Exterior" onclick="pickOne(this)">
+        <span class="opt-icon">🌍</span>
+        <div class="opt-label">Exterior</div>
+        <div class="opt-desc">În aer liber, pe teren, la eveniment</div>
+        <div class="check">✓</div>
+      </div>
+      <div class="opt" data-key="filmare" data-val="Ambele — interior și exterior" onclick="pickOne(this)">
+        <span class="opt-icon">✦</span>
+        <div class="opt-label">Ambele</div>
+        <div class="opt-desc">Combinație interior + exterior</div>
+        <div class="check">✓</div>
+      </div>
+      <div class="opt" data-key="filmare" data-val="Nu știu încă — stabilim la call" onclick="pickOne(this)">
+        <span class="opt-icon">💬</span>
+        <div class="opt-label">Încă nu știu</div>
+        <div class="opt-desc">Stabilim împreună la call</div>
+        <div class="check">✓</div>
+      </div>
+    </div>
+    <div class="err-msg" id="err-5">Te rog selectează o opțiune.</div>
+    <div class="nav">
+      <button class="btn-back" onclick="goBack(5)">← Înapoi</button>
+      <button class="btn-next" onclick="nextOne(5,'filmare')">Continuă →</button>
+    </div>
+  </div>
+
+  <!-- STEP 6 -->
+  <div class="step" id="step-6">
+    <div class="step-label">Pasul 6 — Volum</div>
+    <h2>Câte video-uri ai nevoie <em>pe lună?</em></h2>
+    <p class="sub">Poți ajusta oricând după primele filmări.</p>
+    <div class="vol-track">
+      <div class="vol-opt" data-vol="4 video / proiect (Starter — 129€)" onclick="pickVol(this, false)">
+        <strong>4</strong>Starter
+      </div>
+      <div class="vol-opt" data-vol="8 video / lună (Standard — 199€/lună)" onclick="pickVol(this, false)">
+        <strong>8</strong>Standard
+      </div>
+      <div class="vol-opt" data-vol="__custom__" onclick="pickVol(this, true)">
+        <strong>✏️</strong>Custom
+      </div>
+    </div>
+    <div class="custom-vol-wrap" id="custom-vol-wrap">
+      <input type="number" id="custom-vol-input" placeholder="Ex: 12 video / lună" min="1" oninput="updateVolCustom(this.value)" />
+    </div>
+    <div class="err-msg" id="err-6">Te rog selectează sau introdu un număr.</div>
+    <div class="nav">
+      <button class="btn-back" onclick="goBack(6)">← Înapoi</button>
+      <button class="btn-next" onclick="nextVol()">Continuă →</button>
+    </div>
+  </div>
+
+  <!-- STEP 7 -->
+  <div class="step" id="step-7">
+    <div class="step-label">Pasul 7 — Script & Stil</div>
+    <h2>Cine se ocupă de <em>script?</em></h2>
+    <p class="sub">Includ scriptul în toate pachetele — dar unii clienți preferă să vorbească liber.</p>
+    <div class="options">
+      <div class="opt" data-key="script" data-val="Tu pregătești scriptul" onclick="pickOne(this)">
+        <span class="opt-icon">✍️</span>
+        <div class="opt-label">Tu prepari scriptul</div>
+        <div class="opt-desc">Vreau hook, text structurat și CTA de la tine</div>
+        <div class="check">✓</div>
+      </div>
+      <div class="opt" data-key="script" data-val="Vorbesc natural — fără script" onclick="pickOne(this)">
+        <span class="opt-icon">🎙️</span>
+        <div class="opt-label">Vorbesc natural</div>
+        <div class="opt-desc">Nu vreau să memorez linii — prefer spontan</div>
+        <div class="check">✓</div>
+      </div>
+      <div class="opt" data-key="script" data-val="Colaborare — discutăm ideile împreună" onclick="pickOne(this)">
+        <span class="opt-icon">🤝</span>
+        <div class="opt-label">Colaborare</div>
+        <div class="opt-desc">Discutăm ideile împreună înainte</div>
+        <div class="check">✓</div>
+      </div>
+      <div class="opt" data-key="script" data-val="Tu recomandă — mă bazez pe experiența ta" onclick="pickOne(this)">
+        <span class="opt-icon">💡</span>
+        <div class="opt-label">Tu recomandă</div>
+        <div class="opt-desc">Mă bazez pe experiența ta</div>
+        <div class="check">✓</div>
+      </div>
+    </div>
+    <div class="err-msg" id="err-7">Te rog selectează o opțiune.</div>
+    <div class="nav">
+      <button class="btn-back" onclick="goBack(7)">← Înapoi</button>
+      <button class="btn-next" onclick="nextOne(7,'script')">Continuă →</button>
+    </div>
+  </div>
+
+  <!-- STEP 8 -->
+  <div class="step" id="step-8">
+    <div class="step-label">Pasul 8 — Context</div>
+    <h2>Spune-mi ceva ce <em>te face unic.</em></h2>
+    <p class="sub">Ce te diferențiază, cine e clientul tău ideal, ce vrei să se vadă în video.</p>
+    <textarea class="main-textarea" id="context-text" placeholder="Ex: Lucrăm doar cu materiale eco, clienții noștri sunt femei 25–40 ani din București, vrem un vibe premium dar friendly..."></textarea>
+    <div class="err-msg" id="err-8">Te rog scrie câteva rânduri despre businessul tău.</div>
+    <div class="nav">
+      <button class="btn-back" onclick="goBack(8)">← Înapoi</button>
+      <button class="btn-next" onclick="nextContext()">Continuă →</button>
+    </div>
+  </div>
+
+  <!-- STEP 9 -->
+  <div class="step" id="step-9">
+    <div class="step-label">Pasul 9 — Date de contact</div>
+    <h2>Cum te <em>contactez?</em></h2>
+    <p class="sub">Îți trimit oferta personalizată în maxim 2h.</p>
+    <div class="contact-fields">
+      <input type="text" id="contact-name" placeholder="Numele tău *" />
+      <input type="tel" id="contact-phone" placeholder="Număr de telefon *" />
+      <input type="email" id="contact-email" placeholder="Email (opțional)" />
+    </div>
+    <div class="err-msg" id="err-9">Te rog completează numele și numărul de telefon.</div>
+    <div class="nav">
+      <button class="btn-back" onclick="goBack(9)">← Înapoi</button>
+      <button class="btn-next" onclick="goSummary()">Vezi sumarul →</button>
+    </div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="step" id="step-summary">
+    <div class="step-label">Sumar</div>
+    <h2>Totul arată <em>perfect.</em></h2>
+    <p class="sub" style="margin-bottom:20px">Verifică răspunsurile și trimite — Andrei te contactează în maxim 2h.</p>
+
+    <div class="sum-grid" id="sum-grid"></div>
+
+    <div class="success-box" id="success-box">
+      <div class="success-icon">🎬</div>
+      <h3>Mesaj trimis!</h3>
+      <p>Andrei a primit cererea ta și te va contacta în maxim 2h.<br>Ne vedem curând!</p>
+    </div>
+
+    <div id="send-area">
+      <div class="err-msg" id="err-send">A apărut o eroare. Încearcă din nou sau scrie la 0771 300 127.</div>
+      <button class="send-btn" id="send-btn" onclick="sendEmail()">
+        <div class="spinner" id="spinner"></div>
+        <span id="send-label">📧 Trimite cererea lui Andrei</span>
+      </button>
+      <p class="hint">📱 Sau scrie direct pe WhatsApp: <strong>0771 300 127</strong></p>
+    </div>
+
+    <button class="btn-restart" onclick="restart()">↺ Completează din nou</button>
+  </div>
+
+</div>
+
+<script>
+  var EMAILJS_PUBLIC_KEY  = 'Qq3cNQFw--KVvQi-J';
+  var EMAILJS_SERVICE_ID  = 'service_kdn656c';
+  var EMAILJS_TEMPLATE_ID = 'template_o03spgs';
+
+  emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+
+  var totalSteps = 9;
+  var currentStep = 1;
+  var answers = {};
+  var multiSets = { platform: [], obiectiv: [] };
+  var customObiectivVal = '';
+
+  function updateProgress() {
+    var pct = Math.min((currentStep / totalSteps) * 100, 100);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('step-counter').textContent =
+      currentStep <= totalSteps ? currentStep + ' / ' + totalSteps : '✓ Gata';
+  }
+
+  function showStep(n) {
+    document.querySelectorAll('.step').forEach(function(s) { s.classList.remove('active'); });
+    var id = n > totalSteps ? 'step-summary' : 'step-' + n;
+    document.getElementById(id).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showErr(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.classList.add('visible');
+    setTimeout(function() { el.classList.remove('visible'); }, 3500);
+  }
+
+  function goBack(step) {
+    currentStep = step - 1;
+    updateProgress();
+    showStep(currentStep);
+  }
+
+  /* ── STEP 1 ── */
+  function pickBusiness(el) {
+    document.querySelectorAll('[data-key="business"]').forEach(function(o) { o.classList.remove('selected'); });
+    el.classList.add('selected');
+
+    var val = el.getAttribute('data-val');
+    var customWrap = document.getElementById('custom-business-wrap');
+    if (val === '__custom__') {
+      answers['business'] = '';
+      customWrap.classList.add('visible');
+      setTimeout(function() { document.getElementById('custom-business-input').focus(); }, 50);
+    } else {
+      answers['business'] = val;
+      customWrap.classList.remove('visible');
+    }
+
+    document.getElementById('firma-wrap').classList.add('visible');
+    setTimeout(function() { document.getElementById('firma-input').focus(); }, 80);
+  }
+
+  function step1Next() {
+    var biz = answers['business'] || '';
+    if (biz === '__custom__' || biz === '') {
+      var customVal = document.getElementById('custom-business-input').value.trim();
+      if (!customVal) { showErr('err-1'); return; }
+      answers['business'] = customVal;
+    }
+    var firma = document.getElementById('firma-input').value.trim();
+    if (!firma) { showErr('err-1'); return; }
+    answers['firma'] = firma;
+    currentStep = 2;
+    updateProgress();
+    showStep(2);
+  }
+
+  /* ── SINGLE SELECT ── */
+  function pickOne(el) {
+    var key = el.getAttribute('data-key');
+    document.querySelectorAll('[data-key="' + key + '"]').forEach(function(o) { o.classList.remove('selected'); });
+    el.classList.add('selected');
+    answers[key] = el.getAttribute('data-val');
+  }
+
+  function nextOne(step, key) {
+    if (!answers[key]) { showErr('err-' + step); return; }
+    currentStep = step + 1;
+    updateProgress();
+    showStep(currentStep);
+  }
+
+  /* ── MULTI SELECT ── */
+  function toggleMulti(el, key) {
+    var val = el.getAttribute('data-val');
+    var idx = multiSets[key].indexOf(val);
+    if (el.classList.contains('selected')) {
+      el.classList.remove('selected');
+      if (idx > -1) multiSets[key].splice(idx, 1);
+    } else {
+      el.classList.add('selected');
+      if (idx === -1) multiSets[key].push(val);
+    }
+  }
+
+  function toggleMultiCustom(el, key) {
+    if (el.classList.contains('selected')) {
+      el.classList.remove('selected');
+      var wrap = document.getElementById('custom-' + key + '-wrap');
+      wrap.classList.remove('visible');
+      if (customObiectivVal) {
+        var idx = multiSets[key].indexOf(customObiectivVal);
+        if (idx > -1) multiSets[key].splice(idx, 1);
+        customObiectivVal = '';
+      }
+    } else {
+      el.classList.add('selected');
+      var wrap2 = document.getElementById('custom-' + key + '-wrap');
+      wrap2.classList.add('visible');
+      setTimeout(function() { document.getElementById('custom-' + key + '-input').focus(); }, 50);
+    }
+  }
+
+  function nextMulti(step, key) {
+    if (key === 'obiectiv') {
+      var inp = document.getElementById('custom-obiectiv-input');
+      if (inp && document.getElementById('custom-obiectiv-wrap').classList.contains('visible')) {
+        var v = inp.value.trim();
+        if (v && customObiectivVal !== v) {
+          if (customObiectivVal) {
+            var old = multiSets[key].indexOf(customObiectivVal);
+            if (old > -1) multiSets[key].splice(old, 1);
+          }
+          multiSets[key].push(v);
+          customObiectivVal = v;
+        }
+      }
+    }
+    if (multiSets[key].length === 0) { showErr('err-' + step); return; }
+    answers[key] = multiSets[key].join(', ');
+    currentStep = step + 1;
+    updateProgress();
+    showStep(currentStep);
+  }
+
+  /* ── VOLUME ── */
+  function pickVol(el, isCustom) {
+    document.querySelectorAll('.vol-opt').forEach(function(o) { o.classList.remove('selected'); });
+    el.classList.add('selected');
+    var wrap = document.getElementById('custom-vol-wrap');
+    if (isCustom) {
+      wrap.classList.add('visible');
+      answers['volum'] = '';
+      setTimeout(function() { document.getElementById('custom-vol-input').focus(); }, 50);
+    } else {
+      wrap.classList.remove('visible');
+      answers['volum'] = el.getAttribute('data-vol');
+    }
+  }
+
+  function updateVolCustom(val) {
+    answers['volum'] = (val && parseInt(val) > 0) ? val + ' video / lună (Custom)' : '';
+  }
+
+  function nextVol() {
+    if (!answers['volum']) { showErr('err-6'); return; }
+    currentStep = 7;
+    updateProgress();
+    showStep(7);
+  }
+
+  /* ── CONTEXT ── */
+  function nextContext() {
+    var ctx = document.getElementById('context-text').value.trim();
+    if (!ctx) { showErr('err-8'); return; }
+    answers['context'] = ctx;
+    currentStep = 9;
+    updateProgress();
+    showStep(9);
+  }
+
+  /* ── CONTACT & SUMMARY ── */
+  function goSummary() {
+    var name  = document.getElementById('contact-name').value.trim();
+    var phone = document.getElementById('contact-phone').value.trim();
+    if (!name || !phone) {
+      document.getElementById('contact-name').classList.toggle('field-error', !name);
+      document.getElementById('contact-phone').classList.toggle('field-error', !phone);
+      showErr('err-9'); return;
+    }
+    answers['name']  = name;
+    answers['phone'] = phone;
+    answers['email'] = document.getElementById('contact-email').value.trim() || '—';
+
+    var rows = [
+      ['Nume',             answers['name']],
+      ['Telefon',          answers['phone']],
+      ['Email',            answers['email']],
+      ['Firma / Brand',    answers['firma']    || '—'],
+      ['Business',         answers['business'] || '—'],
+      ['Platforme',        answers['platform'] || '—'],
+      ['Obiectiv',         answers['obiectiv'] || '—'],
+      ['Prezență actuală', answers['prezenta'] || '—'],
+      ['Tip filmare',      answers['filmare']  || '—'],
+      ['Volum / Pachet',   answers['volum']    || '—'],
+      ['Script',           answers['script']   || '—'],
+      ['Context',          answers['context']  || '—'],
+    ];
+    answers['_rows'] = rows;
+
+    var grid = document.getElementById('sum-grid');
+    grid.innerHTML = rows.map(function(r) {
+      return '<div class="sum-row"><span class="sum-key">' + r[0] + '</span><span class="sum-val">' + r[1] + '</span></div>';
+    }).join('');
+
+    currentStep = totalSteps + 1;
+    updateProgress();
+    showStep(currentStep);
+  }
+
+  /* ── SEND ── */
+  function sendEmail() {
+    var rows = answers['_rows'] || [];
+    var body = rows.map(function(r) { return r[0] + ': ' + r[1]; }).join('\n');
+
+    var btn     = document.getElementById('send-btn');
+    var spinner = document.getElementById('spinner');
+    var label   = document.getElementById('send-label');
+
+    btn.disabled = true;
+    spinner.style.display = 'block';
+    label.textContent = 'Se trimite...';
+
+    var params = {
+      to_email:   'uslmedia.contact@gmail.com',
+      from_name:  answers['name']     || 'Client nou',
+      from_phone: answers['phone']    || '—',
+      from_email: answers['email']    || '—',
+      firma:      answers['firma']    || '—',
+      business:   answers['business'] || '—',
+      platform:   answers['platform'] || '—',
+      obiectiv:   answers['obiectiv'] || '—',
+      prezenta:   answers['prezenta'] || '—',
+      filmare:    answers['filmare']  || '—',
+      volum:      answers['volum']    || '—',
+      script:     answers['script']   || '—',
+      context:    answers['context']  || '—',
+      full_body:  body,
+    };
+
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params)
+      .then(function() {
+        document.getElementById('send-area').style.display = 'none';
+        document.getElementById('success-box').classList.add('visible');
+      })
+      .catch(function(err) {
+        console.error('EmailJS error:', err);
+        btn.disabled = false;
+        spinner.style.display = 'none';
+        label.textContent = '📧 Trimite cererea lui Andrei';
+        showErr('err-send');
+      });
+  }
+
+  /* ── RESTART ── */
+  function restart() {
+    answers = {};
+    multiSets = { platform: [], obiectiv: [] };
+    customObiectivVal = '';
+    document.querySelectorAll('.opt, .vol-opt').forEach(function(o) { o.classList.remove('selected'); });
+    document.querySelectorAll('.custom-wrap, .firma-wrap, .custom-vol-wrap').forEach(function(f) { f.classList.remove('visible'); });
+    document.querySelectorAll('input').forEach(function(i) { i.value = ''; });
+    document.getElementById('context-text').value = '';
+    document.getElementById('success-box').classList.remove('visible');
+    document.getElementById('send-area').style.display = '';
+    var btn = document.getElementById('send-btn');
+    btn.disabled = false;
+    document.getElementById('spinner').style.display = 'none';
+    document.getElementById('send-label').textContent = '📧 Trimite cererea lui Andrei';
+    currentStep = 1;
+    updateProgress();
+    showStep(1);
+  }
+
+  updateProgress();
+</script>
+</body>
+</html>
