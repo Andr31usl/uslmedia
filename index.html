@@ -3701,7 +3701,7 @@ body.modal-open .orb-2 {
             <li><span class="feat-icon"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Format social media</li>
             <li><span class="feat-icon"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Livrare rapidă</li>
           </ul>
-          <button class="pkg-btn outline" onclick="navigateTo('colaboram')">Alege Starter</button>
+          <button class="pkg-btn outline" onclick="chooseColaboram('Starter')">Alege Starter</button>
         </div>
 
         <div class="pkg featured">
@@ -3719,7 +3719,7 @@ body.modal-open .orb-2 {
             <li><span class="feat-icon"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Creșterea vizibilității online</li>
             <li><span class="feat-icon"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Livrare rapidă</li>
           </ul>
-          <button class="pkg-btn solid" onclick="navigateTo('colaboram')">Alege Standard</button>
+          <button class="pkg-btn solid" onclick="chooseColaboram('Standard')">Alege Standard</button>
         </div>
 
         <div class="pkg custom" id="pkg-custom">
@@ -4637,6 +4637,16 @@ body.modal-open .orb-2 {
     } else {
       q.style.display = 'none';
     }
+  }
+
+  // Preselectează pachetul ales din Pachete înainte de a deschide formularul
+  function chooseColaboram(pkg) {
+    const sel = document.getElementById('col-pkg');
+    if (sel) {
+      sel.value = pkg;
+      onPkgChange(pkg);
+    }
+    navigateTo('colaboram');
   }
 
   // COLABORARE CUSTOM SUBMIT
