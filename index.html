@@ -583,6 +583,12 @@ nav {
   border-color:rgba(255,255,255,0.2);
 }
 
+a.nav-cta {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
 /* PAGE SYSTEM */
 .page-wrapper {
   position: fixed;
@@ -2274,7 +2280,8 @@ nav {
   gap: 0.75rem;
   margin-top: 1.5rem;
 }
-.mobile-drawer-btns button {
+.mobile-drawer-btns button,
+.mobile-drawer-btns a.mob-btn-secondary {
   width: 100%;
   padding: 0.9rem 1.5rem;
   border-radius: 12px;
@@ -2283,6 +2290,10 @@ nav {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
+  text-decoration: none;
+  text-align: center;
+  display: block;
+  box-sizing: border-box;
 }
 .mob-btn-primary {
   background: var(--blue);
@@ -2998,6 +3009,7 @@ body.modal-open .orb-2 {
 
   <button class="nav-cta" onclick="navigateTo('colaboram')">Hai să colaborăm</button>
   <button class="nav-cta nav-contact-secondary" onclick="navigateTo('contact')">✉ Contact</button>
+  <a class="nav-cta nav-contact-secondary" href="/formular/">📋 Chestionar</a>
 
   <button class="hamburger" id="hamburgerBtn" onclick="toggleDrawer()" aria-label="Meniu">
     <span></span>
@@ -3017,6 +3029,7 @@ body.modal-open .orb-2 {
   <div class="mobile-drawer-btns">
     <button class="mob-btn-primary" onclick="drawerNav('colaboram')">Hai să colaborăm</button>
     <button class="mob-btn-secondary" onclick="drawerNav('contact')">✉ Contact</button>
+    <a class="mob-btn-secondary" href="/formular/">📋 Chestionar</a>
   </div>
   <div class="mobile-drawer-contact">
     uslmedia.contact@gmail.com
