@@ -385,6 +385,7 @@
   .success-box p { font-size: 14px; color: var(--text-dim); line-height: 1.7; }
 
   .hint { font-size: 12px; color: var(--text-dim); margin-bottom: 20px; line-height: 1.7; }
+  .hint strong { color: var(--white); }
 
   .btn-restart {
     background: transparent;
@@ -715,9 +716,9 @@
     <div class="contact-fields">
       <input type="text" id="contact-name" placeholder="Numele tău *" />
       <input type="tel" id="contact-phone" placeholder="Număr de telefon *" />
-      <input type="email" id="contact-email" placeholder="Email (opțional)" />
+      <input type="email" id="contact-email" placeholder="Email *" />
     </div>
-    <div class="err-msg" id="err-9">Te rog completează numele și numărul de telefon.</div>
+    <div class="err-msg" id="err-9">Te rog completează numele, numărul de telefon și emailul.</div>
     <div class="nav">
       <button class="btn-back" onclick="goBack(9)">← Înapoi</button>
       <button class="btn-next" onclick="goSummary()">Vezi sumarul →</button>
@@ -935,14 +936,16 @@
   function goSummary() {
     var name  = document.getElementById('contact-name').value.trim();
     var phone = document.getElementById('contact-phone').value.trim();
-    if (!name || !phone) {
+    var email = document.getElementById('contact-email').value.trim();
+    if (!name || !phone || !email) {
       document.getElementById('contact-name').classList.toggle('field-error', !name);
       document.getElementById('contact-phone').classList.toggle('field-error', !phone);
+      document.getElementById('contact-email').classList.toggle('field-error', !email);
       showErr('err-9'); return;
     }
     answers['name']  = name;
     answers['phone'] = phone;
-    answers['email'] = document.getElementById('contact-email').value.trim() || '—';
+    answers['email'] = email;
 
     var rows = [
       ['Nume',             answers['name']],
