@@ -1340,6 +1340,7 @@ a.nav-cta {
   transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   letter-spacing: 0.01em;
 }
+a.pkg-btn, a.pkg-btn-custom { text-decoration: none; }
 .pkg-btn.outline { background: transparent; border: 1px solid rgba(255,255,255,0.12); color: var(--white); }
 .pkg-btn.outline:hover { border-color: var(--blue-glow); color: var(--blue-glow); transform: translateY(-2px); }
 .pkg-btn.solid { background: var(--blue); color: var(--white); }
@@ -3701,7 +3702,7 @@ body.modal-open .orb-2 {
             <li><span class="feat-icon"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Format social media</li>
             <li><span class="feat-icon"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Livrare rapidă</li>
           </ul>
-          <button class="pkg-btn outline" onclick="chooseColaboram('Starter')">Alege Starter</button>
+          <a class="pkg-btn outline" href="/formular/?pachet=starter">Alege Starter</a>
         </div>
 
         <div class="pkg featured">
@@ -3719,7 +3720,7 @@ body.modal-open .orb-2 {
             <li><span class="feat-icon"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Creșterea vizibilității online</li>
             <li><span class="feat-icon"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Livrare rapidă</li>
           </ul>
-          <button class="pkg-btn solid" onclick="chooseColaboram('Standard')">Alege Standard</button>
+          <a class="pkg-btn solid" href="/formular/?pachet=standard">Alege Standard</a>
         </div>
 
         <div class="pkg custom" id="pkg-custom">
@@ -3737,7 +3738,7 @@ body.modal-open .orb-2 {
             <li><span class="feat-icon"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Stil vizual unitar</li>
             <li><span class="feat-icon"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Livrare rapidă</li>
           </ul>
-          <button class="pkg-btn-custom" onclick="navigateTo('colaboram-custom')">Colaborare custom →</button>
+          <a class="pkg-btn-custom" href="/formular/?pachet=custom">Colaborare custom →</a>
         </div>
 
       </div>
@@ -4637,16 +4638,6 @@ body.modal-open .orb-2 {
     } else {
       q.style.display = 'none';
     }
-  }
-
-  // Preselectează pachetul ales din Pachete înainte de a deschide formularul
-  function chooseColaboram(pkg) {
-    const sel = document.getElementById('col-pkg');
-    if (sel) {
-      sel.value = pkg;
-      onPkgChange(pkg);
-    }
-    navigateTo('colaboram');
   }
 
   // COLABORARE CUSTOM SUBMIT
