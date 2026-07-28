@@ -4365,6 +4365,12 @@ body.modal-open .orb-2 {
   function mobileFormNavigate(page, isBack) {
     stopAllVideos();
     if (!isBack) {
+      // Scroll-ul liber de pe telefon nu împinge nimic în navHistory, așa
+      // că secțiunea reală în care era userul (ex: Pachete) se pierde dacă
+      // n-o salvăm acum, înainte de a intra în formular.
+      if (!isMobileFormPage(currentPage) && navHistory[navHistory.length - 1] !== currentPage) {
+        navHistory.push(currentPage);
+      }
       navHistory.push(page);
       navFuture = [];
       window.history.pushState({ page }, '', '');
