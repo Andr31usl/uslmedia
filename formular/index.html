@@ -52,7 +52,15 @@
     color: var(--white);
     text-transform: uppercase;
   }
-  .logo span { color: var(--accent); }
+  .logo-main span { color: var(--accent); }
+  .logo-subtext {
+    font-size: 0.5em;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: var(--white);
+    margin-top: 2px;
+    text-transform: uppercase;
+  }
 
   .progress-wrap {
     display: flex;
@@ -422,7 +430,10 @@
 <body>
 
 <header>
-  <div class="logo">USL<span> </span>MEDIA</div>
+  <div class="logo">
+    <div class="logo-main">USL <span>MEDIA</span></div>
+    <div class="logo-subtext">DIGITAL GROWTH AGENCY</div>
+  </div>
   <div class="progress-wrap">
     <span id="step-counter">1 / 9</span>
     <div class="progress-bar">
