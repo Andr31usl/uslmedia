@@ -10,7 +10,7 @@
   @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500&display=swap');
 
   :root {
-    --black: #070b14;
+    --black: #000000;
     --white: #eef2f8;
     --accent: #3b82f6;
     --accent-glow: #1d4ed8;
@@ -32,6 +32,37 @@
     font-weight: 300;
     min-height: 100vh;
   }
+
+  /* NOISE OVERLAY (la fel ca pe site-ul principal) */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9990;
+    opacity: 0.4;
+  }
+
+  /* ORB-uri albastre animate (la fel ca pe site-ul principal) */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(140px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .orb-1 { width: 600px; height: 600px; background: rgba(59,130,246,0.15); top: -200px; right: -150px; animation: orbFloat1 16s ease-in-out infinite; }
+  .orb-2 { width: 400px; height: 400px; background: rgba(59,130,246,0.12); bottom: -100px; left: -100px; animation: orbFloat2 20s ease-in-out infinite; }
+  @keyframes orbFloat1 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-60px, 50px) scale(1.08); }
+  }
+  @keyframes orbFloat2 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(50px, -40px) scale(1.1); }
+  }
+  .container { position: relative; z-index: 1; }
 
   header {
     display: flex;
@@ -429,6 +460,9 @@
 </style>
 </head>
 <body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
 
 <header>
   <div class="logo">
