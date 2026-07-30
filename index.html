@@ -520,7 +520,7 @@ nav {
 .logo {
   font-family: 'Syne', sans-serif;
   font-weight: 800;
-  font-size: 1.15rem;
+  font-size: 1.5rem;
   letter-spacing: 0.08em;
   color: var(--white);
   text-decoration: none;
@@ -542,11 +542,11 @@ nav {
   list-style: none;
 }
 .nav-links a {
-  font-size: 0.82rem;
+  font-size: 0.95rem;
   font-weight: 400;
   color: var(--muted);
   text-decoration: none;
-  padding: 0.4rem 0.85rem;
+  padding: 0.5rem 1rem;
   border-radius: 100px;
   transition: color 0.3s cubic-bezier(0.22,1,0.36,1), background 0.3s cubic-bezier(0.22,1,0.36,1);
   cursor: pointer;
@@ -557,12 +557,12 @@ nav {
 
 .nav-cta {
   font-family: 'DM Sans', sans-serif;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   font-weight: 500;
   color: var(--white);
   background: var(--blue);
   border: none;
-  padding: 0.6rem 1.4rem;
+  padding: 0.75rem 1.7rem;
   border-radius: 100px;
   cursor: pointer;
   transition: background 0.3s cubic-bezier(0.22,1,0.36,1), transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s;
@@ -602,7 +602,7 @@ a.nav-cta {
   inset: 0;
   overflow-y: auto;
   overflow-x: hidden;
-  padding-top: 72px;
+  padding-top: 84px;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -2953,7 +2953,7 @@ body.modal-open .orb-2 {
     position: relative;
     inset: auto;
     overflow: visible;
-    padding-top: 72px;
+    padding-top: 84px;
     z-index: 1;
   }
   .page {
@@ -2991,7 +2991,7 @@ body.modal-open .orb-2 {
     z-index: 2000 !important;
     overflow-y: auto !important;
     background: var(--black);
-    padding-top: 72px !important;
+    padding-top: 84px !important;
     opacity: 0 !important;
     visibility: hidden !important;
     pointer-events: none !important;
@@ -3039,7 +3039,6 @@ body.modal-open .orb-2 {
 
   <button class="nav-cta" onclick="navigateTo('colaboram')">Hai să colaborăm</button>
   <button class="nav-cta nav-contact-secondary" onclick="navigateTo('contact')">✉ Contact</button>
-  <a class="nav-cta nav-contact-secondary" href="/formular/">📋 Chestionar</a>
 
   <button class="hamburger" id="hamburgerBtn" onclick="toggleDrawer()" aria-label="Meniu">
     <span></span>
@@ -3059,7 +3058,6 @@ body.modal-open .orb-2 {
   <div class="mobile-drawer-btns">
     <button class="mob-btn-primary" onclick="drawerNav('colaboram')">Hai să colaborăm</button>
     <button class="mob-btn-secondary" onclick="drawerNav('contact')">✉ Contact</button>
-    <a class="mob-btn-secondary" href="/formular/">📋 Chestionar</a>
   </div>
   <div class="mobile-drawer-contact">
     uslmedia.contact@gmail.com
