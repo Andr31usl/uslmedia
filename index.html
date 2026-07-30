@@ -4411,16 +4411,7 @@ body.modal-open .orb-2 {
       document.getElementById('page-' + page).classList.add('active');
       document.getElementById('page-' + page).scrollTop = 0;
 
-      document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-      const navEl = document.getElementById('nav-' + page);
-      if (navEl) navEl.classList.add('active');
-
-      // sync drawer
-      document.querySelectorAll('.mobile-drawer-links a').forEach(a => a.classList.remove('active'));
-      const mobEl = document.getElementById('mob-' + page);
-      if (mobEl) mobEl.classList.add('active');
-
-      currentPage = page;
+      setActivePage(page);
     }, 380);
 
     setTimeout(() => { tLogo.style.opacity = '0'; }, 550);
