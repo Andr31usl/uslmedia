@@ -4326,6 +4326,7 @@ body.modal-open .orb-2 {
     document.querySelectorAll('.mobile-drawer-links a').forEach(a => a.classList.remove('active'));
     const mobA = document.getElementById('mob-' + page);
     if (mobA) mobA.classList.add('active');
+    try { sessionStorage.setItem('uslmedia_page', page); } catch (e) {}
   }
 
   // Pe telefon nu mai comutăm pagini — facem scroll lin către secțiune
@@ -4446,6 +4447,41 @@ body.modal-open .orb-2 {
     }
   });
   window.history.replaceState({ page: 'home' }, '', '');
+
+  // La refresh, rămâi pe secțiunea/pagina unde erai (nu sari înapoi la Home)
+  (function restoreLastPage() {
+    let saved;
+    try { saved = sessionStorage.getItem('uslmedia_page'); } catch (e) { saved = null; }
+    if (!saved || saved === 'home') return;
+    const targetEl = document.getElementById('page-' + saved);
+    if (!targetEl) return;
+
+    if (isMobileNav()) {
+      if (isMobileFormPage(saved)) {
+        targetEl.classList.add('mobile-form-open');
+        targetEl.scrollTop = 0;
+        document.body.classList.add('mobile-form-lock');
+        setActivePage(saved);
+        navHistory = ['home', saved];
+      } else {
+        navHistory = ['home'];
+        window.addEventListener('load', function() {
+          setTimeout(function() {
+            const navBar = document.querySelector('nav');
+            const offset = navBar ? navBar.offsetHeight : 72;
+            const top = targetEl.getBoundingClientRect().top + window.pageYOffset - offset + 1;
+            window.scrollTo({ top: top, behavior: 'auto' });
+            setActivePage(saved);
+          }, 0);
+        });
+      }
+    } else {
+      document.getElementById('page-home').classList.remove('active');
+      targetEl.classList.add('active');
+      setActivePage(saved);
+      navHistory = [saved];
+    }
+  })();
 
   // Hide cursor on touch devices
   let cursorHideTimer;
