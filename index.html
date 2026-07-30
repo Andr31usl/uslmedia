@@ -2467,21 +2467,7 @@ html {
   0%,100% { opacity: 0.7; }
   50% { opacity: 1; }
 }
-.pkg-shimmer {
-  position: absolute;
-  top: 0; left: -80%;
-  width: 55%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(200,0,26,0.07), rgba(255,255,255,0.03), transparent);
-  animation: shimmerSlide 5s ease-in-out infinite;
-  pointer-events: none;
-  z-index: 0;
-}
-@keyframes shimmerSlide {
-  0% { left: -80%; }
-  100% { left: 160%; }
-}
-.pkg.custom > *:not(.pkg-shimmer) { position: relative; z-index: 1; }
+.pkg.custom > * { position: relative; z-index: 1; }
 .b-custom {
   background: linear-gradient(90deg, rgba(100,70,240,0.2), rgba(60,90,255,0.18));
   color: #93B8F0;
@@ -3722,7 +3708,6 @@ body.modal-open .orb-2 {
         </div>
 
         <div class="pkg custom" id="pkg-custom">
-          <div class="pkg-shimmer"></div>
           <div class="pkg-badge b-custom">✦ Personalizat</div>
           <div class="pkg-name">Colaborare Custom</div>
           <div class="pkg-price-tag">Preț personalizat</div>
