@@ -44,5 +44,23 @@ const CLIENTS = [
       { id: "c1", date: "2026-08-05", time: "18:00", location: "Locație filmare, București", pillarId: "p1", title: "Idee postare / Reel", platform: "Instagram", status: "planificat", notes: "" },
       { id: "c2", date: "2026-08-08", time: "12:00", location: "Sediu client", pillarId: "p3", title: "Ofertă lună august", platform: "Instagram", status: "planificat", notes: "" }
     ]
+  },
+  {
+    id: "the-bar",
+    name: "The bar",
+    industry: "Restaurant / Cafenea / Food",
+    status: "activ",
+    startDate: "2026-08-01",
+    contact: {
+      person: "Gianina Nica",
+      phone: "0722417961",
+      email: "nica.gianina@gmail.com",
+      instagram: "",
+      website: "",
+      address: ""
+    },
+    notes: "Obiectiv: atragere clienți noi, vizibilitate & reach organic.\nPlatforme: TikTok, Instagram Reels, YouTube Shorts.\nPrezență actuală: postează ocazional, fără strategie clară.\nTip filmare: ambele — interior și exterior.\nPachet: 8 video / lună (Standard — 199€/lună).\nScript: Claude/USL Media recomandă, pe baza experienței.\n\nContext client: se diferențiază prin produse premium, preparate cu grijă și servite rapid. Clientul ideal e persoana care apreciază calitatea, revine pentru gust și consumă cafea, limonade, cocktailuri și gustări. Își doresc videoclipuri dinamice, apetisante și moderne, care să aducă oameni în locație și să vândă.",
+    pillars: [],
+    posts: []
   }
 ];
