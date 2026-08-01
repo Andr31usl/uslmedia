@@ -20,32 +20,6 @@
 
 const CLIENTS = [
   {
-    id: "client-exemplu",
-    name: "Client Exemplu (poți șterge)",
-    industry: "HoReCa",
-    status: "activ",
-    startDate: "2026-06-01",
-    contact: {
-      person: "Nume Prenume",
-      phone: "07xx xxx xxx",
-      email: "contact@exemplu.ro",
-      instagram: "@exemplu",
-      website: "https://exemplu.ro",
-      address: "Str. Exemplu nr. 1, București"
-    },
-    notes: "Acesta e un client demonstrativ ca să vezi cum arată portalul. Spune-mi datele clienților tăi reali și îi adaug eu aici.",
-    pillars: [
-      { id: "p1", name: "Educațional", color: "#2563EB", description: "Sfaturi și informații utile pentru audiență" },
-      { id: "p2", name: "Behind the scenes", color: "#F59E0B", description: "Culise, echipă, proces de lucru" },
-      { id: "p3", name: "Promo / Ofertă", color: "#10B981", description: "Produse, servicii, promoții" },
-      { id: "p4", name: "Social proof", color: "#EC4899", description: "Recenzii, testimoniale, rezultate" }
-    ],
-    posts: [
-      { id: "c1", date: "2026-08-05", time: "18:00", location: "Locație filmare, București", pillarId: "p1", title: "Idee postare / Reel", platform: "Instagram", status: "planificat", notes: "" },
-      { id: "c2", date: "2026-08-08", time: "12:00", location: "Sediu client", pillarId: "p3", title: "Ofertă lună august", platform: "Instagram", status: "planificat", notes: "" }
-    ]
-  },
-  {
     id: "piata-matache-food-trucks",
     name: "Piața Matache Food Trucks",
     industry: "Food Truck / Piață / Food",
