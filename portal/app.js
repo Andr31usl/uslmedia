@@ -74,6 +74,18 @@ function seedFromBase() {
   return JSON.parse(JSON.stringify(CLIENTS));
 }
 
+function normalizeClient(c) {
+  c.name = c.name || "(fără nume)";
+  c.industry = c.industry || "";
+  c.status = c.status || "activ";
+  c.startDate = c.startDate || "";
+  c.notes = c.notes || "";
+  c.contact = c.contact || {};
+  c.pillars = Array.isArray(c.pillars) ? c.pillars : [];
+  c.posts = Array.isArray(c.posts) ? c.posts : [];
+  return c;
+}
+
 function loadData() {
   const raw = localStorage.getItem(STORAGE_KEY);
   if (!raw) {
@@ -82,11 +94,13 @@ function loadData() {
     localStorage.setItem(VERSION_KEY, String(DATA_VERSION));
   } else {
     try {
-      state.clients = JSON.parse(raw);
+      const parsed = JSON.parse(raw);
+      state.clients = Array.isArray(parsed) ? parsed : seedFromBase();
     } catch (e) {
       state.clients = seedFromBase();
     }
   }
+  state.clients = state.clients.map(normalizeClient);
 }
 
 function saveData() {
@@ -141,8 +155,20 @@ function startApp() {
   appRoot.hidden = false;
   loadData();
   checkVersionBanner();
-  renderSidebar();
-  render();
+  try {
+    renderSidebar();
+    render();
+  } catch (e) {
+    console.error("Portal: datele locale erau incompatibile, se reîncarcă din fișierul de bază.", e);
+    state.clients = seedFromBase();
+    state.view = "dashboard";
+    state.currentClientId = null;
+    saveData();
+    localStorage.setItem(VERSION_KEY, String(DATA_VERSION));
+    document.getElementById("sync-banner").hidden = true;
+    renderSidebar();
+    render();
+  }
 }
 
 /* ================= Sidebar ================= */
@@ -217,7 +243,7 @@ function upcomingPostsAll() {
 }
 
 /* ================= Render root ================= */
-const mainContent = document.getElementById("main-content");
+const mainContent = document.getElementById("page-content");
 
 function render() {
   if (state.view === "client" && state.currentClientId) {
