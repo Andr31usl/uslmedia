@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Portal Clienți — USL Media</title>
+  <link rel="icon" type="image/png" href="/portofoliu%20site/sigla.pgn.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Login -->
+  <div id="login-screen" hidden>
+    <div class="login-card">
+      <div class="brand">USL <span>Portal</span></div>
+      <p>Zona internă de gestiune clienți</p>
+      <form id="login-form">
+        <input type="password" id="login-password" placeholder="Parolă" autocomplete="current-password" required>
+        <button type="submit">Intră în portal</button>
+        <div class="login-error" id="login-error"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- App -->
+  <div id="app" hidden>
+    <aside id="sidebar">
+      <div class="brand" id="dashboard-link" style="cursor:pointer;">USL <span>Portal</span></div>
+      <div class="search-box">
+        <span>🔍</span>
+        <input type="text" id="search-input" placeholder="Caută client...">
+      </div>
+      <button class="btn btn-primary btn-block" id="add-client-btn">+ Client nou</button>
+      <ul id="client-list"></ul>
+      <div id="sidebar-footer">
+        <button id="export-btn">Exportă date (JSON)</button>
+        &nbsp;·&nbsp;
+        <button id="logout-btn">Ieși din cont</button>
+      </div>
+    </aside>
+
+    <main id="main-content">
+      <div class="sync-banner" id="sync-banner" hidden>
+        <span>📦 Datele de bază au fost actualizate. Vrei să încarci ultima versiune?</span>
+        <span style="display:flex;gap:0.5rem;">
+          <button class="btn btn-primary btn-sm" id="sync-reload-btn">Actualizează</button>
+          <button class="btn btn-ghost btn-sm" id="sync-dismiss-btn">Ignoră</button>
+        </span>
+      </div>
+      <!-- content injected by app.js -->
+    </main>
+  </div>
+
+  <div id="modal-root"></div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
