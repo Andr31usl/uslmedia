@@ -1,5 +1,5 @@
 /* ================= Config ================= */
-const DATA_VERSION = 1; // bump asta când editezi manual data.js și vrei să anunți portalul
+const DATA_VERSION = 2; // bump asta când editezi manual data.js și vrei să anunți portalul
 const PASSWORD_HASH = "0b089d81e1f2fd7f6d70cd74e206c7f638c037232ad8d6930d1847a9a50a0c6e";
 const STORAGE_KEY = "usl_portal_data_v1";
 const VERSION_KEY = "usl_portal_data_version";
