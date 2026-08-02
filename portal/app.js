@@ -257,7 +257,8 @@ function render() {
 function renderDashboard() {
   const active = state.clients.filter(c => c.status === "activ").length;
   const totalPosts = allPostsFlat().length;
-  const upcoming = upcomingPostsAll().slice(0, 8);
+  const allUpcoming = upcomingPostsAll();
+  const upcoming = allUpcoming.slice(0, 8);
 
   mainContent.innerHTML = `
     <div class="page-header">
@@ -274,7 +275,7 @@ function renderDashboard() {
       <div class="stat-card"><div class="label">Clienți activi</div><div class="value">${active}</div></div>
       <div class="stat-card"><div class="label">Total clienți</div><div class="value">${state.clients.length}</div></div>
       <div class="stat-card"><div class="label">Postări programate</div><div class="value">${totalPosts}</div></div>
-      <div class="stat-card"><div class="label">Următoarele 7 zile</div><div class="value">${upcoming.filter(p => p.date <= addDays(new Date(), 7)).length}</div></div>
+      <div class="stat-card"><div class="label">Următoarele 7 zile</div><div class="value">${allUpcoming.filter(p => p.date <= addDays(new Date(), 7)).length}</div></div>
     </div>
 
     <div class="section-title">Postări viitoare (toți clienții)</div>
