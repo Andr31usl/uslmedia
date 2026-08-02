@@ -297,6 +297,22 @@
   .custom-vol-wrap input:focus { border-color: var(--accent); }
   .custom-vol-wrap input::placeholder { color: var(--text-dim); }
 
+  .budget-wrap { margin-bottom: 14px; }
+  .budget-wrap input {
+    width: 100%;
+    background: var(--mid);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .budget-wrap input:focus { border-color: var(--accent); }
+  .budget-wrap input::placeholder { color: var(--text-dim); }
+
   /* TEXTAREA */
   .main-textarea {
     width: 100%;
@@ -759,7 +775,22 @@
 
   <!-- STEP 9 -->
   <div class="step" id="step-9">
-    <div class="step-label">Pasul 9 — Date de contact</div>
+    <div class="step-label">Pasul 9 — Buget</div>
+    <h2>Ce buget ai <em>alocat</em> pentru acest proiect?</h2>
+    <p class="sub">O estimare e suficientă — mă ajută să-ți propun pachetul potrivit.</p>
+    <div class="budget-wrap">
+      <input type="text" id="budget-input" placeholder="Ex: 200€ / lună" />
+    </div>
+    <div class="err-msg" id="err-9">Te rog completează bugetul estimat.</div>
+    <div class="nav">
+      <button class="btn-back" onclick="goBack(9)">← Înapoi</button>
+      <button class="btn-next" onclick="nextBudget()">Continuă →</button>
+    </div>
+  </div>
+
+  <!-- STEP 10 -->
+  <div class="step" id="step-10">
+    <div class="step-label">Pasul 10 — Date de contact</div>
     <h2>Cum te <em>contactez?</em></h2>
     <p class="sub">Îți trimit oferta personalizată în maxim 2h.</p>
     <div class="contact-fields">
@@ -767,9 +798,9 @@
       <input type="tel" id="contact-phone" placeholder="Număr de telefon *" />
       <input type="email" id="contact-email" placeholder="Email *" />
     </div>
-    <div class="err-msg" id="err-9">Te rog completează numele, numărul de telefon și emailul.</div>
+    <div class="err-msg" id="err-10">Te rog completează numele, numărul de telefon și emailul.</div>
     <div class="nav">
-      <button class="btn-back" onclick="goBack(9)">← Înapoi</button>
+      <button class="btn-back" onclick="goBack(10)">← Înapoi</button>
       <button class="btn-next" onclick="goSummary()">Vezi sumarul →</button>
     </div>
   </div>
@@ -809,7 +840,7 @@
 
   emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
 
-  var totalSteps = 9;
+  var totalSteps = 10;
   var currentStep = 1;
   var answers = {};
   var multiSets = { platform: [], obiectiv: [] };
@@ -981,6 +1012,16 @@
     showStep(9);
   }
 
+  /* ── BUGET ── */
+  function nextBudget() {
+    var budget = document.getElementById('budget-input').value.trim();
+    if (!budget) { showErr('err-9'); return; }
+    answers['budget'] = budget;
+    currentStep = 10;
+    updateProgress();
+    showStep(10);
+  }
+
   /* ── CONTACT & SUMMARY ── */
   function goSummary() {
     var name  = document.getElementById('contact-name').value.trim();
@@ -990,7 +1031,7 @@
       document.getElementById('contact-name').classList.toggle('field-error', !name);
       document.getElementById('contact-phone').classList.toggle('field-error', !phone);
       document.getElementById('contact-email').classList.toggle('field-error', !email);
-      showErr('err-9'); return;
+      showErr('err-10'); return;
     }
     answers['name']  = name;
     answers['phone'] = phone;
@@ -1008,6 +1049,7 @@
       ['Tip filmare',      answers['filmare']  || '—'],
       ['Volum / Pachet',   answers['volum']    || '—'],
       ['Script',           answers['script']   || '—'],
+      ['Buget',            answers['budget']   || '—'],
       ['Context',          answers['context']  || '—'],
     ];
     answers['_rows'] = rows;
@@ -1048,6 +1090,7 @@
       filmare:    answers['filmare']  || '—',
       volum:      answers['volum']    || '—',
       script:     answers['script']   || '—',
+      budget:     answers['budget']   || '—',
       context:    answers['context']  || '—',
       full_body:  body,
     };
