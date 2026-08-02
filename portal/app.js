@@ -18,6 +18,9 @@ let state = {
   search: "",
   calYear: new Date().getFullYear(),
   calMonth: new Date().getMonth(),
+  dashboardView: "calendar", // calendar | list
+  dashCalYear: new Date().getFullYear(),
+  dashCalMonth: new Date().getMonth(),
 };
 
 /* ================= Utils ================= */
@@ -62,12 +65,6 @@ document.getElementById("logout-btn").addEventListener("click", () => {
   localStorage.removeItem(AUTH_KEY);
   location.reload();
 });
-
-if (isAuthed()) {
-  startApp();
-} else {
-  loginScreen.hidden = false;
-}
 
 /* ================= Data load / sync ================= */
 function seedFromBase() {
@@ -258,7 +255,6 @@ function renderDashboard() {
   const active = state.clients.filter(c => c.status === "activ").length;
   const totalPosts = allPostsFlat().length;
   const allUpcoming = upcomingPostsAll();
-  const upcoming = allUpcoming.slice(0, 8);
 
   mainContent.innerHTML = `
     <div class="page-header">
@@ -278,15 +274,44 @@ function renderDashboard() {
       <div class="stat-card"><div class="label">Următoarele 7 zile</div><div class="value">${allUpcoming.filter(p => p.date <= addDays(new Date(), 7)).length}</div></div>
     </div>
 
-    <div class="section-title">Postări viitoare (toți clienții)</div>
-    <div class="upcoming-list">
-      ${upcoming.length ? upcoming.map(postRowHtml).join("") : `<div class="empty-state">Nu ai postări viitoare programate.</div>`}
+    <div class="section-title">
+      Calendar postări (toți clienții)
+      <div class="view-toggle">
+        <button data-dash-view="calendar" class="${state.dashboardView === "calendar" ? "active" : ""}">Calendar</button>
+        <button data-dash-view="list" class="${state.dashboardView === "list" ? "active" : ""}">Listă</button>
+      </div>
     </div>
+    <div id="dashboard-content-area"></div>
   `;
 
   document.getElementById("dash-add-client").addEventListener("click", () => openClientModal());
-  mainContent.querySelectorAll(".upcoming-item[data-client]").forEach(el => {
+  mainContent.querySelectorAll(".view-toggle button[data-dash-view]").forEach(el => {
     el.addEventListener("click", () => {
+      state.dashboardView = el.dataset.dashView;
+      mainContent.querySelectorAll(".view-toggle button[data-dash-view]").forEach(b => b.classList.toggle("active", b === el));
+      renderDashboardContentArea();
+    });
+  });
+
+  renderDashboardContentArea();
+}
+
+function renderDashboardContentArea() {
+  const area = document.getElementById("dashboard-content-area");
+  if (state.dashboardView === "calendar") {
+    area.innerHTML = dashboardCalendarHtml(state.dashCalYear, state.dashCalMonth);
+    wireDashboardCalendarNav();
+  } else {
+    const upcoming = upcomingPostsAll().slice(0, 8);
+    area.innerHTML = upcoming.length ? `<div class="upcoming-list">${upcoming.map(postRowHtml).join("")}</div>` : `<div class="empty-state">Nu ai postări viitoare programate.</div>`;
+    wireUpcomingItemClicks(area);
+  }
+}
+
+function wireUpcomingItemClicks(root) {
+  root.querySelectorAll(".upcoming-item[data-client]").forEach(el => {
+    el.addEventListener("click", () => {
+      closeModal();
       state.currentClientId = el.dataset.client;
       state.view = "client";
       state.clientView = "calendar";
@@ -297,6 +322,103 @@ function renderDashboard() {
       render();
     });
   });
+}
+
+function dashboardCalendarHtml(year, month) {
+  const first = new Date(year, month, 1);
+  const startOffset = (first.getDay() + 6) % 7; // Monday = 0
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const daysInPrevMonth = new Date(year, month, 0).getDate();
+  const todayIso = new Date().toISOString().slice(0, 10);
+
+  const postsByDay = {};
+  allPostsFlat().forEach(p => {
+    (postsByDay[p.date] = postsByDay[p.date] || []).push(p);
+  });
+
+  let cells = "";
+  for (let i = 0; i < startOffset; i++) {
+    const d = daysInPrevMonth - startOffset + i + 1;
+    cells += `<div class="cal-cell outside"><div class="daynum">${d}</div></div>`;
+  }
+  for (let d = 1; d <= daysInMonth; d++) {
+    const iso = `${year}-${String(month + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+    const posts = (postsByDay[iso] || []).sort((a, b) => (a.time || "").localeCompare(b.time || ""));
+    const shown = posts.slice(0, 3);
+    cells += `
+      <div class="cal-cell ${iso === todayIso ? "today" : ""}" data-date="${iso}">
+        <div class="daynum">${d}</div>
+        <div class="posts">
+          ${shown.map(p => {
+            const color = p.pillar ? p.pillar.color : "#555";
+            return `<div class="cal-post-pill" style="background:${color}" title="${escapeHtml(p.clientName)}: ${escapeHtml(p.title)}">${escapeHtml(p.clientName)} · ${escapeHtml(p.title)}</div>`;
+          }).join("")}
+          ${posts.length > 3 ? `<div class="cal-more">+${posts.length - 3} altele</div>` : ""}
+        </div>
+      </div>`;
+  }
+  const totalCells = startOffset + daysInMonth;
+  const trailing = (7 - (totalCells % 7)) % 7;
+  for (let i = 1; i <= trailing; i++) {
+    cells += `<div class="cal-cell outside"><div class="daynum">${i}</div></div>`;
+  }
+
+  return `
+    <div class="calendar-wrap">
+      <div class="cal-nav">
+        <button id="dash-cal-prev">&larr;</button>
+        <div class="cal-title">${MONTHS[month]} ${year}</div>
+        <button id="dash-cal-next">&rarr;</button>
+      </div>
+      <div class="cal-grid">
+        ${DOW.map(d => `<div class="cal-dow">${d}</div>`).join("")}
+        ${cells}
+      </div>
+    </div>
+  `;
+}
+
+function wireDashboardCalendarNav() {
+  document.getElementById("dash-cal-prev").addEventListener("click", () => {
+    state.dashCalMonth--; if (state.dashCalMonth < 0) { state.dashCalMonth = 11; state.dashCalYear--; }
+    renderDashboardContentArea();
+  });
+  document.getElementById("dash-cal-next").addEventListener("click", () => {
+    state.dashCalMonth++; if (state.dashCalMonth > 11) { state.dashCalMonth = 0; state.dashCalYear++; }
+    renderDashboardContentArea();
+  });
+  mainContent.querySelectorAll(".cal-cell[data-date]").forEach(el => {
+    el.addEventListener("click", () => {
+      const iso = el.dataset.date;
+      const postsThatDay = allPostsFlat().filter(p => p.date === iso);
+      if (postsThatDay.length === 0) return;
+      if (postsThatDay.length === 1) {
+        const p = postsThatDay[0];
+        state.currentClientId = p.clientId;
+        state.view = "client";
+        state.clientView = "calendar";
+        const [y, m] = p.date.split("-").map(Number);
+        state.calYear = y;
+        state.calMonth = m - 1;
+        renderSidebar();
+        render();
+      } else {
+        openDashboardDayModal(iso, postsThatDay);
+      }
+    });
+  });
+}
+
+function openDashboardDayModal(iso, posts) {
+  openModal(`
+    <h2>${fmtDate(iso)}</h2>
+    <div class="upcoming-list">${posts.map(postRowHtml).join("")}</div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="dash-day-close">Închide</button>
+    </div>
+  `);
+  wireUpcomingItemClicks(modalRoot);
+  document.getElementById("dash-day-close").addEventListener("click", closeModal);
 }
 
 function addDays(date, n) {
@@ -740,4 +862,11 @@ function openPostModal(c, existing, defaultDate) {
     renderSidebar();
     renderClientDetail();
   });
+}
+
+/* ================= Boot ================= */
+if (isAuthed()) {
+  startApp();
+} else {
+  loginScreen.hidden = false;
 }
