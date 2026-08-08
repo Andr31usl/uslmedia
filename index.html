@@ -668,7 +668,7 @@ a.nav-cta {
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 5rem 3rem 3rem;
+  padding: 8rem 3rem 5rem;
   max-width: 1100px;
   margin: 0 auto;
   width: 100%;
@@ -694,7 +694,11 @@ a.nav-cta {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--blue-glow);
-  margin-bottom: 2rem;
+  background: rgba(37,99,235,0.08);
+  border: 1px solid var(--border-blue);
+  padding: 0.5rem 1.1rem;
+  border-radius: 100px;
+  margin-bottom: 2.5rem;
   opacity: 0;
   animation: fadeUp 0.8s 0.3s ease forwards;
   align-self: center;
@@ -709,12 +713,12 @@ a.nav-cta {
 
 .home-h1 {
   font-family: 'Syne', sans-serif;
-  font-size: clamp(3.5rem, 8vw, 7rem);
+  font-size: clamp(3.5rem, 9vw, 7.5rem);
   font-weight: 800;
-  line-height: 0.95;
-  letter-spacing: -0.04em;
+  line-height: 0.92;
+  letter-spacing: -0.045em;
   color: var(--white);
-  margin-bottom: 2rem;
+  margin-bottom: 2.25rem;
   opacity: 0;
   animation: fadeUp 0.8s 0.45s ease forwards;
 }
@@ -730,12 +734,12 @@ a.nav-cta {
 }
 
 .home-sub {
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: 300;
-  color: var(--white);
-  max-width: 520px;
-  line-height: 1.7;
-  margin-bottom: 2.5rem;
+  color: var(--white-dim);
+  max-width: 600px;
+  line-height: 1.6;
+  margin-bottom: 3rem;
   opacity: 0;
   animation: fadeUp 0.8s 0.6s ease forwards;
   text-align: center;
@@ -743,10 +747,11 @@ a.nav-cta {
 
 .home-btns {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
   opacity: 0;
   animation: fadeUp 0.8s 0.75s ease forwards;
   justify-content: center;
+  align-items: center;
 }
 .btn-primary {
   font-family: 'DM Sans', sans-serif;
@@ -775,6 +780,24 @@ a.nav-cta {
   transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .btn-ghost:hover { color: var(--white); border-color: rgba(255,255,255,0.2); transform: translateY(-3px); }
+
+.btn-link {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.98rem;
+  font-weight: 500;
+  color: var(--blue-glow);
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: gap 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.btn-link svg { width: 14px; height: 14px; transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
+.btn-link:hover { gap: 0.55rem; }
+.btn-link:hover svg { transform: translateX(2px); }
 
 .home-stats {
   display: flex;
@@ -3161,7 +3184,10 @@ body.modal-open .orb-2 {
       </p>
       <div class="home-btns">
         <button class="btn-primary" onclick="navigateTo('portofoliu')">Vezi portofoliu</button>
-        <button class="btn-primary" onclick="navigateTo('preturi')">Pachete & Prețuri</button>
+        <button class="btn-link" onclick="navigateTo('preturi')">
+          Pachete &amp; Prețuri
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,3 11,8 6,13"/></svg>
+        </button>
       </div>
 
       <div class="float-badge">
