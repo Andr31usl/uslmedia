@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <!--
+    Site-ul uslmedia.ro este o aplicație pe o singură pagină (SPA): secțiunile
+    Despre / Servicii / Portofoliu / Pachete / Contact sunt afișate din JavaScript
+    și nu au URL-uri proprii. În sitemap sunt listate doar URL-urile care răspund
+    real la o cerere HTTP, ca să nu generăm erori 404 în Search Console.
+  -->
+
+  <url>
+    <loc>https://uslmedia.ro/</loc>
+    <lastmod>2026-08-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://uslmedia.ro/portofoliu%20site/sigla.pgn.png</image:loc>
+      <image:title>USL Media — Agenție Marketing Digital &amp; Video București</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://uslmedia.ro/portofoliu%20site/poza%20eu.png</image:loc>
+      <image:title>Ușurelu Radu Andrei — fondator USL Media</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://uslmedia.ro/portofoliu%20site/certificat-hubspot-marketing.png</image:loc>
+      <image:title>Certificat HubSpot Academy — Digital Marketing</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://uslmedia.ro/formular/</loc>
+    <lastmod>2026-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+</urlset>

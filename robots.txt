@@ -1,0 +1,12 @@
+# robots.txt — USL Media | Agenție Marketing Digital & Video București
+# https://uslmedia.ro/
+
+User-agent: *
+Allow: /
+
+# Fișiere interne care nu au valoare în rezultatele căutării
+Disallow: /*?*fbclid=
+Disallow: /*?*gclid=
+Disallow: /*?*utm_
+
+Sitemap: https://uslmedia.ro/sitemap.xml
