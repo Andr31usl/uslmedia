@@ -65,7 +65,8 @@ necesită regenerare, fiindcă toate paginile le încarcă din același loc.
 2. În `index.html`, în secțiunea `#page-portofoliu`, copiază un bloc
    `<div class="video-card" …>` existent și schimbă în el trei lucruri:
    - `data-cat` — una dintre `evenimente`, `imobiliare`, `social`
-   - adresa fișierului, în ambele locuri (`onclick` și `<source src>`)
+   - adresa fișierului, în ambele locuri (`onclick` și `<source src>`) —
+     scrisă relativ, de forma `/portofoliu%20site/nume-fisier.mp4`
    - textul din `.video-title` și eticheta din `.video-tag`
 3. Rulează `node tools/build-pages.mjs` și comite tot.
 
