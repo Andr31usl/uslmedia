@@ -491,6 +491,46 @@
     document.getElementById('colabCustomSuccessWrap').style.display = 'block';
     setTimeout(() => { window.location.reload(); }, 3000);
   }
+  // ===== PORTOFOLIU — FILTRE PE CATEGORII =====
+  // Categoria fiecărui proiect stă în data-cat pe .video-card, iar numărul de
+  // proiecte de pe fiecare buton se calculează din DOM — așa că un clip nou
+  // adăugat în grilă apare automat la filtrul potrivit, fără alte modificări.
+  function filterPortfolio(cat, btn) {
+    const cards = document.querySelectorAll('#page-portofoliu .video-card');
+    let shown = 0;
+
+    cards.forEach(function (card) {
+      const match = cat === 'toate' || card.getAttribute('data-cat') === cat;
+      card.hidden = !match;
+      if (match) shown++;
+      // Un clip ascuns nu are voie să ruleze mai departe în fundal.
+      if (!match) {
+        card.querySelectorAll('video').forEach(function (v) { v.pause(); v.currentTime = 0; });
+      }
+    });
+
+    document.querySelectorAll('#page-portofoliu .porto-filter').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b === btn));
+    });
+
+    const empty = document.getElementById('portoEmpty');
+    if (empty) empty.style.display = shown ? 'none' : 'block';
+  }
+
+  (function initPortfolioCounts() {
+    const cards = document.querySelectorAll('#page-portofoliu .video-card');
+    if (!cards.length) return;
+    document.querySelectorAll('#page-portofoliu .porto-filter-count').forEach(function (el) {
+      const cat = el.getAttribute('data-count-for');
+      const n = cat === 'toate'
+        ? cards.length
+        : document.querySelectorAll('#page-portofoliu .video-card[data-cat="' + cat + '"]').length;
+      el.textContent = n;
+      // Ascundem filtrele fără proiecte, ca să nu ducă spre o grilă goală.
+      if (!n) el.closest('.porto-filter').hidden = true;
+    });
+  })();
+
   // (navigateTo handles all page switching — no duplicate showPage needed)
   // ===== VIDEO MODAL =====
   // ─── VIDEO MODAL ───

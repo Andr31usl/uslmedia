@@ -1333,6 +1333,54 @@ a.nav-cta {
   text-align: center;
   margin-bottom: 3rem;
 }
+
+/* ─── Filtre pe categorii ─── */
+.porto-filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin: -1.4rem auto 2.75rem;
+}
+.porto-filter {
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  padding: 0.55rem 1.15rem;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: color 0.25s, background 0.25s, border-color 0.25s;
+}
+.porto-filter:hover {
+  color: var(--white);
+  border-color: var(--border-blue);
+}
+.porto-filter[aria-pressed="true"] {
+  color: var(--blue-glow);
+  background: rgba(37,99,235,0.12);
+  border-color: rgba(37,99,235,0.45);
+}
+.porto-filter .porto-filter-count {
+  opacity: 0.55;
+  margin-left: 0.35rem;
+  font-weight: 400;
+}
+/* Cardurile filtrate ies din grid, ca să nu lase goluri */
+.video-card[hidden] { display: none; }
+.porto-empty {
+  display: none;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 300;
+  padding: 2.5rem 0;
+}
+
 .video-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
