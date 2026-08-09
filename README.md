@@ -56,6 +56,24 @@ actualizează întâi `tools/build-pages.mjs`.
 Modificările făcute doar în `assets/styles.css` sau `assets/app.js` **nu**
 necesită regenerare, fiindcă toate paginile le încarcă din același loc.
 
+## Cum adaugi un clip în portofoliu
+
+1. Urcă fișierul video în folderul `portofoliu site/`. Recomandat: nume fără
+   spații și fără diacritice (`cafenea-reel.mp4`, nu `Reel cafenea final.mp4`),
+   fiindcă spațiile trebuie scrise `%20` în adresă. GitHub respinge fișiere
+   peste 100 MB — comprimă înainte dacă e cazul.
+2. În `index.html`, în secțiunea `#page-portofoliu`, copiază un bloc
+   `<div class="video-card" …>` existent și schimbă în el trei lucruri:
+   - `data-cat` — una dintre `evenimente`, `imobiliare`, `social`
+   - adresa fișierului, în ambele locuri (`onclick` și `<source src>`)
+   - textul din `.video-title` și eticheta din `.video-tag`
+3. Rulează `node tools/build-pages.mjs` și comite tot.
+
+Numărul afișat pe fiecare buton de filtru se calculează singur din pagină, deci
+nu trebuie actualizat manual. Dacă vrei o categorie nouă, adaug-o în trei
+locuri: un buton în `.porto-filters`, `data-cat` pe carduri, și atât — funcția
+`filterPortfolio` din `assets/app.js` nu are lista categoriilor codificată în ea.
+
 ## SEO
 
 - `robots.txt` și `sitemap.xml` sunt în rădăcină; sitemap-ul listează doar

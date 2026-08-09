@@ -825,21 +825,14 @@
         <h2 class="page-h1 anim anim-2" style="font-size:clamp(2.5rem,5vw,4rem);">Portofoliu</h2>
         <p class="anim anim-3" style="color:var(--muted);font-weight:300;font-size:0.95rem;">Proiecte reale, rezultate reale. Fiecare videoclip are un scop — să crești.</p>
       </div>
-      <div class="video-grid anim anim-4">
-        <div class="video-card" onclick="openVideoModal('https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/video%20renovari.mp4.mov', 'Apartament-Renovision Design')">
-          <div class="video-wrap">
-            <video preload="metadata" playsinline>
-              <source src="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/video%20renovari.mp4.mov" type="video/mp4">
-            </video>
-            <div class="video-play-btn">
-              <svg viewBox="0 0 24 24" fill="white" width="28" height="28"><polygon points="6,4 20,12 6,20"/></svg>
-            </div>
-          </div>
-          <div class="video-info">
-            <p class="video-title">Apartament-Renovision Design</p>
-          </div>
-        </div>
-        <div class="video-card" onclick="openVideoModal('https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/2.mp4', 'Workshop-Rotary Cismigiu')">
+      <div class="porto-filters anim anim-4" role="group" aria-label="Filtrează portofoliul pe categorii">
+        <button type="button" class="porto-filter" data-filter="toate" aria-pressed="true" onclick="filterPortfolio('toate', this)">Toate <span class="porto-filter-count" data-count-for="toate"></span></button>
+        <button type="button" class="porto-filter" data-filter="evenimente" aria-pressed="false" onclick="filterPortfolio('evenimente', this)">Evenimente <span class="porto-filter-count" data-count-for="evenimente"></span></button>
+        <button type="button" class="porto-filter" data-filter="imobiliare" aria-pressed="false" onclick="filterPortfolio('imobiliare', this)">Imobiliare & Amenajări <span class="porto-filter-count" data-count-for="imobiliare"></span></button>
+        <button type="button" class="porto-filter" data-filter="social" aria-pressed="false" onclick="filterPortfolio('social', this)">Reels & Social Media <span class="porto-filter-count" data-count-for="social"></span></button>
+      </div>
+      <div class="video-grid anim anim-5">
+        <div class="video-card" data-cat="evenimente" onclick="openVideoModal('https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/2.mp4', 'Workshop-Rotary Cismigiu')">
           <div class="video-wrap">
             <video preload="metadata" playsinline>
               <source src="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/2.mp4" type="video/mp4">
@@ -850,22 +843,10 @@
           </div>
           <div class="video-info">
             <p class="video-title">Workshop-Rotary Cismigiu</p>
+            <p class="video-tag">Evenimente</p>
           </div>
         </div>
-        <div class="video-card" onclick="openVideoModal('https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/3.mp4', 'Dynamic Reel')">
-          <div class="video-wrap">
-            <video preload="metadata" playsinline>
-              <source src="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/3.mp4" type="video/mp4">
-            </video>
-            <div class="video-play-btn">
-              <svg viewBox="0 0 24 24" fill="white" width="28" height="28"><polygon points="6,4 20,12 6,20"/></svg>
-            </div>
-          </div>
-          <div class="video-info">
-            <p class="video-title">Dynamic Reel</p>
-          </div>
-        </div>
-        <div class="video-card" onclick="openVideoModal('https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/1.mp4', 'Cupa LazarxIoanid')">
+        <div class="video-card" data-cat="evenimente" onclick="openVideoModal('https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/1.mp4', 'Cupa LazarxIoanid')">
           <div class="video-wrap">
             <video preload="metadata" playsinline>
               <source src="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/1.mp4" type="video/mp4">
@@ -876,9 +857,39 @@
           </div>
           <div class="video-info">
             <p class="video-title">Cupa LazarxIoanid</p>
+            <p class="video-tag">Evenimente</p>
+          </div>
+        </div>
+        <div class="video-card" data-cat="imobiliare" onclick="openVideoModal('https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/video%20renovari.mp4.mov', 'Apartament-Renovision Design')">
+          <div class="video-wrap">
+            <video preload="metadata" playsinline>
+              <source src="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/video%20renovari.mp4.mov" type="video/mp4">
+            </video>
+            <div class="video-play-btn">
+              <svg viewBox="0 0 24 24" fill="white" width="28" height="28"><polygon points="6,4 20,12 6,20"/></svg>
+            </div>
+          </div>
+          <div class="video-info">
+            <p class="video-title">Apartament-Renovision Design</p>
+            <p class="video-tag">Imobiliare & Amenajări</p>
+          </div>
+        </div>
+        <div class="video-card" data-cat="social" onclick="openVideoModal('https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/3.mp4', 'Dynamic Reel')">
+          <div class="video-wrap">
+            <video preload="metadata" playsinline>
+              <source src="https://github.com/Andr31usl/uslmedia/raw/main/portofoliu%20site/3.mp4" type="video/mp4">
+            </video>
+            <div class="video-play-btn">
+              <svg viewBox="0 0 24 24" fill="white" width="28" height="28"><polygon points="6,4 20,12 6,20"/></svg>
+            </div>
+          </div>
+          <div class="video-info">
+            <p class="video-title">Dynamic Reel</p>
+            <p class="video-tag">Reels & Social Media</p>
           </div>
         </div>
       </div>
+      <p class="porto-empty" id="portoEmpty">Nu există proiecte în această categorie deocamdată.</p>
 
 
     </div>
