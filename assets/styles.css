@@ -736,6 +736,20 @@ a.nav-cta {
   letter-spacing: 0.01em;
 }
 .btn-primary:hover { background: var(--blue-bright); transform: translateY(-3px); box-shadow: 0 12px 32px rgba(37,99,235,0.4); }
+
+/* CTA-urile către chestionar sunt link-uri reale, ca să poată fi urmărite de
+   Google și deschise în tab nou. Regulile de mai jos le fac să arate exact ca
+   butoanele pe care le-au înlocuit, fără să atingă butoanele rămase. */
+a.nav-cta,
+a.btn-primary,
+a.mob-btn-primary,
+a.footer-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none;
+}
 .btn-ghost {
   font-family: 'DM Sans', sans-serif;
   font-size: 0.95rem;
@@ -2415,7 +2429,7 @@ a.pkg-btn, a.pkg-btn-custom { text-decoration: none; }
   margin-top: 1.5rem;
 }
 .mobile-drawer-btns button,
-.mobile-drawer-btns a.mob-btn-secondary {
+.mobile-drawer-btns a {
   width: 100%;
   padding: 0.9rem 1.5rem;
   border-radius: 12px;

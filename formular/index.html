@@ -159,6 +159,14 @@
     line-height: 1.7;
   }
 
+  .q2-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--white);
+    margin: 26px 0 14px;
+  }
+
   /* OPTIONS */
   .options {
     display: grid;
@@ -499,7 +507,7 @@
 <div class="container">
 
   <!-- STEP 1 -->
-  <div class="step active" id="step-1">
+  <div class="step active" id="step-1" data-name="Business">
     <div class="step-label">Pasul 1 — Business</div>
     <h2>Cu ce se ocupă <em>businessul tău?</em></h2>
     <p class="sub">Ajută-mă să înțeleg domeniul tău ca să pregătesc conținut potrivit.</p>
@@ -553,8 +561,59 @@
     </div>
   </div>
 
+
+  <!-- STEP SERVICII -->
+  <div class="step" id="step-servicii" data-name="Servicii">
+    <div class="step-label"></div>
+    <h2>Ce servicii <em>te interesează?</em></h2>
+    <p class="sub">Poți alege mai multe. Întrebările următoare se adaptează la ce alegi aici.</p>
+    <div class="options three">
+      <div class="opt" data-key="servicii" data-val="Filmare Video" onclick="toggleMulti(this,'servicii')">
+        <span class="opt-icon">🎥</span>
+        <div class="opt-label">Filmare Video</div>
+        <div class="opt-desc">Filmez eu, la tine</div>
+        <div class="check">✓</div>
+      </div>
+      <div class="opt" data-key="servicii" data-val="Editare Video" onclick="toggleMulti(this,'servicii')">
+        <span class="opt-icon">✂️</span>
+        <div class="opt-label">Editare Video</div>
+        <div class="opt-desc">Ai deja filmările</div>
+        <div class="check">✓</div>
+      </div>
+      <div class="opt" data-key="servicii" data-val="Reels &amp; TikTok" onclick="toggleMulti(this,'servicii')">
+        <span class="opt-icon">📱</span>
+        <div class="opt-label">Reels &amp; TikTok</div>
+        <div class="opt-desc">Conținut vertical</div>
+        <div class="check">✓</div>
+      </div>
+      <div class="opt" data-key="servicii" data-val="Social Media Growth" onclick="toggleMulti(this,'servicii')">
+        <span class="opt-icon">📈</span>
+        <div class="opt-label">Social Media Growth</div>
+        <div class="opt-desc">Strategie și creștere</div>
+        <div class="check">✓</div>
+      </div>
+      <div class="opt" data-key="servicii" data-val="Creare Site Web" onclick="toggleMulti(this,'servicii')">
+        <span class="opt-icon">💻</span>
+        <div class="opt-label">Creare Site Web</div>
+        <div class="opt-desc">Site nou sau refăcut</div>
+        <div class="check">✓</div>
+      </div>
+      <div class="opt" data-key="servicii" data-val="Meta Ads" onclick="toggleMulti(this,'servicii')">
+        <span class="opt-icon">🎯</span>
+        <div class="opt-label">Meta Ads</div>
+        <div class="opt-desc">Reclame Facebook &amp; Instagram</div>
+        <div class="check">✓</div>
+      </div>
+    </div>
+    <div class="err-msg" id="err-servicii">Te rog selectează cel puțin un serviciu.</div>
+    <div class="nav">
+      <button class="btn-back" onclick="goPrev()">← Înapoi</button>
+      <button class="btn-next" onclick="nextMulti('servicii','servicii')">Continuă →</button>
+    </div>
+  </div>
+
   <!-- STEP 2 -->
-  <div class="step" id="step-2">
+  <div class="step" id="step-2" data-name="Platforme">
     <div class="step-label">Pasul 2 — Platforme</div>
     <h2>Unde vrei să <em>postezi?</em></h2>
     <p class="sub">Poți alege mai multe. Optimizez conținutul pentru fiecare platformă.</p>
@@ -574,16 +633,21 @@
         <div class="opt-label">YouTube Shorts</div>
         <div class="check">✓</div>
       </div>
+      <div class="opt" data-key="platform" data-val="Facebook" onclick="toggleMulti(this,'platform')">
+        <span class="opt-icon">👥</span>
+        <div class="opt-label">Facebook</div>
+        <div class="check">✓</div>
+      </div>
     </div>
     <div class="err-msg" id="err-2">Te rog selectează cel puțin o platformă.</div>
     <div class="nav">
-      <button class="btn-back" onclick="goBack(2)">← Înapoi</button>
+      <button class="btn-back" onclick="goPrev()">← Înapoi</button>
       <button class="btn-next" onclick="nextMulti(2,'platform')">Continuă →</button>
     </div>
   </div>
 
   <!-- STEP 3 -->
-  <div class="step" id="step-3">
+  <div class="step" id="step-3" data-name="Obiectiv">
     <div class="step-label">Pasul 3 — Obiectiv</div>
     <h2>Ce vrei să <em>obții</em> din conținut?</h2>
     <p class="sub">Poți alege mai multe obiective.</p>
@@ -619,13 +683,13 @@
     </div>
     <div class="err-msg" id="err-3">Te rog selectează cel puțin un obiectiv.</div>
     <div class="nav">
-      <button class="btn-back" onclick="goBack(3)">← Înapoi</button>
+      <button class="btn-back" onclick="goPrev()">← Înapoi</button>
       <button class="btn-next" onclick="nextMulti(3,'obiectiv')">Continuă →</button>
     </div>
   </div>
 
   <!-- STEP 4 -->
-  <div class="step" id="step-4">
+  <div class="step" id="step-4" data-name="Prezență online">
     <div class="step-label">Pasul 4 — Prezență online</div>
     <h2>Cum arată <em>prezența ta online</em> acum?</h2>
     <p class="sub">Fără judecată — vreau să știu de unde plecăm.</p>
@@ -653,13 +717,13 @@
     </div>
     <div class="err-msg" id="err-4">Te rog selectează o opțiune.</div>
     <div class="nav">
-      <button class="btn-back" onclick="goBack(4)">← Înapoi</button>
+      <button class="btn-back" onclick="goPrev()">← Înapoi</button>
       <button class="btn-next" onclick="nextOne(4,'prezenta')">Continuă →</button>
     </div>
   </div>
 
   <!-- STEP 5 -->
-  <div class="step" id="step-5">
+  <div class="step" id="step-5" data-name="Filmare">
     <div class="step-label">Pasul 5 — Filmare</div>
     <h2>Unde are loc <em>filmarea?</em></h2>
     <p class="sub">Mă ajută să planific echipamentul și logistica.</p>
@@ -691,13 +755,13 @@
     </div>
     <div class="err-msg" id="err-5">Te rog selectează o opțiune.</div>
     <div class="nav">
-      <button class="btn-back" onclick="goBack(5)">← Înapoi</button>
+      <button class="btn-back" onclick="goPrev()">← Înapoi</button>
       <button class="btn-next" onclick="nextOne(5,'filmare')">Continuă →</button>
     </div>
   </div>
 
   <!-- STEP 6 -->
-  <div class="step" id="step-6">
+  <div class="step" id="step-6" data-name="Volum">
     <div class="step-label">Pasul 6 — Volum</div>
     <h2>Câte video-uri ai nevoie <em>pe lună?</em></h2>
     <p class="sub">Poți ajusta oricând după primele filmări.</p>
@@ -717,13 +781,13 @@
     </div>
     <div class="err-msg" id="err-6">Te rog selectează sau introdu un număr.</div>
     <div class="nav">
-      <button class="btn-back" onclick="goBack(6)">← Înapoi</button>
+      <button class="btn-back" onclick="goPrev()">← Înapoi</button>
       <button class="btn-next" onclick="nextVol()">Continuă →</button>
     </div>
   </div>
 
   <!-- STEP 7 -->
-  <div class="step" id="step-7">
+  <div class="step" id="step-7" data-name="Script & Stil">
     <div class="step-label">Pasul 7 — Script & Stil</div>
     <h2>Cine se ocupă de <em>script?</em></h2>
     <p class="sub">Includ scriptul în toate pachetele — dar unii clienți preferă să vorbească liber.</p>
@@ -755,26 +819,126 @@
     </div>
     <div class="err-msg" id="err-7">Te rog selectează o opțiune.</div>
     <div class="nav">
-      <button class="btn-back" onclick="goBack(7)">← Înapoi</button>
+      <button class="btn-back" onclick="goPrev()">← Înapoi</button>
       <button class="btn-next" onclick="nextOne(7,'script')">Continuă →</button>
     </div>
   </div>
 
+
+  <!-- STEP SITE WEB -->
+  <div class="step" id="step-web" data-name="Site web">
+    <div class="step-label"></div>
+    <h2>Ce fel de <em>site</em> ai nevoie?</h2>
+    <p class="sub">Ca să știu de la ce pornim și cât de complex e proiectul.</p>
+    <div class="options">
+      <div class="opt" data-key="site_tip" data-val="Site de prezentare" onclick="pickOne(this)">
+        <span class="opt-icon">🏢</span>
+        <div class="opt-label">Site de prezentare</div>
+        <div class="opt-desc">Despre, servicii, contact</div>
+      </div>
+      <div class="opt" data-key="site_tip" data-val="Magazin online" onclick="pickOne(this)">
+        <span class="opt-icon">🛒</span>
+        <div class="opt-label">Magazin online</div>
+        <div class="opt-desc">Produse, coș, plăți</div>
+      </div>
+      <div class="opt" data-key="site_tip" data-val="Landing page" onclick="pickOne(this)">
+        <span class="opt-icon">🎯</span>
+        <div class="opt-label">Landing page</div>
+        <div class="opt-desc">O pagină pentru o campanie</div>
+      </div>
+      <div class="opt" data-key="site_tip" data-val="Nu știu încă — stabilim la call" onclick="pickOne(this)">
+        <span class="opt-icon">💬</span>
+        <div class="opt-label">Nu știu încă</div>
+        <div class="opt-desc">Stabilim împreună</div>
+      </div>
+    </div>
+    <div class="q2-title">Ai deja un site?</div>
+    <div class="options three">
+      <div class="opt" data-key="site_existent" data-val="Nu, pornim de la zero" onclick="pickOne(this)">
+        <span class="opt-icon">✨</span>
+        <div class="opt-label">Nu, de la zero</div>
+      </div>
+      <div class="opt" data-key="site_existent" data-val="Da, vreau să-l refac" onclick="pickOne(this)">
+        <span class="opt-icon">🔁</span>
+        <div class="opt-label">Da, îl refac</div>
+      </div>
+      <div class="opt" data-key="site_existent" data-val="Da, vreau doar îmbunătățiri" onclick="pickOne(this)">
+        <span class="opt-icon">🔧</span>
+        <div class="opt-label">Doar îmbunătățiri</div>
+      </div>
+    </div>
+    <div class="err-msg" id="err-web">Te rog răspunde la ambele întrebări.</div>
+    <div class="nav">
+      <button class="btn-back" onclick="goPrev()">← Înapoi</button>
+      <button class="btn-next" onclick="nextWeb()">Continuă →</button>
+    </div>
+  </div>
+
+
+  <!-- STEP META ADS -->
+  <div class="step" id="step-ads" data-name="Meta Ads">
+    <div class="step-label"></div>
+    <h2>Ce vrei să obții din <em>reclame?</em></h2>
+    <p class="sub">Bugetul de reclame se plătește direct către Meta, separat de serviciul meu.</p>
+    <div class="options">
+      <div class="opt" data-key="ads_obiectiv" data-val="Vânzări directe / comenzi" onclick="pickOne(this)">
+        <span class="opt-icon">🛍️</span>
+        <div class="opt-label">Vânzări directe</div>
+        <div class="opt-desc">Comenzi din reclamă</div>
+      </div>
+      <div class="opt" data-key="ads_obiectiv" data-val="Lead-uri / cereri de ofertă" onclick="pickOne(this)">
+        <span class="opt-icon">📩</span>
+        <div class="opt-label">Lead-uri</div>
+        <div class="opt-desc">Cereri de ofertă, programări</div>
+      </div>
+      <div class="opt" data-key="ads_obiectiv" data-val="Trafic în locație" onclick="pickOne(this)">
+        <span class="opt-icon">📍</span>
+        <div class="opt-label">Trafic în locație</div>
+        <div class="opt-desc">Oameni care vin la tine</div>
+      </div>
+      <div class="opt" data-key="ads_obiectiv" data-val="Notorietate / awareness" onclick="pickOne(this)">
+        <span class="opt-icon">📣</span>
+        <div class="opt-label">Notorietate</div>
+        <div class="opt-desc">Să te știe lumea</div>
+      </div>
+    </div>
+    <div class="q2-title">Buget lunar estimat pentru reclame</div>
+    <div class="options three">
+      <div class="opt" data-key="ads_buget" data-val="Sub 500 € / lună" onclick="pickOne(this)">
+        <div class="opt-label">Sub 500 €</div>
+      </div>
+      <div class="opt" data-key="ads_buget" data-val="500 – 1500 € / lună" onclick="pickOne(this)">
+        <div class="opt-label">500 – 1500 €</div>
+      </div>
+      <div class="opt" data-key="ads_buget" data-val="Peste 1500 € / lună" onclick="pickOne(this)">
+        <div class="opt-label">Peste 1500 €</div>
+      </div>
+      <div class="opt" data-key="ads_buget" data-val="Nu știu încă — mă sfătuiesc cu tine" onclick="pickOne(this)">
+        <div class="opt-label">Nu știu încă</div>
+      </div>
+    </div>
+    <div class="err-msg" id="err-ads">Te rog răspunde la ambele întrebări.</div>
+    <div class="nav">
+      <button class="btn-back" onclick="goPrev()">← Înapoi</button>
+      <button class="btn-next" onclick="nextAds()">Continuă →</button>
+    </div>
+  </div>
+
   <!-- STEP 8 -->
-  <div class="step" id="step-8">
+  <div class="step" id="step-8" data-name="Context">
     <div class="step-label">Pasul 8 — Context</div>
     <h2>Spune-mi ceva ce <em>te face unic.</em></h2>
     <p class="sub">Ce te diferențiază, cine e clientul tău ideal, ce vrei să se vadă în video.</p>
     <textarea class="main-textarea" id="context-text" placeholder="Ex: Lucrăm doar cu materiale eco, clienții noștri sunt femei 25–40 ani din București, vrem un vibe premium dar friendly..."></textarea>
     <div class="err-msg" id="err-8">Te rog scrie câteva rânduri despre businessul tău.</div>
     <div class="nav">
-      <button class="btn-back" onclick="goBack(8)">← Înapoi</button>
+      <button class="btn-back" onclick="goPrev()">← Înapoi</button>
       <button class="btn-next" onclick="nextContext()">Continuă →</button>
     </div>
   </div>
 
   <!-- STEP 9 -->
-  <div class="step" id="step-9">
+  <div class="step" id="step-9" data-name="Buget">
     <div class="step-label">Pasul 9 — Buget</div>
     <h2>Ce buget ai <em>alocat</em> pentru acest proiect?</h2>
     <p class="sub">O estimare e suficientă — mă ajută să-ți propun pachetul potrivit.</p>
@@ -783,13 +947,13 @@
     </div>
     <div class="err-msg" id="err-9">Te rog completează bugetul estimat.</div>
     <div class="nav">
-      <button class="btn-back" onclick="goBack(9)">← Înapoi</button>
+      <button class="btn-back" onclick="goPrev()">← Înapoi</button>
       <button class="btn-next" onclick="nextBudget()">Continuă →</button>
     </div>
   </div>
 
   <!-- STEP 10 -->
-  <div class="step" id="step-10">
+  <div class="step" id="step-10" data-name="Date de contact">
     <div class="step-label">Pasul 10 — Date de contact</div>
     <h2>Cum te <em>contactez?</em></h2>
     <p class="sub">Îți trimit oferta personalizată în maxim 2h.</p>
@@ -800,7 +964,7 @@
     </div>
     <div class="err-msg" id="err-10">Te rog completează numele, numărul de telefon și emailul.</div>
     <div class="nav">
-      <button class="btn-back" onclick="goBack(10)">← Înapoi</button>
+      <button class="btn-back" onclick="goPrev()">← Înapoi</button>
       <button class="btn-next" onclick="goSummary()">Vezi sumarul →</button>
     </div>
   </div>
@@ -838,26 +1002,107 @@
   var EMAILJS_SERVICE_ID  = 'service_kdn656c';
   var EMAILJS_TEMPLATE_ID = 'template_o03spgs';
 
-  emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
-
-  var totalSteps = 10;
-  var currentStep = 1;
-  var answers = {};
-  var multiSets = { platform: [], obiectiv: [] };
-  var customObiectivVal = '';
-
-  function updateProgress() {
-    var pct = Math.min((currentStep / totalSteps) * 100, 100);
-    document.getElementById('progress-fill').style.width = pct + '%';
-    document.getElementById('step-counter').textContent =
-      currentStep <= totalSteps ? currentStep + ' / ' + totalSteps : '✓ Gata';
+  // Dacă CDN-ul EmailJS e blocat (adblocker, rețea de firmă), un apel
+  // neprotejat aici oprea execuția întregului script și chestionarul devenea
+  // complet nefuncțional — nu doar trimiterea, ci și navigarea între pași.
+  try {
+    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+  } catch (e) {
+    console.warn('EmailJS indisponibil: formularul se completează normal, dar trimiterea va eșua.', e);
   }
 
-  function showStep(n) {
+  var answers = {};
+  var multiSets = { servicii: [], platform: [], obiectiv: [] };
+  var customObiectivVal = '';
+
+  /* ── FLUXUL PAȘILOR ───────────────────────────────────────────────
+     Nu toate serviciile au nevoie de aceleași întrebări: cine vrea doar
+     un site nu trebuie întrebat unde filmăm. Fiecare pas își declară
+     condiția, iar numerotarea și bara de progres se calculează din
+     pașii rămași activi — nu din numere fixe.                        */
+
+  function chose(serviciu) { return multiSets.servicii.indexOf(serviciu) > -1; }
+  function wantsContent() {
+    return chose('Filmare Video') || chose('Editare Video') ||
+           chose('Reels & TikTok') || chose('Social Media Growth');
+  }
+  function wantsAds() { return chose('Meta Ads'); }
+
+  var STEPS = [
+    { el: 'step-1' },
+    { el: 'step-servicii' },
+    { el: 'step-2',   keys: ['platform'], multi: ['platform'],
+      when: function() { return wantsContent() || wantsAds(); } },
+    { el: 'step-3' },
+    { el: 'step-4' },
+    { el: 'step-5',   keys: ['filmare'], when: function() { return chose('Filmare Video'); } },
+    { el: 'step-6',   keys: ['volum'],   when: wantsContent },
+    { el: 'step-7',   keys: ['script'],  when: wantsContent },
+    { el: 'step-web', keys: ['site_tip', 'site_existent'],
+      when: function() { return chose('Creare Site Web'); } },
+    { el: 'step-ads', keys: ['ads_obiectiv', 'ads_buget'], when: wantsAds },
+    { el: 'step-8' },
+    { el: 'step-9' },
+    { el: 'step-10' }
+  ];
+
+  function activeSteps() {
+    return STEPS.filter(function(s) { return !s.when || s.when(); });
+  }
+
+  function currentIndex() {
+    var cur = document.querySelector('.step.active');
+    if (!cur) return 0;
+    var list = activeSteps();
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].el === cur.id) return i;
+    }
+    return 0;
+  }
+
+  function updateProgress(i, total) {
+    var pct = Math.min(((i + 1) / total) * 100, 100);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('step-counter').textContent = (i + 1) + ' / ' + total;
+  }
+
+  function showStep(elId, i, total) {
     document.querySelectorAll('.step').forEach(function(s) { s.classList.remove('active'); });
-    var id = n > totalSteps ? 'step-summary' : 'step-' + n;
-    document.getElementById(id).classList.add('active');
+    var el = document.getElementById(elId);
+    el.classList.add('active');
+    var label = el.querySelector('.step-label');
+    if (label && el.hasAttribute('data-name')) {
+      label.textContent = 'Pasul ' + (i + 1) + ' — ' + el.getAttribute('data-name');
+    }
+    updateProgress(i, total);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function goTo(i) {
+    var list = activeSteps();
+    if (i >= list.length) { goSummary(); return; }
+    if (i < 0) i = 0;
+    showStep(list[i].el, i, list.length);
+  }
+
+  function goNext() { goTo(currentIndex() + 1); }
+  function goPrev() { goTo(currentIndex() - 1); }
+
+  // Cine răspunde la un pas, apoi se întoarce și deselectează serviciul care
+  // îl declanșa, ar trimite altfel răspunsuri la întrebări care nu i s-au mai
+  // pus. La fel și pachetul preselectat din /pachete/ pentru cineva care vrea
+  // doar un site. Ștergem răspunsurile pașilor care nu mai sunt în flux.
+  function pruneInactiveAnswers() {
+    STEPS.forEach(function(step) {
+      if (!step.keys || !step.when || step.when()) return;
+      step.keys.forEach(function(k) { delete answers[k]; });
+      (step.multi || []).forEach(function(k) {
+        multiSets[k] = [];
+        document.querySelectorAll('[data-key="' + k + '"]').forEach(function(o) {
+          o.classList.remove('selected');
+        });
+      });
+    });
   }
 
   function showErr(id) {
@@ -865,12 +1110,6 @@
     if (!el) return;
     el.classList.add('visible');
     setTimeout(function() { el.classList.remove('visible'); }, 3500);
-  }
-
-  function goBack(step) {
-    currentStep = step - 1;
-    updateProgress();
-    showStep(currentStep);
   }
 
   /* ── STEP 1 ── */
@@ -903,9 +1142,7 @@
     var firma = document.getElementById('firma-input').value.trim();
     if (!firma) { showErr('err-1'); return; }
     answers['firma'] = firma;
-    currentStep = 2;
-    updateProgress();
-    showStep(2);
+    goNext();
   }
 
   /* ── SINGLE SELECT ── */
@@ -918,9 +1155,7 @@
 
   function nextOne(step, key) {
     if (!answers[key]) { showErr('err-' + step); return; }
-    currentStep = step + 1;
-    updateProgress();
-    showStep(currentStep);
+    goNext();
   }
 
   /* ── MULTI SELECT ── */
@@ -971,9 +1206,7 @@
     }
     if (multiSets[key].length === 0) { showErr('err-' + step); return; }
     answers[key] = multiSets[key].join(', ');
-    currentStep = step + 1;
-    updateProgress();
-    showStep(currentStep);
+    goNext();
   }
 
   /* ── VOLUME ── */
@@ -997,9 +1230,19 @@
 
   function nextVol() {
     if (!answers['volum']) { showErr('err-6'); return; }
-    currentStep = 7;
-    updateProgress();
-    showStep(7);
+    goNext();
+  }
+
+  /* ── SITE WEB ── */
+  function nextWeb() {
+    if (!answers['site_tip'] || !answers['site_existent']) { showErr('err-web'); return; }
+    goNext();
+  }
+
+  /* ── META ADS ── */
+  function nextAds() {
+    if (!answers['ads_obiectiv'] || !answers['ads_buget']) { showErr('err-ads'); return; }
+    goNext();
   }
 
   /* ── CONTEXT ── */
@@ -1007,9 +1250,7 @@
     var ctx = document.getElementById('context-text').value.trim();
     if (!ctx) { showErr('err-8'); return; }
     answers['context'] = ctx;
-    currentStep = 9;
-    updateProgress();
-    showStep(9);
+    goNext();
   }
 
   /* ── BUGET ── */
@@ -1017,9 +1258,7 @@
     var budget = document.getElementById('budget-input').value.trim();
     if (!budget) { showErr('err-9'); return; }
     answers['budget'] = budget;
-    currentStep = 10;
-    updateProgress();
-    showStep(10);
+    goNext();
   }
 
   /* ── CONTACT & SUMMARY ── */
@@ -1037,21 +1276,30 @@
     answers['phone'] = phone;
     answers['email'] = email;
 
+    pruneInactiveAnswers();
+
+    // Rândurile fără "—" sunt cele legate de un serviciu anume: dacă pasul
+    // n-a fost afișat, câmpul e gol și rândul dispare din sumar.
     var rows = [
       ['Nume',             answers['name']],
       ['Telefon',          answers['phone']],
       ['Email',            answers['email']],
       ['Firma / Brand',    answers['firma']    || '—'],
       ['Business',         answers['business'] || '—'],
-      ['Platforme',        answers['platform'] || '—'],
+      ['Servicii dorite',  answers['servicii'] || '—'],
+      ['Platforme',        answers['platform']],
       ['Obiectiv',         answers['obiectiv'] || '—'],
       ['Prezență actuală', answers['prezenta'] || '—'],
-      ['Tip filmare',      answers['filmare']  || '—'],
-      ['Volum / Pachet',   answers['volum']    || '—'],
-      ['Script',           answers['script']   || '—'],
+      ['Tip filmare',      answers['filmare']],
+      ['Volum / Pachet',   answers['volum']],
+      ['Script',           answers['script']],
+      ['Tip site',         answers['site_tip']],
+      ['Site existent',    answers['site_existent']],
+      ['Obiectiv reclame', answers['ads_obiectiv']],
+      ['Buget reclame',    answers['ads_buget']],
       ['Buget',            answers['budget']   || '—'],
       ['Context',          answers['context']  || '—'],
-    ];
+    ].filter(function(r) { return r[1]; });
     answers['_rows'] = rows;
 
     var grid = document.getElementById('sum-grid');
@@ -1059,9 +1307,11 @@
       return '<div class="sum-row"><span class="sum-key">' + r[0] + '</span><span class="sum-val">' + r[1] + '</span></div>';
     }).join('');
 
-    currentStep = totalSteps + 1;
-    updateProgress();
-    showStep(currentStep);
+    document.querySelectorAll('.step').forEach(function(s) { s.classList.remove('active'); });
+    document.getElementById('step-summary').classList.add('active');
+    document.getElementById('progress-fill').style.width = '100%';
+    document.getElementById('step-counter').textContent = '✓ Gata';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   /* ── SEND ── */
@@ -1084,16 +1334,29 @@
       from_email: answers['email']    || '—',
       firma:      answers['firma']    || '—',
       business:   answers['business'] || '—',
+      servicii:   answers['servicii'] || '—',
       platform:   answers['platform'] || '—',
       obiectiv:   answers['obiectiv'] || '—',
       prezenta:   answers['prezenta'] || '—',
       filmare:    answers['filmare']  || '—',
       volum:      answers['volum']    || '—',
       script:     answers['script']   || '—',
+      site_tip:       answers['site_tip']      || '—',
+      site_existent:  answers['site_existent'] || '—',
+      ads_obiectiv:   answers['ads_obiectiv']  || '—',
+      ads_buget:      answers['ads_buget']     || '—',
       budget:     answers['budget']   || '—',
       context:    answers['context']  || '—',
       full_body:  body,
     };
+
+    if (typeof emailjs === 'undefined') {
+      btn.disabled = false;
+      spinner.style.display = 'none';
+      label.textContent = '📧 Trimite cererea lui Andrei';
+      showErr('err-send');
+      return;
+    }
 
     emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params)
       .then(function() {
@@ -1112,7 +1375,7 @@
   /* ── RESTART ── */
   function restart() {
     answers = {};
-    multiSets = { platform: [], obiectiv: [] };
+    multiSets = { servicii: [], platform: [], obiectiv: [] };
     customObiectivVal = '';
     document.querySelectorAll('.opt, .vol-opt').forEach(function(o) { o.classList.remove('selected'); });
     document.querySelectorAll('.custom-wrap, .firma-wrap, .custom-vol-wrap').forEach(function(f) { f.classList.remove('visible'); });
@@ -1124,9 +1387,7 @@
     btn.disabled = false;
     document.getElementById('spinner').style.display = 'none';
     document.getElementById('send-label').textContent = '📧 Trimite cererea lui Andrei';
-    currentStep = 1;
-    updateProgress();
-    showStep(1);
+    goTo(0);
   }
 
   /* ── PRESELECTARE PACHET (venit din Pachete, ex: /formular/?pachet=starter) ── */
@@ -1137,7 +1398,7 @@
     if (el) { pickVol(el, pkg.toLowerCase() === 'custom'); }
   })();
 
-  updateProgress();
+  goTo(0);
 </script>
 </body>
 </html>
