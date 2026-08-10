@@ -1,3 +1,8 @@
+/*
+ * /colaboram/ si /colaboram-custom/ NU sunt in lista: sunt pagini statice de
+ * redirectare catre /formular/, scrise manual. Nu le regenera de aici.
+ */
+
 /**
  * Generează paginile pe secțiuni din index.html.
  *
@@ -55,25 +60,6 @@ const SECTIONS = [
     title: 'Pachete & Prețuri Marketing Video București | USL Media',
     description:
       'Pachete transparente de producție video și marketing digital în București: Starter de la 129 €, Standard 199 €/lună și pachete personalizate, fără costuri ascunse.'
-  },
-  {
-    id: 'colaboram',
-    slug: 'colaboram',
-    navId: null,
-    breadcrumb: 'Hai să colaborăm',
-    title: 'Cere o Ofertă | Agenție Marketing Digital & Video București',
-    description:
-      'Spune-ne ce ai nevoie și primești o ofertă personalizată de la USL Media, agenție de marketing digital și producție video din București. Răspuns în maximum 48 de ore.'
-  },
-  {
-    id: 'colaboram-custom',
-    slug: 'colaboram-custom',
-    navId: null,
-    breadcrumb: 'Colaborare custom',
-    noindex: true,
-    title: 'Colaborare Personalizată | USL Media București',
-    description:
-      'Configurează o colaborare personalizată cu USL Media: număr de videoclipuri, revizii, script, tip de filmare și platforme.'
   },
   {
     id: 'contact',
