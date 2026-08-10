@@ -704,70 +704,68 @@
     sections.forEach(function(sec) { spy.observe(sec); });
   })();
 
-  // NEWSLETTER POPUP
+  // POPUP AUDIT GRATUIT
   (function() {
-    function initNewsletter() {
-      var backdrop   = document.getElementById('nlBackdrop');
-      var closeBtn   = document.getElementById('nlClose');
-      var submitBtn  = document.getElementById('nlSubmit');
-      var emailInput = document.getElementById('nlEmail');
+    var DELAY_MS   = 45000;              // cat asteptam inainte sa-l aratam
+    var SNOOZE_KEY = 'usl_audit_popup';
+    var SNOOZE_MS  = 7 * 24 * 60 * 60 * 1000;   // 7 zile
 
-      if (!backdrop || !closeBtn || !submitBtn || !emailInput) {
-        console.warn('Newsletter: elemente lipsa');
+    // Fara asta, popup-ul reapare la fiecare intrare pe site si la fiecare
+    // pagina deschisa direct — inclusiv pentru cine tocmai l-a inchis.
+    function snoozed() {
+      try {
+        var t = parseInt(localStorage.getItem(SNOOZE_KEY), 10);
+        return t && (Date.now() - t) < SNOOZE_MS;
+      } catch (e) { return false; }
+    }
+    function snooze() {
+      try { localStorage.setItem(SNOOZE_KEY, String(Date.now())); } catch (e) {}
+    }
+
+    function initAuditPopup() {
+      var backdrop = document.getElementById('nlBackdrop');
+      var closeBtn = document.getElementById('nlClose');
+      var cta      = document.getElementById('nlCta');
+
+      if (!backdrop || !closeBtn || !cta) {
+        console.warn('Popup audit: elemente lipsa');
         return;
       }
+      if (snoozed()) return;
 
-      function openNl() {
+      function openPopup() {
         backdrop.style.display = 'flex';
         backdrop.style.opacity = '0';
         setTimeout(function() { backdrop.style.opacity = '1'; }, 10);
       }
-      function closeNl() {
+      function closePopup() {
+        snooze();
         backdrop.style.opacity = '0';
         setTimeout(function() { backdrop.style.display = 'none'; }, 300);
       }
 
-      setTimeout(openNl, 30000);
+      var timer = setTimeout(openPopup, DELAY_MS);
 
-      closeBtn.addEventListener('click', closeNl);
-
+      closeBtn.addEventListener('click', closePopup);
       backdrop.addEventListener('click', function(e) {
-        if (e.target === backdrop) closeNl();
+        if (e.target === backdrop) closePopup();
+      });
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && backdrop.style.display === 'flex') closePopup();
       });
 
-      submitBtn.addEventListener('click', function() {
-        var email = emailInput.value.trim();
-        var valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-        if (!valid) {
-          emailInput.style.borderColor = 'rgba(239,68,68,0.6)';
-          emailInput.focus();
-          setTimeout(function() { emailInput.style.borderColor = ''; }, 2000);
-          return;
-        }
-        // Notificare pentru tine
-        emailjs.send('service_388u2vq', 'template_izp45s8', {
-          email: email,
-          sursa: 'Newsletter Popup',
-          mesaj: 'Abonat nou la newsletter: ' + email
-        });
-        // Welcome email pentru abonat
-        emailjs.send('service_388u2vq', 'template_e5vzaj8', {
-          email: email,
-          name: email
-        });
-        document.getElementById('nlFormContent').style.display = 'none';
-        document.getElementById('nlSuccess').style.display = 'flex';
-        setTimeout(closeNl, 3000);
-      });
+      // Cine a dat click pe ofertă nu mai are de ce s-o revada.
+      cta.addEventListener('click', function() { snooze(); });
 
-      emailInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') submitBtn.click();
-      });
+      // Daca userul e deja in drum spre formular, nu-i mai taiem calea.
+      if (window.location.pathname.indexOf('/formular') === 0) {
+        clearTimeout(timer);
+      }
     }
 
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initNewsletter);
+      document.addEventListener('DOMContentLoaded', initAuditPopup);
     } else {
-      initNewsletter();
+      initAuditPopup();
     }
   })();

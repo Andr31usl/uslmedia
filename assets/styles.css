@@ -139,6 +139,10 @@
 .nl-input-wrap input::placeholder { color: rgba(255,255,255,0.28); }
 
 .nl-btn {
+  /* E link către /formular/, nu buton — de aici display și text-decoration. */
+  display: block;
+  text-align: center;
+  text-decoration: none;
   background: linear-gradient(135deg, #1A3FBF, #2563EB);
   color: #fff;
   font-family: 'Syne', sans-serif;
