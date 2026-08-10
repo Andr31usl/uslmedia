@@ -682,9 +682,14 @@ a.nav-cta {
 
 .home-h1 {
   font-family: 'Syne', sans-serif;
-  font-size: clamp(3.5rem, 9vw, 7.5rem);
+  /* "CARE VINDE" ocupă ~9.97x font-size în lățime cu Syne 800. Dimensiunile
+     de dinainte erau calibrate pentru fontul de sistem, mai îngust, așa că
+     după încărcarea lui Syne titlul se rupea pe două rânduri. Împărțim
+     lățimea utilă a containerului (viewport minus padding, plafonată de
+     max-width-ul hero-ului) la 10.3, ca să încapă pe un rând cu marjă. */
+  font-size: min(calc((100vw - 96px) / 10.3), 6.05rem);
   font-weight: 800;
-  line-height: 0.92;
+  line-height: 0.98;
   letter-spacing: -0.045em;
   color: var(--white);
   margin-bottom: 2.25rem;
@@ -2482,7 +2487,8 @@ a.pkg-btn, a.pkg-btn-custom { text-decoration: none; }
   .home-hero { padding: 3rem 1.25rem 2rem; }
   .home-stats { padding: 2rem 1.25rem; gap: 1.5rem; flex-wrap: wrap; }
   .float-badge { display: none; }
-  .home-h1 { font-size: clamp(2.5rem, 9vw, 3.8rem); }
+  /* Pe telefon hero-ul are 1.25rem padding pe fiecare parte. */
+  .home-h1 { font-size: calc((100vw - 40px) / 10.3); }
 
   .despre-wrap,
   .porto-wrap,
