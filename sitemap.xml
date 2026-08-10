@@ -5,7 +5,7 @@
   <!--
     Fiecare secțiune are propriul fișier static (generat cu tools/build-pages.mjs),
     deci fiecare URL de mai jos răspunde real la o cerere HTTP.
-    /colaboram-custom/ lipsește intenționat: e marcat noindex, fiind un pas de formular.
+    /colaboram/ și /colaboram-custom/ lipsesc: sunt doar redirectări către /formular/.
   -->
 
   <url>
@@ -63,17 +63,10 @@
   </url>
 
   <url>
-    <loc>https://www.uslmedia.ro/colaboram/</loc>
-    <lastmod>2026-08-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <url>
     <loc>https://www.uslmedia.ro/formular/</loc>
     <lastmod>2026-08-09</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
+    <priority>0.8</priority>
   </url>
 
 </urlset>
