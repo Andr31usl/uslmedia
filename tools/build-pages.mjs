@@ -59,7 +59,7 @@ const SECTIONS = [
     breadcrumb: 'Pachete & Prețuri',
     title: 'Pachete & Prețuri Marketing Video București | USL Media',
     description:
-      'Pachete transparente de producție video și marketing digital în București: Starter de la 129 €, Standard 199 €/lună și pachete personalizate, fără costuri ascunse.'
+      'Pachete de producție video și marketing digital în București: abonament lunar cu 15 materiale, proiecte punctuale și colaborări personalizate. Ofertă în aceeași zi.'
   },
   {
     id: 'contact',
