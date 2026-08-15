@@ -2508,6 +2508,8 @@ a.pkg-btn, a.pkg-btn-custom { text-decoration: none; }
   .video-card { max-width: 100%; }
   
   .pkg-grid { grid-template-columns: 1fr; }
+  /* Pe o singura coloana abonamentul trece primul, indiferent de ordinea din DOM. */
+  .pkg-grid .pkg.featured { order: -1; }
   .field-row { grid-template-columns: 1fr; }
   .colab-field-row { grid-template-columns: 1fr; }
   .cnf-field-row { grid-template-columns: 1fr; }

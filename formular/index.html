@@ -770,11 +770,11 @@
     <h2>Câte video-uri ai nevoie <em>pe lună?</em></h2>
     <p class="sub">Poți ajusta oricând după primele filmări.</p>
     <div class="vol-track">
-      <div class="vol-opt" data-pkg="starter" data-vol="4 video / proiect (Starter — 129€)" onclick="pickVol(this, false)">
-        <strong>4</strong>Starter
+      <div class="vol-opt" data-pkg="proiect" data-vol="Proiect unic — filmare punctuală" onclick="pickVol(this, false)">
+        <strong>1x</strong>Proiect unic
       </div>
-      <div class="vol-opt" data-pkg="standard" data-vol="8 video / lună (Standard — 199€/lună)" onclick="pickVol(this, false)">
-        <strong>8</strong>Standard
+      <div class="vol-opt" data-pkg="abonament" data-vol="15 materiale / lună (Prezență completă)" onclick="pickVol(this, false)">
+        <strong>15</strong>Abonament
       </div>
       <div class="vol-opt" data-pkg="custom" data-vol="__custom__" onclick="pickVol(this, true)">
         <strong>✏️</strong>Custom
@@ -1394,7 +1394,7 @@
     goTo(0);
   }
 
-  /* ── PRESELECTARE PACHET (venit din Pachete, ex: /formular/?pachet=starter) ── */
+  /* ── PRESELECTARE PACHET (venit din Pachete, ex: /formular/?pachet=abonament) ── */
   (function preselectPachet() {
     var pkg = new URLSearchParams(window.location.search).get('pachet');
     if (!pkg) return;
