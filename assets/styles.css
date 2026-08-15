@@ -206,7 +206,9 @@
   --navy-card: #08090E;
   --grad-start: #2563EB;
   --grad-mid:   #1A3FBF;
-  --grad-end:   #0F2380;
+  --grad-end:   #000099;
+  /* Albastru pur, capatul adanc al paletei. */
+  --blue-deep:  #000099;
   --blue: #1A3FBF;
   --blue-bright: #2563EB;
   --blue-glow: #2563EB;
@@ -215,7 +217,7 @@
   --muted: #93B8F0;
   --border: rgba(255,255,255,0.07);
   --border-blue: rgba(37,99,235,0.35);
-  --gradient: linear-gradient(135deg, #2563EB 0%, #1A3FBF 60%, #0F2380 100%);
+  --gradient: linear-gradient(135deg, #2563EB 0%, #1A3FBF 60%, #000099 100%);
   --gradient-hover: linear-gradient(135deg, #3B82F6 0%, #2563EB 60%, #1A3FBF 100%);
   --gradient-glow: 0 8px 28px rgba(37,99,235,0.40);
 }
@@ -2718,7 +2720,7 @@ html {
   display: block; width: 100%; text-align: center;
   font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600;
   padding: 0.95rem; border-radius: 12px; cursor: pointer; border: none;
-  background: linear-gradient(90deg, #0F2380, #1A3FBF, #1A3FBF, #0F2380);
+  background: linear-gradient(90deg, #000099, #1A3FBF, #1A3FBF, #000099);
   background-size: 300% 100%;
   color: var(--white); transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s;
   animation: gradientShiftCustom 6s ease infinite;
@@ -2868,7 +2870,7 @@ html {
 .testi-avatar {
   width: 34px; height: 34px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #2563EB, #0F2380);
+  background: linear-gradient(135deg, #2563EB, #000099);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3189,7 +3191,7 @@ body.modal-open .orb-2 {
 .hf-glow-2 {
   width: 320px; height: 320px;
   bottom: -150px; right: -160px;
-  background: radial-gradient(circle, rgba(59,114,245,0.34), transparent 70%);
+  background: radial-gradient(circle, rgba(0,0,153,0.55), transparent 70%);
   animation: hfDrift2 27s ease-in-out infinite alternate;
 }
 
