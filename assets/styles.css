@@ -3154,3 +3154,106 @@ body.modal-open .orb-2 {
     overflow: hidden !important;
   }
 }
+
+/* ===== OBIECTE PLUTITOARE ÎN HERO =====
+   Decor, atât. Containerul NU taie nimic: hero-ul are max-width 1100px, iar
+   o tăietură pe conturul lui ar reteza petele difuze fix acolo și ar desena
+   cutia ca pe un dreptunghi mai deschis. Le las să se stingă natural — .page
+   are overflow-x: hidden și ține toată lățimea, deci clipul cade la marginea
+   ecranului, unde nu se vede. pointer-events: none, ca să nu prindă clicuri
+   destinate butoanelor. */
+.hero-floaters {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+/* Textul hero-ului rămâne deasupra decorului. Fără asta, un element
+   poziționat ar fi desenat peste frații lui nepoziționați. */
+.home-hero > *:not(.hero-floaters) {
+  position: relative;
+  z-index: 1;
+}
+
+.hf-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+}
+.hf-glow-1 {
+  width: 380px; height: 380px;
+  top: -150px; left: -180px;
+  background: radial-gradient(circle, rgba(37,99,235,0.40), transparent 70%);
+  animation: hfDrift1 22s ease-in-out infinite alternate;
+}
+.hf-glow-2 {
+  width: 320px; height: 320px;
+  bottom: -150px; right: -160px;
+  background: radial-gradient(circle, rgba(59,114,245,0.34), transparent 70%);
+  animation: hfDrift2 27s ease-in-out infinite alternate;
+}
+
+.hf-shape {
+  position: absolute;
+  border: 1px solid rgba(37,99,235,0.3);
+}
+.hf-ring {
+  width: 118px; height: 118px;
+  border-radius: 50%;
+  top: 12%; right: 2%;
+  animation: hfFloat 19s ease-in-out infinite;
+}
+.hf-square {
+  width: 72px; height: 72px;
+  border-radius: 16px;
+  bottom: 20%; left: 2%;
+  animation: hfFloat 23s ease-in-out infinite reverse;
+}
+/* Triunghi de play, pentru că despre video e vorba. */
+.hf-play {
+  width: 46px; height: 46px;
+  border: 0;
+  background: rgba(37,99,235,0.18);
+  clip-path: polygon(14% 4%, 94% 50%, 14% 96%);
+  top: 20%; left: 4%;
+  animation: hfFloat 26s ease-in-out infinite;
+}
+
+.hf-dot {
+  position: absolute;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: rgba(37,99,235,0.6);
+}
+.hf-dot-1 { top: 34%; left: 13%; animation: hfBob 11s ease-in-out infinite; }
+.hf-dot-2 { top: 70%; right: 14%; animation: hfBob 14s ease-in-out infinite 1.5s; }
+.hf-dot-3 { top: 8%;  left: 32%; animation: hfBob 16s ease-in-out infinite 3s; }
+
+/* Doar transform și opacity, ca animațiile să stea pe compositor. */
+@keyframes hfDrift1 {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(70px, 45px, 0) scale(1.15); }
+}
+@keyframes hfDrift2 {
+  from { transform: translate3d(0, 0, 0) scale(1.1); }
+  to   { transform: translate3d(-55px, -40px, 0) scale(1); }
+}
+@keyframes hfFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-24px) rotate(9deg); }
+}
+@keyframes hfBob {
+  0%, 100% { transform: translateY(0); opacity: 0.3; }
+  50%      { transform: translateY(-18px); opacity: 0.95; }
+}
+
+@media (max-width: 768px) {
+  /* Pe telefon hero-ul e strâmt: rămân doar petele difuze, mai mici. */
+  .hf-shape, .hf-dot { display: none; }
+  .hf-glow-1 { width: 240px; height: 240px; top: -110px; left: -110px; }
+  .hf-glow-2 { width: 210px; height: 210px; bottom: -110px; right: -100px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hf-glow, .hf-shape, .hf-dot { animation: none; }
+}
