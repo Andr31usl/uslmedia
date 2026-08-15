@@ -17,6 +17,7 @@
  */
 
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -72,7 +73,21 @@ const SECTIONS = [
   }
 ];
 
-const src = readFileSync(join(ROOT, 'index.html'), 'utf8');
+/**
+ * GitHub Pages servește /assets/ cu un cache de zece minute, iar în fața lui
+ * mai stă și CDN-ul. Fără o versiune în URL, un vizitator care a deschis
+ * site-ul înainte de ultima modificare primește foaia de stil veche până îi
+ * expiră cache-ul — și niciun refresh din browser nu ajută, pentru că nu
+ * cache-ul lui e problema.
+ *
+ * Versiunea se calculează din conținutul fișierelor, deci se schimbă singură
+ * exact când se schimbă ele și rămâne aceeași dacă nu s-a atins nimic.
+ */
+function assetVersion(...files) {
+  const hash = createHash('sha256');
+  for (const file of files) hash.update(readFileSync(join(ROOT, file)));
+  return hash.digest('hex').slice(0, 8);
+}
 
 /** Înlocuiește exact o apariție; aruncă dacă tiparul nu mai există în sursă. */
 function replaceOnce(html, pattern, replacement, label) {
@@ -89,6 +104,28 @@ function replaceOnce(html, pattern, replacement, label) {
 function escapeAttr(value) {
   return value.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
 }
+
+/** Pune (sau actualizează) ?v=… pe foaia de stil și pe scriptul comun. */
+function versionAssets(html, version) {
+  html = replaceOnce(
+    html,
+    /href="\/assets\/styles\.css(\?v=[^"]*)?"/,
+    `href="/assets/styles.css?v=${version}"`,
+    'link către styles.css'
+  );
+  return replaceOnce(
+    html,
+    /src="\/assets\/app\.js(\?v=[^"]*)?"/,
+    `src="/assets/app.js?v=${version}"`,
+    'script app.js'
+  );
+}
+
+/* index.html e sursa pentru toate celelalte pagini, deci primește versiunea
+   întâi și se rescrie pe disc — altfel doar paginile generate ar fi corecte. */
+const version = assetVersion('assets/styles.css', 'assets/app.js');
+const src = versionAssets(readFileSync(join(ROOT, 'index.html'), 'utf8'), version);
+writeFileSync(join(ROOT, 'index.html'), src);
 
 function buildPage(section) {
   const url = `${ORIGIN}/${section.slug}/`;
