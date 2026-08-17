@@ -499,16 +499,16 @@ nav {
    rândurile au aproape aceeași lățime, iar între ele nu rămâne aer. Înainte,
    subtitlul ieșea cu ~33px în afara numelui (era mai mare, mai răsfirat și
    alb ca și numele), așa că blocul se lăbărța și se citea ca două texte
-   nelegate. Acum „USL MEDIA" are 138px, subtitlul 139px — se aliniază la
+   nelegate. Acum „USL MEDIA" are 125px, subtitlul 124px — se aliniază la
    ambele capete. */
 .logo {
   display: flex;
   flex-direction: column;
   font-family: 'Syne', sans-serif;
   font-weight: 800;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   line-height: 1;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.01em;
   color: var(--white);
   text-decoration: none;
   cursor: none;
@@ -518,10 +518,10 @@ nav {
     font-family: 'DM Sans', sans-serif;
     font-size: 0.4em;
     font-weight: 500;       /* Compensează corpul mic: la 400 s-ar stinge. */
-    letter-spacing: 0.07em; /* Majusculele mici au nevoie de puțin aer. */
+    letter-spacing: 0.04em;
     line-height: 1;
     color: var(--white);
-    margin-top: 5px;
+    margin-top: 4px;
     text-transform: uppercase;
 }
 .nav-links {
