@@ -496,23 +496,21 @@ nav {
   backdrop-filter: blur(20px);
 }
 /* Logo-ul e un lockup pe două rânduri, deci se ține strâns de două lucruri:
-   rândurile au aproape aceeași lățime, iar între ele nu rămâne aer. Înainte,
-   subtitlul ieșea cu ~33px în afara numelui (era mai mare, mai răsfirat și
-   alb ca și numele), așa că blocul se lăbărța și se citea ca două texte
-   nelegate. Acum „USL MEDIA" are 168px, subtitlul 163px — se aliniază la
-   ambele capete.
+   rândurile au aceeași lățime, iar între ele nu rămâne aer. Numele nu e în
+   Syne, ca restul titlurilor, ci în DM Sans 700 — clientul a cerut explicit
+   literele rotunde, neutre, nu grotescul îngust al lui Syne.
 
-   Valorile sunt măsurate cu Syne și DM Sans chiar încărcate. Cu fonturile de
-   rezervă, Syne 800 iese cu ~40% mai îngust, deci orice recalibrare făcută
-   fără fonturile reale dă alte numere și strică alinierea. */
+   130.3px numele, 129.9px subtitlul, la fonturile chiar încărcate. Măsoară
+   întotdeauna cu Syne și DM Sans încărcate: pe fonturile de rezervă ies alte
+   numere și alinierea se duce. */
 .logo {
   display: flex;
   flex-direction: column;
-  font-family: 'Syne', sans-serif;
-  font-weight: 800;
-  font-size: 1.125rem;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
   line-height: 1;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.02em;
   color: var(--white);
   text-decoration: none;
   cursor: none;
@@ -520,9 +518,9 @@ nav {
 .logo span { color: var(--blue-glow); }
 .logo .subtext {
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.583em;
+    font-size: 0.375em;
     font-weight: 500;       /* Compensează corpul mic: la 400 s-ar stinge. */
-    letter-spacing: 0.14em;
+    letter-spacing: 0.1em;
     line-height: 1;
     color: var(--white);
     margin-top: 4px;
