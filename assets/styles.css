@@ -495,22 +495,33 @@ nav {
   background: rgba(6,6,8,0.80);
   backdrop-filter: blur(20px);
 }
+/* Logo-ul e un lockup pe două rânduri, deci se ține strâns de două lucruri:
+   rândurile au aproape aceeași lățime, iar între ele nu rămâne aer. Înainte,
+   subtitlul ieșea cu ~33px în afara numelui (era mai mare, mai răsfirat și
+   alb ca și numele), așa că blocul se lăbărța și se citea ca două texte
+   nelegate. Acum „USL MEDIA" are 138px, subtitlul 139px — se aliniază la
+   ambele capete. */
 .logo {
+  display: flex;
+  flex-direction: column;
   font-family: 'Syne', sans-serif;
   font-weight: 800;
   font-size: 1.5rem;
-  letter-spacing: 0.08em;
+  line-height: 1;
+  letter-spacing: 0.03em;
   color: var(--white);
   text-decoration: none;
   cursor: none;
 }
 .logo span { color: var(--blue-glow); }
 .logo .subtext {
-    font-size: 0.5em;       /* Va fi mai mic față de textul principal */
-    font-weight: 400;       /* Mai subțire față de logo */
-    letter-spacing: 0.1em;
-    color: var(--white);
-    margin-top: 2px;        /* Spațiu mic sub "USL MEDIA" */
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.4em;
+    font-weight: 500;       /* Compensează corpul mic: la 400 s-ar stinge. */
+    letter-spacing: 0.07em; /* Majusculele mici au nevoie de puțin aer. */
+    line-height: 1;
+    color: var(--muted);    /* Subtitlu, nu al doilea titlu. */
+    margin-top: 5px;
     text-transform: uppercase;
 }
 .nav-links {
