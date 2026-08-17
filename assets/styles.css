@@ -520,7 +520,7 @@ nav {
     font-weight: 500;       /* Compensează corpul mic: la 400 s-ar stinge. */
     letter-spacing: 0.07em; /* Majusculele mici au nevoie de puțin aer. */
     line-height: 1;
-    color: var(--muted);    /* Subtitlu, nu al doilea titlu. */
+    color: var(--white);
     margin-top: 5px;
     text-transform: uppercase;
 }
