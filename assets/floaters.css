@@ -1,0 +1,193 @@
+/* ===== FLOATERS — DECOR AMBIENTAL, PE TOT SITE-UL =====
+   Generalizarea obiectelor plutitoare din hero, ca să poată fi puse în orice
+   secțiune. Regulile de bază:
+
+   - Stratul (.fl-layer) stă pe z-index: -1. Așa se desenează peste fundalul
+     secțiunii, dar sub textul și cardurile ei — fără să fie nevoie să umblu la
+     z-index-ul copiilor, cum trebuia la hero.
+   - pointer-events: none peste tot. Decorul nu prinde niciodată un clic.
+   - Animez doar transform, opacity și filter — rămân pe compositor, deci nu
+     provoacă reflow la 60fps.
+   - Poziția, mărimea, durata și opacitatea vin din custom properties, ca un
+     singur set de clase să acopere toate variantele. Vezi floaters.js pentru
+     preseturile fiecărei secțiuni.
+   ===================================================================== */
+
+/* position/inset/z-index le scrie JS inline, nu de aici: secțiunile gazdă au
+   deja reguli proprii pentru copiii lor direcți (hero-ul, de exemplu, îi
+   forțează pe toți la position: relative), iar o regulă de clasă ar pierde
+   lupta. Inline câștigă oriunde l-aș injecta. */
+.fl-layer {
+  pointer-events: none;
+  /* Parallax: floaters.js scrie --fl-p (px) la scroll. */
+  transform: translate3d(0, var(--fl-p, 0px), 0);
+  will-change: transform;
+}
+
+/* isolation: izolează contextul de stivuire în secțiune. Fără el, un strat cu
+   z-index negativ urcă la primul strămoș care e context de stivuire și ajunge
+   sub fundalul aceluia — adică invizibil. */
+.fl-host { isolation: isolate; }
+
+/* Baza comună. `translate` e proprietate separată de `transform`, așa că
+   centrarea pe --x/--y nu se bate cap în cap cu transformările din keyframes. */
+.fl {
+  position: absolute;
+  left: var(--x, 50%);
+  top: var(--y, 50%);
+  width: var(--s, 80px);
+  height: var(--s, 80px);
+  translate: -50% -50%;
+  opacity: var(--op, 1);
+  animation-duration: var(--dur, 22s);
+  animation-delay: var(--delay, 0s);
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-name: none;
+}
+
+/* ── Pete difuze ─────────────────────────────────────────────────────── */
+.fl-glow {
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(37, 99, 235, var(--glow, 0.34)), transparent 70%);
+  filter: blur(var(--blur, 70px));
+  animation-name: flDrift;
+  animation-direction: alternate;
+}
+/* Varianta închisă, pentru contrast — albastrul de noapte din hero. */
+.fl-glow-deep {
+  background: radial-gradient(circle, rgba(0, 0, 153, var(--glow, 0.5)), transparent 70%);
+}
+/* Varianta rece, pentru secțiunile unde albastrul tare ar fi prea mult. */
+.fl-glow-soft {
+  background: radial-gradient(circle, rgba(96, 165, 250, var(--glow, 0.18)), transparent 70%);
+}
+
+/* ── Contururi ───────────────────────────────────────────────────────── */
+.fl-ring,
+.fl-square,
+.fl-hex,
+.fl-corner {
+  border: 1px solid rgba(37, 99, 235, var(--stroke, 0.3));
+  animation-name: flFloat;
+}
+.fl-ring { border-radius: 50%; }
+.fl-ring-dashed {
+  border-style: dashed;
+  animation-name: flSpin;
+  animation-timing-function: linear;
+}
+.fl-square { border-radius: calc(var(--s, 80px) * 0.22); }
+
+/* Hexagon: conturul nu se poate face din border, așa că folosesc un fundal
+   tăiat cu clip-path și o „gaură" concentrică prin al doilea gradient. */
+.fl-hex {
+  border: 0;
+  background: rgba(37, 99, 235, var(--stroke, 0.18));
+  clip-path: polygon(25% 2%, 75% 2%, 100% 50%, 75% 98%, 25% 98%, 0% 50%);
+  animation-name: flFloat;
+}
+
+/* Colț de cadru — trimitere la ramele de filmare. */
+.fl-corner {
+  border-right: 0;
+  border-bottom: 0;
+  border-radius: 4px 0 0 0;
+  border-width: 2px;
+  animation-name: flFloat;
+}
+.fl-corner-flip { rotate: 180deg; }
+
+/* ── Forme pline ─────────────────────────────────────────────────────── */
+.fl-play {
+  background: rgba(37, 99, 235, var(--fill, 0.18));
+  clip-path: polygon(14% 4%, 94% 50%, 14% 96%);
+  animation-name: flFloat;
+}
+.fl-dot {
+  width: var(--s, 5px);
+  height: var(--s, 5px);
+  border-radius: 50%;
+  background: rgba(37, 99, 235, var(--fill, 0.6));
+  animation-name: flBob;
+}
+
+/* Cruciuliță subțire. Brațele stau în pseudo-elemente, ca să rămână un
+   singur nod în DOM. */
+.fl-plus {
+  animation-name: flPulse;
+}
+.fl-plus::before,
+.fl-plus::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  background: rgba(37, 99, 235, var(--fill, 0.45));
+}
+.fl-plus::before { width: 100%; height: 1px; }
+.fl-plus::after { width: 1px; height: 100%; }
+
+/* Linie fină, care se stinge la ambele capete. */
+.fl-line {
+  height: 1px;
+  width: var(--s, 160px);
+  background: linear-gradient(90deg, transparent, rgba(37, 99, 235, var(--fill, 0.45)), transparent);
+  rotate: var(--rot, 0deg);
+  animation-name: flPulse;
+}
+
+/* Petic de grilă — textură discretă în spatele cardurilor. */
+.fl-grid {
+  background-image: radial-gradient(rgba(37, 99, 235, var(--fill, 0.35)) 1px, transparent 1px);
+  background-size: var(--gap, 26px) var(--gap, 26px);
+  mask-image: radial-gradient(circle, #000 15%, transparent 70%);
+  -webkit-mask-image: radial-gradient(circle, #000 15%, transparent 70%);
+  animation-name: flPulse;
+}
+
+/* ── Keyframes. Doar transform/opacity/filter. ───────────────────────── */
+@keyframes flDrift {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(var(--dx, 60px), var(--dy, 40px), 0) scale(var(--scale, 1.15)); }
+}
+@keyframes flFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(calc(var(--travel, 24px) * -1)) rotate(var(--turn, 9deg)); }
+}
+@keyframes flBob {
+  0%, 100% { transform: translateY(0); opacity: calc(var(--op, 1) * 0.3); }
+  50%      { transform: translateY(calc(var(--travel, 18px) * -1)); opacity: var(--op, 1); }
+}
+@keyframes flSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes flPulse {
+  0%, 100% { transform: translateY(0) scale(1); opacity: calc(var(--op, 1) * 0.45); }
+  50%      { transform: translateY(calc(var(--travel, 14px) * -1)) scale(1.06); opacity: var(--op, 1); }
+}
+
+/* ── Intrare lină ────────────────────────────────────────────────────── */
+/* Fără asta, decorul apare brusc la injectare și se vede „pocnitura". */
+/* --fl-strength e maneta globală de intensitate: o poți coborî dintr-un
+   singur loc (:root) dacă decorul pare prea prezent. */
+.fl-layer { opacity: 0; transition: opacity 0.8s ease; }
+.fl-layer.fl-in { opacity: var(--fl-strength, 1); }
+
+/* ── Ecrane mici ─────────────────────────────────────────────────────── */
+/* Pe telefon rămân doar petele difuze: formele mici se înghesuie în text și
+   fac layoutul zgomotos. JS oricum injectează mai puține (vezi maxMobile). */
+@media (max-width: 768px) {
+  .fl-ring, .fl-square, .fl-hex, .fl-corner, .fl-play, .fl-plus, .fl-line, .fl-grid {
+    display: none;
+  }
+  .fl-glow { filter: blur(calc(var(--blur, 70px) * 0.7)); }
+}
+
+/* ── Accesibilitate ──────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .fl { animation: none !important; }
+  .fl-layer { transform: none !important; }
+}
