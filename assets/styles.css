@@ -499,14 +499,18 @@ nav {
    rândurile au aproape aceeași lățime, iar între ele nu rămâne aer. Înainte,
    subtitlul ieșea cu ~33px în afara numelui (era mai mare, mai răsfirat și
    alb ca și numele), așa că blocul se lăbărța și se citea ca două texte
-   nelegate. Acum „USL MEDIA" are 125px, subtitlul 124px — se aliniază la
-   ambele capete. */
+   nelegate. Acum „USL MEDIA" are 168px, subtitlul 163px — se aliniază la
+   ambele capete.
+
+   Valorile sunt măsurate cu Syne și DM Sans chiar încărcate. Cu fonturile de
+   rezervă, Syne 800 iese cu ~40% mai îngust, deci orice recalibrare făcută
+   fără fonturile reale dă alte numere și strică alinierea. */
 .logo {
   display: flex;
   flex-direction: column;
   font-family: 'Syne', sans-serif;
   font-weight: 800;
-  font-size: 1.4rem;
+  font-size: 1.125rem;
   line-height: 1;
   letter-spacing: 0.01em;
   color: var(--white);
@@ -516,9 +520,9 @@ nav {
 .logo span { color: var(--blue-glow); }
 .logo .subtext {
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.4em;
+    font-size: 0.583em;
     font-weight: 500;       /* Compensează corpul mic: la 400 s-ar stinge. */
-    letter-spacing: 0.04em;
+    letter-spacing: 0.14em;
     line-height: 1;
     color: var(--white);
     margin-top: 4px;
