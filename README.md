@@ -18,6 +18,7 @@ colaboram-custom/      |
 contact/              /
 formular/             chestionarul de client (pagină separată, independentă)
 tools/build-pages.mjs generatorul paginilor pe secțiuni
+.claude/skills/       skill-uri de design pentru Claude Code (nu se publică)
 ```
 
 ## Cum funcționează navigația
@@ -83,3 +84,13 @@ locuri: un buton în `.porto-filters`, `data-cat` pe carduri, și atât — func
 - Datele structurate (`ProfessionalService`, `WebSite`, `BreadcrumbList`) sunt
   în `<head>`; cele de breadcrumb sunt injectate de generator.
 - `.nojekyll` dezactivează procesarea Jekyll pe GitHub Pages.
+- `/.claude/` e blocat în `robots.txt`: sunt unelte de development, nu conținut
+  de site.
+
+## Unelte de design
+
+`.claude/skills/` conține pachetul [UI/UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
+(MIT): baze de date căutabile cu stiluri UI, palete, perechi de fonturi și
+reguli UX, plus skill-uri de design system și branding. Se încarcă automat în
+Claude Code când lucrezi în repo. Detalii și comenzi în
+`.claude/skills/README.md`.

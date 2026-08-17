@@ -5,6 +5,7 @@ User-agent: *
 Allow: /
 
 # Fișiere interne care nu au valoare în rezultatele căutării
+Disallow: /.claude/
 Disallow: /*?*fbclid=
 Disallow: /*?*gclid=
 Disallow: /*?*utm_
