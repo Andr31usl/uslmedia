@@ -3115,8 +3115,8 @@ body.modal-open .orb-2 {
 
 @media (max-width: 768px) {
   .video-modal-inner video { max-width: 99vw; max-height: 88vh; border-radius: 12px; }
-  .video-modal-share { top: 14px; right: 60px; height: 38px; padding: 0 0.7rem; }
-  .video-modal-share-label { display: none; }
+  .video-modal-share { top: 14px; right: 58px; height: 38px; padding: 0 0.85rem; gap: 0.4rem; font-size: 0.66rem; letter-spacing: 0.04em; }
+  .video-modal-title { max-width: calc(100vw - 234px); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .video-modal-toast { bottom: 24px; font-size: 0.78rem; }
   .video-modal-close { top: 14px; right: 14px; width: 38px; height: 38px; }
   .video-modal-title { top: 16px; left: 16px; }
