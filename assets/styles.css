@@ -2969,7 +2969,8 @@ html {
 body.modal-open .page-wrapper,
 body.modal-open nav,
 body.modal-open .orb-1,
-body.modal-open .orb-2 {
+body.modal-open .orb-2,
+body.modal-open .site-floaters {
   filter: blur(14px);
   transition: filter 0.3s ease;
   pointer-events: none;
@@ -3225,6 +3226,84 @@ body.modal-open .orb-2 {
   }
 }
 
+/* ===== OBIECTE PLUTITOARE PE TOT SITE-UL =====
+   Același limbaj vizual ca decorul din hero (inel, pătrat rotunjit, triunghi
+   de play, puncte), dar într-un strat fix la nivel de <body>, ca .orb — deci
+   apare pe toate secțiunile, inclusiv pe scroll-ul continuu de pe telefon.
+   z-index 0: sub .page-wrapper (z-index 1), peste fundalul negru. */
+.site-floaters {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.sf {
+  position: absolute;
+  border: 1px solid rgba(37,99,235,0.22);
+  will-change: transform;
+}
+.sf-ring { border-radius: 50%; }
+.sf-ring-1 { width: 128px; height: 128px; top: 16%;    left: 3%;   animation: sfFloat 21s ease-in-out infinite; }
+.sf-ring-2 { width: 74px;  height: 74px;  bottom: 14%; right: 7%;  animation: sfFloat 25s ease-in-out infinite reverse; }
+.sf-ring-3 { width: 46px;  height: 46px;  top: 62%;    right: 3%;  animation: sfFloat 18s ease-in-out infinite 2s; }
+
+.sf-square { border-radius: 16px; }
+.sf-square-1 { width: 80px; height: 80px; top: 24%;    right: 5%;  animation: sfFloat 27s ease-in-out infinite reverse; }
+.sf-square-2 { width: 44px; height: 44px; bottom: 24%; left: 7%;   animation: sfFloat 23s ease-in-out infinite 1.5s; }
+
+/* Triunghi de play, pentru că despre video e vorba. */
+.sf-play {
+  border: 0;
+  background: rgba(37,99,235,0.16);
+  clip-path: polygon(14% 4%, 94% 50%, 14% 96%);
+}
+.sf-play-1 { width: 44px; height: 44px; top: 46%;    left: 5%;   animation: sfFloat 24s ease-in-out infinite; }
+.sf-play-2 { width: 26px; height: 26px; bottom: 34%; right: 16%; animation: sfFloat 20s ease-in-out infinite 3s; }
+
+.sf-dot {
+  position: absolute;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: rgba(37,99,235,0.55);
+}
+.sf-dot-1 { top: 30%; left: 14%;  animation: sfBob 12s ease-in-out infinite; }
+.sf-dot-2 { top: 74%; left: 22%;  animation: sfBob 15s ease-in-out infinite 1.2s; }
+.sf-dot-3 { top: 18%; right: 20%; animation: sfBob 13s ease-in-out infinite 2.4s; }
+.sf-dot-4 { top: 56%; right: 12%; animation: sfBob 17s ease-in-out infinite 0.6s; }
+.sf-dot-5 { top: 88%; right: 34%; animation: sfBob 14s ease-in-out infinite 3.6s; }
+
+/* Doar transform și opacity, ca animațiile să stea pe compositor. */
+@keyframes sfFloat {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50%      { transform: translate3d(0, -26px, 0) rotate(10deg); }
+}
+@keyframes sfBob {
+  0%, 100% { transform: translate3d(0, 0, 0); opacity: 0.25; }
+  50%      { transform: translate3d(0, -20px, 0); opacity: 0.9; }
+}
+
+@media (max-width: 768px) {
+  /* Pe telefon ecranul e strâmt: formele rămân, dar mai mici și mai spre
+     margini, ca să nu treacă peste text. */
+  .sf-ring-1 { width: 84px; height: 84px; top: 18%; left: -18px; }
+  .sf-ring-2 { width: 52px; height: 52px; bottom: 12%; right: -14px; }
+  .sf-ring-3 { width: 32px; height: 32px; top: 64%; right: 4%; }
+  .sf-square-1 { width: 54px; height: 54px; top: 26%; right: -16px; }
+  .sf-square-2 { width: 32px; height: 32px; bottom: 26%; left: 4%; }
+  .sf-play-1 { width: 30px; height: 30px; top: 48%; left: 3%; }
+  .sf-play-2 { width: 20px; height: 20px; bottom: 36%; right: 10%; }
+  .sf-dot-1 { left: 8%; }
+  .sf-dot-2 { left: 12%; }
+  .sf-dot-3 { right: 10%; }
+  .sf-dot-5 { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sf, .sf-dot { animation: none; }
+}
+
 /* ===== OBIECTE PLUTITOARE ÎN HERO =====
    Decor, atât. Containerul NU taie nimic: hero-ul are max-width 1100px, iar
    o tăietură pe conturul lui ar reteza petele difuze fix acolo și ar desena
@@ -3263,42 +3342,6 @@ body.modal-open .orb-2 {
   animation: hfDrift2 27s ease-in-out infinite alternate;
 }
 
-.hf-shape {
-  position: absolute;
-  border: 1px solid rgba(37,99,235,0.3);
-}
-.hf-ring {
-  width: 118px; height: 118px;
-  border-radius: 50%;
-  top: 12%; right: 2%;
-  animation: hfFloat 19s ease-in-out infinite;
-}
-.hf-square {
-  width: 72px; height: 72px;
-  border-radius: 16px;
-  bottom: 20%; left: 2%;
-  animation: hfFloat 23s ease-in-out infinite reverse;
-}
-/* Triunghi de play, pentru că despre video e vorba. */
-.hf-play {
-  width: 46px; height: 46px;
-  border: 0;
-  background: rgba(37,99,235,0.18);
-  clip-path: polygon(14% 4%, 94% 50%, 14% 96%);
-  top: 20%; left: 4%;
-  animation: hfFloat 26s ease-in-out infinite;
-}
-
-.hf-dot {
-  position: absolute;
-  width: 5px; height: 5px;
-  border-radius: 50%;
-  background: rgba(37,99,235,0.6);
-}
-.hf-dot-1 { top: 34%; left: 13%; animation: hfBob 11s ease-in-out infinite; }
-.hf-dot-2 { top: 70%; right: 14%; animation: hfBob 14s ease-in-out infinite 1.5s; }
-.hf-dot-3 { top: 8%;  left: 32%; animation: hfBob 16s ease-in-out infinite 3s; }
-
 /* Doar transform și opacity, ca animațiile să stea pe compositor. */
 @keyframes hfDrift1 {
   from { transform: translate3d(0, 0, 0) scale(1); }
@@ -3308,22 +3351,12 @@ body.modal-open .orb-2 {
   from { transform: translate3d(0, 0, 0) scale(1.1); }
   to   { transform: translate3d(-55px, -40px, 0) scale(1); }
 }
-@keyframes hfFloat {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50%      { transform: translateY(-24px) rotate(9deg); }
-}
-@keyframes hfBob {
-  0%, 100% { transform: translateY(0); opacity: 0.3; }
-  50%      { transform: translateY(-18px); opacity: 0.95; }
-}
 
 @media (max-width: 768px) {
-  /* Pe telefon hero-ul e strâmt: rămân doar petele difuze, mai mici. */
-  .hf-shape, .hf-dot { display: none; }
   .hf-glow-1 { width: 240px; height: 240px; top: -110px; left: -110px; }
   .hf-glow-2 { width: 210px; height: 210px; bottom: -110px; right: -100px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hf-glow, .hf-shape, .hf-dot { animation: none; }
+  .hf-glow { animation: none; }
 }
