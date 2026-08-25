@@ -184,7 +184,7 @@
     }
     </script>
 
-    <link rel="stylesheet" href="/assets/styles.css?v=20260817d">
+    <link rel="stylesheet" href="/assets/styles.css?v=20260825a">
 </head>
 <body>
 
@@ -831,7 +831,7 @@
         <button type="button" class="porto-filter" data-filter="social" aria-pressed="false" onclick="filterPortfolio('social', this)">Reels & Social Media <span class="porto-filter-count" data-count-for="social"></span></button>
       </div>
       <div class="video-grid anim anim-5">
-        <div class="video-card" data-cat="evenimente" onclick="openVideoModal('/portofoliu%20site/2.mp4', 'Workshop-Rotary Cismigiu')">
+        <div class="video-card" data-cat="evenimente" data-clip="workshop-rotary-cismigiu" onclick="openVideoModal('/portofoliu%20site/2.mp4', 'Workshop-Rotary Cismigiu', 'workshop-rotary-cismigiu')">
           <div class="video-wrap">
             <video preload="metadata" playsinline>
               <source src="/portofoliu%20site/2.mp4" type="video/mp4">
@@ -845,7 +845,7 @@
             <p class="video-tag">Evenimente</p>
           </div>
         </div>
-        <div class="video-card" data-cat="evenimente" onclick="openVideoModal('/portofoliu%20site/1.mp4', 'Cupa LazarxIoanid')">
+        <div class="video-card" data-cat="evenimente" data-clip="cupa-lazar-x-ioanid" onclick="openVideoModal('/portofoliu%20site/1.mp4', 'Cupa LazarxIoanid', 'cupa-lazar-x-ioanid')">
           <div class="video-wrap">
             <video preload="metadata" playsinline>
               <source src="/portofoliu%20site/1.mp4" type="video/mp4">
@@ -859,7 +859,7 @@
             <p class="video-tag">Evenimente</p>
           </div>
         </div>
-        <div class="video-card" data-cat="imobiliare" onclick="openVideoModal('/portofoliu%20site/video%20renovari.mp4.mov', 'Apartament-Renovision Design')">
+        <div class="video-card" data-cat="imobiliare" data-clip="apartament-renovision-design" onclick="openVideoModal('/portofoliu%20site/video%20renovari.mp4.mov', 'Apartament-Renovision Design', 'apartament-renovision-design')">
           <div class="video-wrap">
             <video preload="metadata" playsinline>
               <source src="/portofoliu%20site/video%20renovari.mp4.mov" type="video/mp4">
@@ -873,7 +873,7 @@
             <p class="video-tag">Imobiliare & Amenajări</p>
           </div>
         </div>
-        <div class="video-card" data-cat="social" onclick="openVideoModal('/portofoliu%20site/3.mp4', 'Dynamic Reel')">
+        <div class="video-card" data-cat="social" data-clip="dynamic-reel" onclick="openVideoModal('/portofoliu%20site/3.mp4', 'Dynamic Reel', 'dynamic-reel')">
           <div class="video-wrap">
             <video preload="metadata" playsinline>
               <source src="/portofoliu%20site/3.mp4" type="video/mp4">
@@ -887,7 +887,7 @@
             <p class="video-tag">Reels & Social Media</p>
           </div>
         </div>
-        <div class="video-card" data-cat="horeca" onclick="openVideoModal('/portofoliu%20site/Corks.mp4', 'Restaurant-Corks')">
+        <div class="video-card" data-cat="horeca" data-clip="restaurant-corks" onclick="openVideoModal('/portofoliu%20site/Corks.mp4', 'Restaurant-Corks', 'restaurant-corks')">
           <div class="video-wrap">
             <video preload="metadata" playsinline>
               <source src="/portofoliu%20site/Corks.mp4" type="video/mp4">
@@ -901,7 +901,7 @@
             <p class="video-tag">Restaurante & Cafenele</p>
           </div>
         </div>
-        <div class="video-card" data-cat="horeca" onclick="openVideoModal('/portofoliu%20site/Leecoffee%201.mp4', 'Cafenea-Lee Coffee')">
+        <div class="video-card" data-cat="horeca" data-clip="cafenea-lee-coffee" onclick="openVideoModal('/portofoliu%20site/Leecoffee%201.mp4', 'Cafenea-Lee Coffee', 'cafenea-lee-coffee')">
           <div class="video-wrap">
             <video preload="metadata" playsinline>
               <source src="/portofoliu%20site/Leecoffee%201.mp4" type="video/mp4">
@@ -915,7 +915,7 @@
             <p class="video-tag">Restaurante & Cafenele</p>
           </div>
         </div>
-        <div class="video-card" data-cat="horeca" onclick="openVideoModal('/portofoliu%20site/Leecoffee%202.mp4', 'Latte Art-Lee Coffee')">
+        <div class="video-card" data-cat="horeca" data-clip="latte-art-lee-coffee" onclick="openVideoModal('/portofoliu%20site/Leecoffee%202.mp4', 'Latte Art-Lee Coffee', 'latte-art-lee-coffee')">
           <div class="video-wrap">
             <video preload="metadata" playsinline>
               <source src="/portofoliu%20site/Leecoffee%202.mp4" type="video/mp4">
@@ -929,7 +929,7 @@
             <p class="video-tag">Restaurante & Cafenele</p>
           </div>
         </div>
-        <div class="video-card" data-cat="horeca" onclick="openVideoModal('/portofoliu%20site/Leecoffe%203.mp4', 'Reel-Lee Coffee')">
+        <div class="video-card" data-cat="horeca" data-clip="reel-lee-coffee" onclick="openVideoModal('/portofoliu%20site/Leecoffe%203.mp4', 'Reel-Lee Coffee', 'reel-lee-coffee')">
           <div class="video-wrap">
             <video preload="metadata" playsinline>
               <source src="/portofoliu%20site/Leecoffe%203.mp4" type="video/mp4">
@@ -1605,7 +1605,7 @@
 
 </div>
 
-<script src="/assets/app.js?v=20260817d" defer></script>
+<script src="/assets/app.js?v=20260825a" defer></script>
 
 <!-- MODAL VIDEO – în afara page-wrapper, nu e afectat de blur -->
 <div class="video-modal-overlay" id="videoModalOverlay">
@@ -1614,6 +1614,11 @@
       <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
     <div class="video-modal-title" id="videoModalTitle"></div>
+    <button class="video-modal-share" id="videoModalShare" type="button" hidden aria-label="Trimite linkul clipului">
+      <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.5" x2="15.4" y2="6.5"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/></svg>
+      <span class="video-modal-share-label">Trimite clipul</span>
+    </button>
+    <div class="video-modal-toast" id="videoModalToast" role="status" aria-live="polite"></div>
     <video id="videoModalPlayer" controls playsinline></video>
   </div>
 </div>

@@ -240,7 +240,7 @@
   // deci pagina e corectă și fără JavaScript.
   (function initFromUrl() {
     const page = pageFromPath(window.location.pathname);
-    window.history.replaceState({ page }, '', pathFor(page));
+    window.history.replaceState({ page }, '', pathFor(page) + window.location.hash);
     navHistory = [page];
 
     const targetEl = document.getElementById('page-' + page);
@@ -534,7 +534,7 @@
   // (navigateTo handles all page switching — no duplicate showPage needed)
   // ===== VIDEO MODAL =====
   // ─── VIDEO MODAL ───
-  function openVideoModal(src, title) {
+  function openVideoModal(src, title, slug) {
     const overlay = document.getElementById('videoModalOverlay');
     const player  = document.getElementById('videoModalPlayer');
     const titleEl = document.getElementById('videoModalTitle');
@@ -550,6 +550,13 @@
     overlay.classList.add('open');
     document.body.classList.add('modal-open');
 
+    // Clipul deschis devine partajabil: slug-ul intră în adresă şi apare
+    // butonul de share.
+    currentClipSlug = slug || '';
+    const shareBtn = document.getElementById('videoModalShare');
+    if (shareBtn) shareBtn.hidden = !currentClipSlug;
+    if (currentClipSlug) setClipHash(currentClipSlug);
+
     // Blochează scroll pe containerul paginii active
     const activePage = document.querySelector('.page.active');
     if (activePage) activePage.style.overflow = 'hidden';
@@ -562,6 +569,10 @@
     const player  = document.getElementById('videoModalPlayer');
     player.pause();
     player.src = '';
+
+    if (currentClipSlug) setClipHash('');
+    currentClipSlug = '';
+    hideClipToast();
     overlay.classList.remove('open');
     document.body.classList.remove('modal-open');
 
@@ -572,6 +583,132 @@
     // Notifica componentele ca modalul s-a inchis
     document.dispatchEvent(new Event('modalClosed'));
   }
+
+  // ===== SHARE — LINK DIRECT CĂTRE UN CLIP =====
+  // Fiecare card din portofoliu are un slug stabil în data-clip. Când se
+  // deschide modalul, slug-ul intră în adresă (#clip=...), iar un link cu
+  // acest hash deschide clipul direct la încărcarea paginii.
+  const CLIP_PAGE = '/portofoliu/';
+  let currentClipSlug = '';
+  let clipToastTimer = null;
+
+  function clipUrl(slug) {
+    return window.location.origin + CLIP_PAGE + '#clip=' + encodeURIComponent(slug);
+  }
+
+  function slugFromHash(hash) {
+    const m = /(?:^|[#&])clip=([^&]+)/.exec(String(hash || ''));
+    return m ? decodeURIComponent(m[1]) : '';
+  }
+
+  // replaceState, nu pushState: butonul Back al browserului rămâne pentru
+  // navigarea între secțiuni, nu pentru deschis/închis modalul.
+  function setClipHash(slug) {
+    const base = window.location.pathname + window.location.search;
+    try {
+      window.history.replaceState(
+        window.history.state,
+        '',
+        slug ? base + '#clip=' + encodeURIComponent(slug) : base
+      );
+    } catch (e) {}
+  }
+
+  function hideClipToast() {
+    const toast = document.getElementById('videoModalToast');
+    if (toast) toast.classList.remove('show');
+    clearTimeout(clipToastTimer);
+  }
+
+  function showClipToast(text) {
+    const toast = document.getElementById('videoModalToast');
+    if (!toast) return;
+    toast.textContent = text;
+    toast.classList.add('show');
+    clearTimeout(clipToastTimer);
+    clipToastTimer = setTimeout(function () { toast.classList.remove('show'); }, 2400);
+  }
+
+  function copyClipLink(url) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(url);
+    }
+    // Fallback pentru browsere fără Clipboard API (sau http local).
+    return new Promise(function (resolve, reject) {
+      const tmp = document.createElement('textarea');
+      tmp.value = url;
+      tmp.setAttribute('readonly', '');
+      tmp.style.position = 'fixed';
+      tmp.style.top = '-1000px';
+      document.body.appendChild(tmp);
+      tmp.select();
+      let ok = false;
+      try { ok = document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(tmp);
+      ok ? resolve() : reject();
+    });
+  }
+
+  function shareCurrentClip() {
+    if (!currentClipSlug) return;
+    const url = clipUrl(currentClipSlug);
+    const titleEl = document.getElementById('videoModalTitle');
+    const title = titleEl && titleEl.textContent ? titleEl.textContent : 'USL Media';
+
+    // Pe telefon deschidem meniul nativ de share (WhatsApp, Instagram etc.);
+    // pe desktop copiem linkul în clipboard.
+    if (navigator.share) {
+      navigator.share({ title: title, text: title + ' — USL Media', url: url }).catch(function () {});
+      return;
+    }
+    copyClipLink(url).then(function () {
+      showClipToast('Link copiat');
+    }).catch(function () {
+      window.prompt('Copiază linkul clipului:', url);
+    });
+  }
+
+  function openClipFromSlug(slug) {
+    const card = document.querySelector('.video-card[data-clip="' + slug + '"]');
+    if (!card) return false;
+    const source = card.querySelector('source');
+    const titleEl = card.querySelector('.video-title');
+    if (!source) return false;
+    openVideoModal(source.getAttribute('src'), titleEl ? titleEl.textContent : '', slug);
+    return true;
+  }
+
+  // Deschide clipul cerut de link, la intrarea pe pagină.
+  (function initClipFromHash() {
+    const slug = slugFromHash(window.location.hash);
+    if (!slug) return;
+
+    function open() {
+      if (currentPage !== 'portofoliu') {
+        navigateTo('portofoliu');
+        setTimeout(function () { openClipFromSlug(slug); }, 800);
+      } else {
+        openClipFromSlug(slug);
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', open);
+    } else {
+      open();
+    }
+  })();
+
+  // Un link cu #clip= dat pe aceeaşi pagină nu reîncarcă nimic, aşa că
+  // ascultăm şi schimbarea de hash.
+  window.addEventListener('hashchange', function () {
+    const slug = slugFromHash(window.location.hash);
+    if (!slug) {
+      if (currentClipSlug) closeVideoModal();
+      return;
+    }
+    if (slug !== currentClipSlug) openClipFromSlug(slug);
+  });
 
   // ===== IMAGE LIGHTBOX =====
   function openImageModal(src, alt) {
@@ -620,6 +757,15 @@
 
     // Buton X
     closeBtn.addEventListener('click', closeVideoModal);
+
+    // Buton share (nu trebuie să închidă modalul odată cu clickul pe overlay)
+    const shareBtn = document.getElementById('videoModalShare');
+    if (shareBtn) {
+      shareBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        shareCurrentClip();
+      });
+    }
 
     // Blochează scroll complet – wheel + touch
     overlay.addEventListener('wheel', function(e) {
