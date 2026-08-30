@@ -1457,6 +1457,33 @@ a.footer-cta {
 .video-title { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; color: var(--white); margin-bottom: 0.2rem; }
 .video-tag { font-size: 0.68rem; color: var(--blue-glow); font-weight: 400; letter-spacing: 0.05em; text-transform: uppercase; }
 
+/* ─── Clipuri Vimeo (vertical 9:16) ───
+   Grid separat de .video-grid: embed-uri externe, fara filtrare pe categorii.
+   Doua coloane pe desktop, una pe mobil; fiecare clip max 400px si centrat,
+   ca formatul vertical sa nu ocupe toata latimea. */
+.vimeo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  justify-items: center;
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+}
+.vimeo-card {
+  width: 100%;
+  max-width: 400px;
+  background: #04050A;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  overflow: hidden;
+  transition: border-color 0.3s;
+}
+.vimeo-card:hover { border-color: var(--border-blue); }
+.vimeo-card iframe { border: 0; display: block; }
+
+@media (max-width: 768px) {
+  .vimeo-grid { grid-template-columns: 1fr; }
+}
+
 /* ===== PRETURI PAGE ===== */
 .preturi-wrap {
   max-width: 1300px;
