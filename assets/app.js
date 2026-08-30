@@ -543,23 +543,64 @@
     });
   })();
 
+  // ===== PORTOFOLIU — CLIPURI GĂZDUITE PE VIMEO =====
+  // Cardul arată la fel ca restul: miniatură plus buton de play, iar clicul
+  // deschide acelaşi modal. Miniatura vine din oEmbed, ca să nu ţinem în pagină
+  // un player încărcat degeaba pentru fiecare clip.
+  const VIMEO_EMBED_PARAMS = 'title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479';
+
+  function vimeoEmbedUrl(id, autoplay) {
+    return 'https://player.vimeo.com/video/' + id + '?' + VIMEO_EMBED_PARAMS +
+      (autoplay ? '&autoplay=1' : '');
+  }
+
+  (function initVimeoPosters() {
+    document.querySelectorAll('.video-card[data-vimeo]').forEach(function (card) {
+      const id = card.getAttribute('data-vimeo');
+      const poster = card.querySelector('.video-poster');
+      if (!id || !poster) return;
+
+      fetch('https://vimeo.com/api/oembed.json?width=640&url=' +
+            encodeURIComponent('https://vimeo.com/' + id))
+        .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+        .then(function (data) {
+          if (!data || !data.thumbnail_url) return Promise.reject();
+          poster.src = data.thumbnail_url;
+        })
+        .catch(function () { vimeoCardFallback(card, id); });
+    });
+  })();
+
+  // Dacă miniatura nu se poate lua, cardul cade pe playerul Vimeo încorporat:
+  // mai puţin uniform, dar clipul rămâne vizibil şi se poate porni din card.
+  function vimeoCardFallback(card, id) {
+    const wrap = card.querySelector('.video-wrap');
+    if (!wrap) return;
+
+    const titleEl = card.querySelector('.video-title');
+    card.removeAttribute('onclick');
+    card.onclick = null;
+
+    const frame = document.createElement('iframe');
+    frame.src = vimeoEmbedUrl(id, false);
+    frame.title = titleEl ? titleEl.textContent : '';
+    frame.setAttribute('frameborder', '0');
+    frame.setAttribute('loading', 'lazy');
+    frame.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+    frame.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share');
+
+    wrap.innerHTML = '';
+    wrap.appendChild(frame);
+  }
+
   // (navigateTo handles all page switching — no duplicate showPage needed)
   // ===== VIDEO MODAL =====
   // ─── VIDEO MODAL ───
-  function openVideoModal(src, title, slug) {
+  // Partea comună a celor două feluri de clip (fişier mp4 sau embed Vimeo):
+  // titlu, share, blocarea scrollului.
+  function openModalShell(title, slug) {
     const overlay = document.getElementById('videoModalOverlay');
-    const player  = document.getElementById('videoModalPlayer');
-    const titleEl = document.getElementById('videoModalTitle');
-
-    // Opreşte preview-urile din carduri
-    document.querySelectorAll('.video-wrap video').forEach(v => {
-      v.pause();
-      v.currentTime = 0;
-    });
-    pauseVimeo(document);
-
-    player.src = src;
-    titleEl.textContent = title;
+    document.getElementById('videoModalTitle').textContent = title;
     overlay.classList.add('open');
     document.body.classList.add('modal-open');
 
@@ -573,8 +614,58 @@
     // Blochează scroll pe containerul paginii active
     const activePage = document.querySelector('.page.active');
     if (activePage) activePage.style.overflow = 'hidden';
+  }
+
+  // Opreşte tot ce rulează în carduri înainte să pornească clipul din modal.
+  function stopCardPreviews() {
+    document.querySelectorAll('.video-wrap video').forEach(v => {
+      v.pause();
+      v.currentTime = 0;
+    });
+    pauseVimeo(document);
+  }
+
+  function openVideoModal(src, title, slug) {
+    const player = document.getElementById('videoModalPlayer');
+
+    stopCardPreviews();
+    clearVimeoModal();
+
+    player.hidden = false;
+    player.src = src;
+    openModalShell(title, slug);
 
     player.play().catch(() => {});
+  }
+
+  // Clipurile de pe Vimeo trec prin acelaşi modal, doar că printr-un iframe:
+  // elementul <video> ştie doar fişiere mp4.
+  function openVimeoModal(id, title, slug) {
+    const player = document.getElementById('videoModalPlayer');
+    const wrap   = document.getElementById('videoModalVimeo');
+    const frame  = document.getElementById('videoModalVimeoFrame');
+    if (!wrap || !frame) return;
+
+    stopCardPreviews();
+
+    player.pause();
+    player.removeAttribute('src');
+    player.load();
+    player.hidden = true;
+
+    frame.src = vimeoEmbedUrl(id, true);
+    frame.title = title || '';
+    wrap.hidden = false;
+
+    openModalShell(title, slug);
+  }
+
+  function clearVimeoModal() {
+    const wrap  = document.getElementById('videoModalVimeo');
+    const frame = document.getElementById('videoModalVimeoFrame');
+    if (!wrap || !frame) return;
+    frame.src = '';
+    wrap.hidden = true;
   }
 
   function closeVideoModal() {
@@ -582,6 +673,8 @@
     const player  = document.getElementById('videoModalPlayer');
     player.pause();
     player.src = '';
+    player.hidden = false;
+    clearVimeoModal();
 
     if (currentClipSlug) setClipHash('');
     currentClipSlug = '';
@@ -684,10 +777,18 @@
   function openClipFromSlug(slug) {
     const card = document.querySelector('.video-card[data-clip="' + slug + '"]');
     if (!card) return false;
-    const source = card.querySelector('source');
     const titleEl = card.querySelector('.video-title');
+    const title = titleEl ? titleEl.textContent : '';
+
+    const vimeoId = card.getAttribute('data-vimeo');
+    if (vimeoId) {
+      openVimeoModal(vimeoId, title, slug);
+      return true;
+    }
+
+    const source = card.querySelector('source');
     if (!source) return false;
-    openVideoModal(source.getAttribute('src'), titleEl ? titleEl.textContent : '', slug);
+    openVideoModal(source.getAttribute('src'), title, slug);
     return true;
   }
 

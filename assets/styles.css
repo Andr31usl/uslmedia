@@ -1445,7 +1445,7 @@ a.footer-cta {
   background: #000;
   overflow: hidden;
 }
-.video-wrap video, .video-wrap iframe {
+.video-wrap video, .video-wrap iframe, .video-wrap .video-poster {
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
@@ -2923,7 +2923,7 @@ html {
 .video-wrap {
   position: relative;
 }
-.video-wrap video {
+.video-wrap video, .video-wrap .video-poster {
   pointer-events: none;
   width: 100%;
   display: block;
@@ -3026,6 +3026,26 @@ body.modal-open .site-floaters {
   box-shadow: 0 32px 100px rgba(0,0,0,0.9), 0 0 0 1px rgba(37,99,235,0.18);
 }
 
+/* Embed Vimeo — iframe-ul nu-si spune dimensiunea, deci raportul 9:16 e fixat aici. */
+.video-modal-vimeo {
+  position: relative;
+  height: 92vh;
+  aspect-ratio: 9 / 16;
+  max-width: 96vw;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 32px 100px rgba(0,0,0,0.9), 0 0 0 1px rgba(37,99,235,0.18);
+}
+.video-modal-vimeo iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: 0;
+}
+.video-modal-vimeo[hidden],
+.video-modal-inner video[hidden] { display: none; }
+
 /* Buton close */
 .video-modal-close {
   position: fixed;
@@ -3116,6 +3136,7 @@ body.modal-open .site-floaters {
 
 @media (max-width: 768px) {
   .video-modal-inner video { max-width: 99vw; max-height: 88vh; border-radius: 12px; }
+  .video-modal-vimeo { max-width: 99vw; height: 88vh; border-radius: 12px; }
   .video-modal-share { top: 14px; right: 58px; height: 38px; padding: 0 0.85rem; gap: 0.4rem; font-size: 0.66rem; letter-spacing: 0.04em; }
   .video-modal-title { max-width: calc(100vw - 234px); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .video-modal-toast { bottom: 24px; font-size: 0.78rem; }
