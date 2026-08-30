@@ -184,7 +184,7 @@
     }
     </script>
 
-    <link rel="stylesheet" href="/assets/styles.css?v=4224b100">
+    <link rel="stylesheet" href="/assets/styles.css?v=16f58f44">
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -894,18 +894,24 @@
             <p class="video-tag">Imobiliare & Amenajări</p>
           </div>
         </div>
-        <div class="video-card" data-cat="imobiliare">
+        <div class="video-card" data-cat="imobiliare" data-clip="real-estate" data-vimeo="1222439482" onclick="openVimeoModal('1222439482', 'Real estate', 'real-estate')">
           <div class="video-wrap">
-            <iframe src="https://player.vimeo.com/video/1222439482?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" title="Real estate"></iframe>
+            <img class="video-poster" src="" alt="" loading="lazy" decoding="async">
+            <div class="video-play-btn">
+              <svg viewBox="0 0 24 24" fill="white" width="28" height="28"><polygon points="6,4 20,12 6,20"/></svg>
+            </div>
           </div>
           <div class="video-info">
             <p class="video-title">Real estate</p>
             <p class="video-tag">Imobiliare &amp; Amenajări</p>
           </div>
         </div>
-        <div class="video-card" data-cat="imobiliare">
+        <div class="video-card" data-cat="imobiliare" data-clip="teaser-imobil" data-vimeo="1222439487" onclick="openVimeoModal('1222439487', 'Teaser imobil', 'teaser-imobil')">
           <div class="video-wrap">
-            <iframe src="https://player.vimeo.com/video/1222439487?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" title="Teaser imobil"></iframe>
+            <img class="video-poster" src="" alt="" loading="lazy" decoding="async">
+            <div class="video-play-btn">
+              <svg viewBox="0 0 24 24" fill="white" width="28" height="28"><polygon points="6,4 20,12 6,20"/></svg>
+            </div>
           </div>
           <div class="video-info">
             <p class="video-title">Teaser imobil</p>
@@ -1644,7 +1650,7 @@
 
 </div>
 
-<script src="/assets/app.js?v=4224b100" defer></script>
+<script src="/assets/app.js?v=16f58f44" defer></script>
 
 <!-- MODAL VIDEO – în afara page-wrapper, nu e afectat de blur -->
 <div class="video-modal-overlay" id="videoModalOverlay">
@@ -1659,6 +1665,9 @@
     </button>
     <div class="video-modal-toast" id="videoModalToast" role="status" aria-live="polite"></div>
     <video id="videoModalPlayer" controls playsinline></video>
+    <div class="video-modal-vimeo" id="videoModalVimeo" hidden>
+      <iframe id="videoModalVimeoFrame" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title=""></iframe>
+    </div>
   </div>
 </div>
 
