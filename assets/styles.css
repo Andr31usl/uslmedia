@@ -1445,7 +1445,7 @@ a.footer-cta {
   background: #000;
   overflow: hidden;
 }
-.video-wrap video, .video-wrap iframe, .video-wrap .video-poster {
+.video-wrap video, .video-wrap iframe {
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
@@ -2923,7 +2923,7 @@ html {
 .video-wrap {
   position: relative;
 }
-.video-wrap video, .video-wrap .video-poster {
+.video-wrap video, .video-wrap .video-preview {
   pointer-events: none;
   width: 100%;
   display: block;

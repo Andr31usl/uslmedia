@@ -544,9 +544,12 @@
   })();
 
   // ===== PORTOFOLIU — CLIPURI GĂZDUITE PE VIMEO =====
-  // Cardul arată la fel ca restul: miniatură plus buton de play, iar clicul
-  // deschide acelaşi modal. Miniatura vine din oEmbed, ca să nu ţinem în pagină
-  // un player încărcat degeaba pentru fiecare clip.
+  // Cardul trebuie să arate ca restul: un cadru fix, peste care stă butonul
+  // nostru de play. Previewul rulează cu background=1 — modul fără niciun
+  // element de interfaţă Vimeo — şi îl oprim la primul cadru desenat, aşa că
+  // rămâne o imagine statică, fără al doilea buton de play peste al nostru.
+  // Dacă browserul blochează pornirea automată, playerul rămâne oricum pe
+  // cadrul lui de start, tot fără interfaţă.
   const VIMEO_EMBED_PARAMS = 'title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479';
 
   function vimeoEmbedUrl(id, autoplay) {
@@ -554,44 +557,19 @@
       (autoplay ? '&autoplay=1' : '');
   }
 
-  (function initVimeoPosters() {
-    document.querySelectorAll('.video-card[data-vimeo]').forEach(function (card) {
-      const id = card.getAttribute('data-vimeo');
-      const poster = card.querySelector('.video-poster');
-      if (!id || !poster) return;
+  (function freezeVimeoPreviews() {
+    if (!window.Vimeo || !window.Vimeo.Player) return;
 
-      fetch('https://vimeo.com/api/oembed.json?width=640&url=' +
-            encodeURIComponent('https://vimeo.com/' + id))
-        .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
-        .then(function (data) {
-          if (!data || !data.thumbnail_url) return Promise.reject();
-          poster.src = data.thumbnail_url;
-        })
-        .catch(function () { vimeoCardFallback(card, id); });
+    document.querySelectorAll('.video-card[data-vimeo] .video-preview').forEach(function (frame) {
+      let player;
+      try { player = new window.Vimeo.Player(frame); } catch (e) { return; }
+
+      player.on('timeupdate', function onTick() {
+        player.off('timeupdate', onTick);
+        player.pause().catch(function () {});
+      });
     });
   })();
-
-  // Dacă miniatura nu se poate lua, cardul cade pe playerul Vimeo încorporat:
-  // mai puţin uniform, dar clipul rămâne vizibil şi se poate porni din card.
-  function vimeoCardFallback(card, id) {
-    const wrap = card.querySelector('.video-wrap');
-    if (!wrap) return;
-
-    const titleEl = card.querySelector('.video-title');
-    card.removeAttribute('onclick');
-    card.onclick = null;
-
-    const frame = document.createElement('iframe');
-    frame.src = vimeoEmbedUrl(id, false);
-    frame.title = titleEl ? titleEl.textContent : '';
-    frame.setAttribute('frameborder', '0');
-    frame.setAttribute('loading', 'lazy');
-    frame.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
-    frame.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share');
-
-    wrap.innerHTML = '';
-    wrap.appendChild(frame);
-  }
 
   // (navigateTo handles all page switching — no duplicate showPage needed)
   // ===== VIDEO MODAL =====
