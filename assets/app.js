@@ -495,6 +495,17 @@
   // Categoria fiecărui proiect stă în data-cat pe .video-card, iar numărul de
   // proiecte de pe fiecare buton se calculează din DOM — așa că un clip nou
   // adăugat în grilă apare automat la filtrul potrivit, fără alte modificări.
+  // Clipurile Vimeo sunt iframe-uri, nu <video>: se opresc prin protocolul de
+  // postMessage al player-ului, ca să nu meargă sunetul dintr-un card ascuns
+  // sau din spatele modalului.
+  function pauseVimeo(root) {
+    (root || document).querySelectorAll('iframe[src*="player.vimeo.com"]').forEach(function (f) {
+      try {
+        f.contentWindow.postMessage(JSON.stringify({ method: 'pause' }), 'https://player.vimeo.com');
+      } catch (e) { /* iframe încă neîncărcat */ }
+    });
+  }
+
   function filterPortfolio(cat, btn) {
     const cards = document.querySelectorAll('#page-portofoliu .video-card');
     let shown = 0;
@@ -506,6 +517,7 @@
       // Un clip ascuns nu are voie să ruleze mai departe în fundal.
       if (!match) {
         card.querySelectorAll('video').forEach(function (v) { v.pause(); v.currentTime = 0; });
+        pauseVimeo(card);
       }
     });
 
@@ -544,6 +556,7 @@
       v.pause();
       v.currentTime = 0;
     });
+    pauseVimeo(document);
 
     player.src = src;
     titleEl.textContent = title;
