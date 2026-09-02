@@ -2841,26 +2841,28 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 64px;
-  padding: 0 1.9rem;
+  flex-direction: column;
+  gap: 0.6rem;
+  height: 122px;
+  padding: 0 2.2rem;
   /* Logourile sunt deja albe pe fond transparent, deci nu mai au ce filtra. */
   opacity: 0.62;
   transition: opacity 0.3s;
 }
 .client-item:hover { opacity: 1; }
 .client-logo {
-  max-height: 52px;
-  max-width: 150px;
+  max-height: 62px;
+  max-width: 176px;
   width: auto;
   display: block;
   object-fit: contain;
 }
-/* Fără fişierul de logo rămâne numele, ca banda să nu aibă goluri. */
+/* Numele stă sub logo; fără fişierul de logo rămâne singur. */
 .client-name {
   font-family: 'Syne', sans-serif;
   font-weight: 700;
-  font-size: 0.95rem;
-  letter-spacing: 0.06em;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--white);
   white-space: nowrap;
@@ -2885,9 +2887,9 @@ html {
   /* Ecran îngust, deci se vede o bucată mică din bandă: mai repede, ca să nu
      pară că stă pe loc. */
   .clients-group { animation-duration: 16s; }
-  .client-item { height: 52px; padding: 0 1.15rem; }
-  .client-logo { max-height: 36px; max-width: 108px; }
-  .client-name { font-size: 0.85rem; }
+  .client-item { height: 96px; gap: 0.45rem; padding: 0 1.35rem; }
+  .client-logo { max-height: 46px; max-width: 128px; }
+  .client-name { font-size: 0.62rem; letter-spacing: 0.1em; }
 }
 
 .testimoniale-section {
