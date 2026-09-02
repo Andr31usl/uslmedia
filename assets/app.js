@@ -492,12 +492,10 @@
     setTimeout(() => { window.location.reload(); }, 3000);
   }
   // ===== BANDĂ CLIENȚI =====
-  // Până când fişierul de logo există în /assets/clienti/, cardul arată numele
-  // brandului — banda rămâne întreagă, fără spaţii goale.
+  // Numele brandului stă oricum sub logo, deci un fişier lipsă înseamnă doar
+  // să scoatem imaginea ruptă din card.
   function clientLogoFallback(img) {
     img.hidden = true;
-    const name = img.nextElementSibling;
-    if (name && name.classList.contains('client-name')) name.hidden = false;
   }
 
   // ===== PORTOFOLIU — FILTRE PE CATEGORII =====
