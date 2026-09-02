@@ -2822,6 +2822,7 @@ html {
   background: var(--blue-glow);
   animation: pulse 2s infinite;
 }
+.clients-marquee + .clients-marquee { margin-top: 0.2rem; }
 .clients-marquee {
   display: flex;
   width: 100%;
@@ -2840,16 +2841,13 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 72px;
-  padding: 0 2rem;
-  opacity: 0.6;
-  filter: grayscale(1);
-  transition: opacity 0.3s, filter 0.3s;
+  height: 64px;
+  padding: 0 1.9rem;
+  /* Logourile sunt deja albe pe fond transparent, deci nu mai au ce filtra. */
+  opacity: 0.62;
+  transition: opacity 0.3s;
 }
-.client-item:hover {
-  opacity: 1;
-  filter: none;
-}
+.client-item:hover { opacity: 1; }
 .client-logo {
   max-height: 52px;
   max-width: 150px;
@@ -2868,6 +2866,12 @@ html {
   white-space: nowrap;
 }
 .client-logo[hidden], .client-name[hidden] { display: none; }
+/* Al doilea rând merge invers, ca banda să nu pară un singur bloc care alunecă. */
+.clients-group--back { animation-name: clientsScrollBack; }
+@keyframes clientsScrollBack {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(0); }
+}
 @keyframes clientsScroll {
   from { transform: translateX(0); }
   to   { transform: translateX(-100%); }
@@ -2881,8 +2885,8 @@ html {
   /* Ecran îngust, deci se vede o bucată mică din bandă: mai repede, ca să nu
      pară că stă pe loc. */
   .clients-group { animation-duration: 16s; }
-  .client-item { height: 60px; padding: 0 1.25rem; }
-  .client-logo { max-height: 40px; max-width: 118px; }
+  .client-item { height: 52px; padding: 0 1.15rem; }
+  .client-logo { max-height: 36px; max-width: 108px; }
   .client-name { font-size: 0.85rem; }
 }
 
