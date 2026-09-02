@@ -491,6 +491,15 @@
     document.getElementById('colabCustomSuccessWrap').style.display = 'block';
     setTimeout(() => { window.location.reload(); }, 3000);
   }
+  // ===== BANDĂ CLIENȚI =====
+  // Până când fişierul de logo există în /assets/clienti/, cardul arată numele
+  // brandului — banda rămâne întreagă, fără spaţii goale.
+  function clientLogoFallback(img) {
+    img.hidden = true;
+    const name = img.nextElementSibling;
+    if (name && name.classList.contains('client-name')) name.hidden = false;
+  }
+
   // ===== PORTOFOLIU — FILTRE PE CATEGORII =====
   // Categoria fiecărui proiect stă în data-cat pe .video-card, iar numărul de
   // proiecte de pe fiecare buton se calculează din DOM — așa că un clip nou

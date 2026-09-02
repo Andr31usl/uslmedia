@@ -2791,6 +2791,99 @@ html {
 }
 
 /* ===== TESTIMONIALE GLIDE SLIDER ===== */
+/* ===== BANDĂ CLIENȚI ===== */
+/* Logourile se rotesc într-o buclă continuă: două grupe identice, iar banda se
+   mută cu exact o grupă (-50%), aşa că reluarea nu se vede. */
+.clients-strip {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2.5rem 3rem 0;
+  border-top: 1px solid var(--border);
+  opacity: 0;
+  animation: fadeUp 0.8s 0.95s ease forwards;
+}
+.clients-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--blue-glow);
+  margin-bottom: 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.clients-label::before {
+  content: '';
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--blue-glow);
+  animation: pulse 2s infinite;
+}
+.clients-marquee {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  /* Capetele se sting în fundal, ca logourile să nu apară tăiate brusc. */
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+.clients-group {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  animation: clientsScroll 34s linear infinite;
+}
+.clients-marquee:hover .clients-group { animation-play-state: paused; }
+.client-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 72px;
+  padding: 0 2rem;
+  opacity: 0.6;
+  filter: grayscale(1);
+  transition: opacity 0.3s, filter 0.3s;
+}
+.client-item:hover {
+  opacity: 1;
+  filter: none;
+}
+.client-logo {
+  max-height: 52px;
+  max-width: 150px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+}
+/* Fără fişierul de logo rămâne numele, ca banda să nu aibă goluri. */
+.client-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--white);
+  white-space: nowrap;
+}
+.client-logo[hidden], .client-name[hidden] { display: none; }
+@keyframes clientsScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .clients-group { animation: none; }
+  .clients-marquee { overflow-x: auto; }
+}
+@media (max-width: 768px) {
+  .clients-strip { padding: 2rem 1.25rem 0; }
+  .client-item { height: 60px; padding: 0 1.25rem; }
+  .client-logo { max-height: 40px; max-width: 118px; }
+  .client-name { font-size: 0.85rem; }
+}
+
 .testimoniale-section {
   width: 100%;
   max-width: 1100px;
