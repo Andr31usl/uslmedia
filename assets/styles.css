@@ -2835,7 +2835,7 @@ html {
   display: flex;
   align-items: center;
   flex: 0 0 auto;
-  animation: clientsScroll 34s linear infinite;
+  animation: clientsScroll 58s linear infinite;
 }
 .client-item {
   display: flex;
@@ -2886,7 +2886,7 @@ html {
   .clients-strip { padding: 2rem 1.25rem 0; }
   /* Ecran îngust, deci se vede o bucată mică din bandă: mai repede, ca să nu
      pară că stă pe loc. */
-  .clients-group { animation-duration: 16s; }
+  .clients-group { animation-duration: 30s; }
   .client-item { height: 96px; gap: 0.45rem; padding: 0 1.35rem; }
   .client-logo { max-height: 46px; max-width: 128px; }
   .client-name { font-size: 0.62rem; letter-spacing: 0.1em; }
