@@ -9,6 +9,7 @@ text, ca banda să nu aibă goluri.
 | `corks.png`          | Corks Cozy Bar    |
 | `lee-coffee.png`     | Lee Coffee        |
 | `renovision.png`     | Renovision Design |
+| `elixir.png`         | Elixir Imobiliare |
 | `rotary-cismigiu.png`| Rotary Cișmigiu   |
 | `r-evolve-eq.png`    | R-Evolve EQ       |
 
