@@ -2924,11 +2924,15 @@ html {
   position: relative;
 }
 .testi-track {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1.25rem;
 }
 .testi-card {
+  /* Trei pe rând, iar un rând incomplet rămâne centrat — al patrulea review nu
+     atârnă singur în stânga. Lăţimea e fixă, ca să nu iasă mai lat decât restul. */
+  flex: 0 1 calc((100% - 2.5rem) / 3);
   background: var(--navy-card);
   border: 1px solid var(--border);
   border-radius: 18px;
@@ -3010,11 +3014,11 @@ html {
 .testi-dots { display: none; }
 @media (max-width: 768px) {
   .testimoniale-section { padding: 2rem 1.25rem; }
-  .testi-track { grid-template-columns: 1fr; }
+  .testi-card { flex-basis: 100%; }
   .testi-card:nth-child(n) { transition-delay: 0s; }
 }
 @media (min-width: 769px) and (max-width: 1024px) {
-  .testi-track { grid-template-columns: repeat(2, 1fr); }
+  .testi-card { flex-basis: calc((100% - 1.25rem) / 2); }
 }
 
 /* ===== VIDEO PLAY BUTTON & MODAL ===== */
