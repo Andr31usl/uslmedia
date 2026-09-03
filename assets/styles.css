@@ -3000,25 +3000,6 @@ html {
   color: var(--white);
   flex-shrink: 0;
 }
-/* Logoul e lat: într-un cerc de 54px textul lui ar fi ilizibil, aşa că pentru
-   logouri cercul devine o plăcuţă pe lăţimea semnului, pe fundal negru. */
-.testi-avatar--logo {
-  width: auto;
-  min-width: 54px;
-  max-width: 180px;
-  padding: 0 12px;
-  border-radius: 14px;
-  background: #04050A;
-  border: 1px solid var(--border);
-}
-.testi-avatar--logo img {
-  position: static;
-  width: auto;
-  height: auto;
-  max-height: 38px;
-  max-width: 100%;
-  object-fit: contain;
-}
 /* Poza acoperă iniţialele; fără fişier rămân iniţialele dedesubt. */
 .testi-avatar img {
   position: absolute;
@@ -3026,6 +3007,25 @@ html {
   width: 100%; height: 100%;
   object-fit: cover;
   display: block;
+}
+/* Logoul e lat şi are text mic: într-un cerc n-ar mai fi lizibil, aşa că pentru
+   logouri cercul devine o plăcuţă cât semnul, pe fundal negru. */
+.testi-avatar--logo {
+  width: auto;
+  height: 64px;
+  min-width: 64px;
+  max-width: 190px;
+  padding: 7px 12px;
+  border-radius: 14px;
+  background: #04050A;
+  border: 1px solid var(--border);
+}
+.testi-avatar--logo img {
+  position: static;
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
 }
 .testi-author-info {}
 .testi-name {
