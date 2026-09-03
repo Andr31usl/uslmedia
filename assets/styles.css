@@ -3000,6 +3000,11 @@ html {
   color: var(--white);
   flex-shrink: 0;
 }
+/* Un logo se aşază întreg în cerc, spre deosebire de o poză care îl umple. */
+.testi-avatar--logo img {
+  object-fit: contain;
+  padding: 6px;
+}
 /* Poza acoperă iniţialele; fără fişier rămân iniţialele dedesubt. */
 .testi-avatar img {
   position: absolute;
