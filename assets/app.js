@@ -94,7 +94,10 @@
 
   // Pe telefon nu mai comutăm pagini — facem scroll lin către secțiune
   function scrollToPageMobile(page) {
-    const targetEl = document.getElementById('page-' + page);
+    // Portofoliul intră direct pe clipuri, nu pe headline + filtre.
+    const targetEl = page === 'portofoliu'
+      ? (document.getElementById('portofoliuVideoGrid') || document.getElementById('page-' + page))
+      : document.getElementById('page-' + page);
     if (!targetEl) return;
     stopAllVideos();
     const navBar = document.querySelector('nav');
@@ -175,8 +178,11 @@
       tLogo.style.opacity = '1';
 
       document.getElementById('page-' + currentPage).classList.remove('active');
-      document.getElementById('page-' + page).classList.add('active');
-      document.getElementById('page-' + page).scrollTop = 0;
+      const newPageEl = document.getElementById('page-' + page);
+      newPageEl.classList.add('active');
+      // Portofoliul intră direct pe clipuri, nu pe headline + filtre.
+      const portoGrid = page === 'portofoliu' ? document.getElementById('portofoliuVideoGrid') : null;
+      newPageEl.scrollTop = portoGrid ? portoGrid.offsetTop : 0;
 
       setActivePage(page);
     }, 380);
@@ -255,9 +261,13 @@
       } else {
         setActivePage(page);
         if (page === 'home') return;
-        settleScrollTo(targetEl);
+        // Portofoliul intră direct pe clipuri, nu pe headline + filtre.
+        const scrollTarget = page === 'portofoliu'
+          ? (document.getElementById('portofoliuVideoGrid') || targetEl)
+          : targetEl;
+        settleScrollTo(scrollTarget);
         window.addEventListener('load', function() {
-          setTimeout(function() { settleScrollTo(targetEl); }, 0);
+          setTimeout(function() { settleScrollTo(scrollTarget); }, 0);
         });
       }
     } else {
