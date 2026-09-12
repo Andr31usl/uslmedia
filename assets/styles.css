@@ -3579,3 +3579,94 @@ body.is-loaded .home-stats   { transition-delay: 400ms; }
   .hero-dot-2 { top: 72%; left: 92%; }
   .hero-dot-3 { display: none; }
 }
+
+
+/* ─── BUTOANE: ridicare la hover ───
+   Regulile de paletă de la începutul fișierului scriu transform cu
+   !important, așa că ridicarea de aici are nevoie de același nivel ca să
+   treacă peste ele. */
+.btn-primary,
+.nav-cta,
+.colab-btn,
+.cnf-btn,
+.submit-btn,
+.pkg-btn,
+.pkg-btn-custom,
+.contact-btn,
+.contact-btn-solo,
+.mob-btn-primary,
+.footer-cta,
+.btn-ghost {
+  transition: background 200ms ease, transform 200ms ease, box-shadow 200ms ease,
+              border-color 200ms ease, color 200ms ease !important;
+}
+.btn-primary:hover,
+.nav-cta:hover,
+.colab-btn:hover,
+.cnf-btn:hover,
+.submit-btn:hover,
+.pkg-btn.solid:hover,
+.pkg-btn-custom:hover,
+.contact-btn:hover,
+.contact-btn-solo:hover,
+.mob-btn-primary:hover,
+.footer-cta:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 14px 34px rgba(37,99,235,0.45) !important;
+}
+/* Butoanele secundare (contur) primesc aceeași ridicare, dar un glow mai
+   discret — rămân secundare. */
+.pkg-btn.outline:hover,
+.btn-ghost:hover,
+.nav-contact-secondary:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 10px 26px rgba(37,99,235,0.22) !important;
+}
+.btn-primary:active,
+.nav-cta:active,
+.colab-btn:active,
+.cnf-btn:active,
+.pkg-btn:active,
+.pkg-btn-custom:active,
+.footer-cta:active {
+  transform: translateY(-1px) !important;
+}
+
+/* ─── CARDURI: ridicare + glow albastru la hover ─── */
+.serv-card,
+.value-card,
+.video-card,
+.pkg,
+.cert-card,
+.aside-card,
+.contact-info-card,
+.journey-step,
+.process-step {
+  transition: transform 250ms cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 250ms ease,
+              box-shadow 250ms ease;
+}
+.serv-card:hover,
+.value-card:hover,
+.video-card:hover,
+.pkg:hover,
+.cert-card:hover,
+.aside-card:hover,
+.contact-info-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(37,99,235,0.45);
+  box-shadow: 0 18px 45px rgba(0,0,0,0.5), 0 0 26px rgba(37,99,235,0.18);
+}
+
+/* Cardurile de portofoliu au imagine/video în cadru fix (.video-wrap are
+   overflow:hidden), deci imaginea poate crește puțin fără să iasă. */
+.video-wrap video,
+.video-wrap iframe,
+.video-wrap .video-preview {
+  transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.video-card:hover .video-wrap video,
+.video-card:hover .video-wrap iframe,
+.video-card:hover .video-wrap .video-preview {
+  transform: scale(1.05);
+}
