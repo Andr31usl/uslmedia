@@ -4013,3 +4013,43 @@ html.js [data-reveal].in-view {
     will-change: auto;
   }
 }
+
+
+/* ─── TITLURILE SECȚIUNILOR DE PE HOME ───
+   Erau etichete de 0.68rem, cu majuscule și tracking larg — se citeau ca
+   o notă de subsol deasupra conținutului. Le ducem la scara titlurilor
+   din rest (Syne 800, tracking strâns, alb), cu punctul albastru păstrat
+   ca accent. Textul rămâne cel din HTML, doar că nu-l mai forțăm la
+   majuscule: la corpul ăsta, propoziția scrisă normal are mai mult
+   impact decât un rând întreg de capitale. */
+.clients-label,
+.testimoniale-label {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.5rem, 3.2vw, 2.25rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  text-transform: none;
+  color: var(--white);
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+.clients-label::before,
+.testimoniale-label::before {
+  width: 10px;
+  height: 10px;
+  box-shadow: 0 0 14px rgba(37,99,235,0.75);
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .clients-label,
+  .testimoniale-label {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    align-items: flex-start;
+  }
+  /* Punctul stă pe prima linie a titlului, nu centrat pe două rânduri. */
+  .clients-label::before,
+  .testimoniale-label::before { margin-top: 0.45rem; }
+}
