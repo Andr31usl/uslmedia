@@ -9,6 +9,8 @@ Găzduit pe GitHub Pages, domeniu `www.uslmedia.ro` (vezi `CNAME`).
 index.html            sursa de adevăr: markup-ul tuturor secțiunilor
 assets/styles.css     tot CSS-ul
 assets/app.js         navigația, formularele, modalele, newsletterul
+clipuri/              librăria de clipuri: fișierele video + lista lor
+                      (clipuri.mjs); grila din portofoliu se generează de aici
 despre/               \
 servicii/              |
 portofoliu/            |  generate din index.html — NU se editează manual
@@ -58,22 +60,22 @@ necesită regenerare, fiindcă toate paginile le încarcă din același loc.
 
 ## Cum adaugi un clip în portofoliu
 
-1. Urcă fișierul video în folderul `portofoliu site/`. Recomandat: nume fără
-   spații și fără diacritice (`cafenea-reel.mp4`, nu `Reel cafenea final.mp4`),
-   fiindcă spațiile trebuie scrise `%20` în adresă. GitHub respinge fișiere
-   peste 100 MB — comprimă înainte dacă e cazul.
-2. În `index.html`, în secțiunea `#page-portofoliu`, copiază un bloc
-   `<div class="video-card" …>` existent și schimbă în el trei lucruri:
-   - `data-cat` — una dintre `evenimente`, `imobiliare`, `social`
-   - adresa fișierului, în ambele locuri (`onclick` și `<source src>`) —
-     scrisă relativ, de forma `/portofoliu%20site/nume-fisier.mp4`
-   - textul din `.video-title` și eticheta din `.video-tag`
+Clipurile stau în `clipuri/`, iar lista lor în `clipuri/clipuri.mjs`. Grila cu
+previewuri din `#page-portofoliu` e **generată** din listă, între marcajele
+`<!-- clipuri:start -->` și `<!-- clipuri:end -->` — nu o edita direct în
+`index.html`, se rescrie la următorul build.
+
+1. Urcă fișierul video în `clipuri/`, cu nume fără spații și fără diacritice.
+   GitHub respinge fișiere peste 100 MB — comprimă înainte dacă e cazul.
+2. Adaugă o intrare în `CLIPURI`, în `clipuri/clipuri.mjs`: `titlu`,
+   `categorie` și `fisier` (sau `vimeo`, pentru clipurile găzduite acolo).
 3. Rulează `node tools/build-pages.mjs` și comite tot.
 
-Numărul afișat pe fiecare buton de filtru se calculează singur din pagină, deci
-nu trebuie actualizat manual. Dacă vrei o categorie nouă, adaug-o în trei
-locuri: un buton în `.porto-filters`, `data-cat` pe carduri, și atât — funcția
-`filterPortfolio` din `assets/app.js` nu are lista categoriilor codificată în ea.
+Butoanele de filtrare vin din `CATEGORII`, tot din `clipuri.mjs`, iar numărul
+de pe fiecare buton se calculează în browser — deci o categorie nouă înseamnă
+o singură linie adăugată acolo. Generatorul se oprește cu eroare dacă un clip
+n-are titlu, arată spre un fișier inexistent sau folosește o categorie care nu
+e definită. Detaliile complete sunt în `clipuri/README.md`.
 
 ## SEO
 

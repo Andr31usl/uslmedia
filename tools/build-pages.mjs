@@ -14,12 +14,17 @@
  *     node tools/build-pages.mjs
  *
  * și comite fișierele regenerate.
+ *
+ * Excepția de la „index.html e sursa de adevăr”: grila de clipuri din
+ * portofoliu, dintre marcajele `clipuri:start` / `clipuri:end`, e generată în
+ * index.html din librăria clipuri/clipuri.mjs de aceeași comandă.
  */
 
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { CATEGORII, CLIPURI } from '../clipuri/clipuri.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const ORIGIN = 'https://www.uslmedia.ro';
@@ -101,6 +106,11 @@ function replaceOnce(html, pattern, replacement, label) {
   return html.replace(pattern, replacement);
 }
 
+/** index.html folosește CRLF; păstrăm aceeași convenție peste tot. */
+function toCRLF(text) {
+  return text.replace(/\r\n/g, '\n').replace(/\n/g, '\r\n');
+}
+
 function escapeAttr(value) {
   return value.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
 }
@@ -121,11 +131,147 @@ function versionAssets(html, version) {
   );
 }
 
+/* ===== PORTOFOLIU — GRILA GENERATĂ DIN clipuri/clipuri.mjs =====
+   Filtrele și cardurile dintre marcajele `clipuri:start` / `clipuri:end` nu se
+   scriu de mână în index.html: se generează din librăria de clipuri, ca un
+   proiect nou să însemne o singură intrare într-o listă. */
+
+const CLIPURI_DIR = '/clipuri/';
+
+/** Tipul MIME al sursei, după extensie — <source> fără type derutează Safari. */
+function videoType(file) {
+  if (/\.webm$/i.test(file)) return 'video/webm';
+  if (/\.ogv$/i.test(file)) return 'video/ogg';
+  return 'video/mp4'; // .mp4, .m4v, .mov (H.264)
+}
+
+/** Slug stabil pentru #clip=… : litere mici, fără diacritice, cuvinte cu „-”. */
+function slugify(text) {
+  return String(text)
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+function escapeText(value) {
+  return String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+/** Text care ajunge între apostrofi, într-un atribut onclick. */
+function jsString(value) {
+  return escapeAttr(String(value).replace(/\\/g, '\\\\').replace(/'/g, "\\'"));
+}
+
+/** Verifică librăria și completează câmpurile derivate (slug, categorie, sursă). */
+function readClipuri() {
+  const categorii = new Map(CATEGORII.map((c) => [c.id, c.nume]));
+  const slugs = new Set();
+
+  return CLIPURI.map((clip, i) => {
+    const unde = `clipul ${i + 1} ("${clip.titlu || 'fără titlu'}") din clipuri/clipuri.mjs`;
+
+    if (!clip.titlu) throw new Error(`build-pages: ${unde} nu are titlu.`);
+    if (!categorii.has(clip.categorie)) {
+      throw new Error(
+        `build-pages: ${unde} are categoria "${clip.categorie}", care nu e în CATEGORII. ` +
+        `Categorii valide: ${[...categorii.keys()].join(', ')}.`
+      );
+    }
+    if (!clip.fisier === !clip.vimeo) {
+      throw new Error(`build-pages: ${unde} trebuie să aibă ori "fisier", ori "vimeo" — exact unul.`);
+    }
+    if (clip.fisier && !existsSync(join(ROOT, 'clipuri', clip.fisier))) {
+      throw new Error(`build-pages: ${unde} arată spre clipuri/${clip.fisier}, care nu există.`);
+    }
+
+    const slug = clip.slug || slugify(clip.titlu);
+    if (slugs.has(slug)) {
+      throw new Error(`build-pages: slug-ul "${slug}" apare de două ori; pune un "slug" propriu la ${unde}.`);
+    }
+    slugs.add(slug);
+
+    return {
+      ...clip,
+      slug,
+      eticheta: categorii.get(clip.categorie),
+      src: clip.fisier ? encodeURI(CLIPURI_DIR + clip.fisier) : ''
+    };
+  });
+}
+
+const PLAY_BTN =
+  '<div class="video-play-btn">\n' +
+  '              <svg viewBox="0 0 24 24" fill="white" width="28" height="28"><polygon points="6,4 20,12 6,20"/></svg>\n' +
+  '            </div>';
+
+function renderCard(clip) {
+  const onclick = clip.vimeo
+    ? `openVimeoModal('${jsString(clip.vimeo)}', '${jsString(clip.titlu)}', '${jsString(clip.slug)}')`
+    : `openVideoModal('${jsString(clip.src)}', '${jsString(clip.titlu)}', '${jsString(clip.slug)}')`;
+
+  // Previewul: pentru fişiere, chiar <video> oprit pe primul cadru; pentru
+  // Vimeo, un embed „background” pe care app.js îl îngheaţă după primul cadru.
+  const preview = clip.vimeo
+    ? `<iframe class="video-preview" src="https://player.vimeo.com/video/${escapeAttr(clip.vimeo)}?background=1&amp;muted=1&amp;loop=1&amp;autopause=0" frameborder="0" allow="autoplay" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" title="${escapeAttr(clip.titlu)}" tabindex="-1" aria-hidden="true"></iframe>`
+    : `<video preload="metadata" playsinline${clip.poster ? ` poster="${escapeAttr(encodeURI(clip.poster))}"` : ''}>\n` +
+      `              <source src="${escapeAttr(clip.src)}" type="${videoType(clip.fisier)}">\n` +
+      `            </video>`;
+
+  return [
+    `        <div class="video-card" data-cat="${escapeAttr(clip.categorie)}" data-clip="${escapeAttr(clip.slug)}"${clip.vimeo ? ` data-vimeo="${escapeAttr(clip.vimeo)}"` : ''} onclick="${onclick}">`,
+    '          <div class="video-wrap">',
+    `            ${preview}`,
+    `            ${PLAY_BTN}`,
+    '          </div>',
+    '          <div class="video-info">',
+    `            <p class="video-title">${escapeText(clip.titlu)}</p>`,
+    `            <p class="video-tag">${escapeText(clip.eticheta)}</p>`,
+    '          </div>',
+    '        </div>'
+  ].join('\n');
+}
+
+function renderFilters() {
+  const buton = (id, nume, apasat) =>
+    `        <button type="button" class="porto-filter" data-filter="${escapeAttr(id)}" aria-pressed="${apasat}" ` +
+    `onclick="filterPortfolio('${jsString(id)}', this)">${escapeText(nume)} ` +
+    `<span class="porto-filter-count" data-count-for="${escapeAttr(id)}"></span></button>`;
+
+  return [
+    '      <div class="porto-filters anim anim-4" role="group" aria-label="Filtrează portofoliul pe categorii">',
+    buton('toate', 'Toate', 'true'),
+    ...CATEGORII.map((c) => buton(c.id, c.nume, 'false')),
+    '      </div>'
+  ].join('\n');
+}
+
+function renderPortofoliu(html) {
+  const clipuri = readClipuri();
+  const bloc = [
+    renderFilters(),
+    '      <div class="video-grid anim anim-5">',
+    ...clipuri.map(renderCard),
+    '      </div>'
+  ].join('\n');
+
+  return replaceOnce(
+    html,
+    /[ \t]*<!-- clipuri:start[\s\S]*?<!-- clipuri:end -->/,
+    () => `      <!-- clipuri:start — generat din clipuri/clipuri.mjs, nu edita aici -->\n${bloc}\n      <!-- clipuri:end -->`,
+    'marcajele clipuri:start / clipuri:end'
+  );
+}
+
 /* index.html e sursa pentru toate celelalte pagini, deci primește versiunea
    întâi și se rescrie pe disc — altfel doar paginile generate ar fi corecte. */
 const version = assetVersion('assets/styles.css', 'assets/app.js');
-const src = versionAssets(readFileSync(join(ROOT, 'index.html'), 'utf8'), version);
-writeFileSync(join(ROOT, 'index.html'), src);
+const src = versionAssets(
+  renderPortofoliu(readFileSync(join(ROOT, 'index.html'), 'utf8')),
+  version
+);
+writeFileSync(join(ROOT, 'index.html'), toCRLF(src));
 
 function buildPage(section) {
   const url = `${ORIGIN}/${section.slug}/`;
@@ -241,8 +387,7 @@ let count = 0;
 for (const section of SECTIONS) {
   const dir = join(ROOT, section.slug);
   mkdirSync(dir, { recursive: true });
-  // index.html folosește CRLF; păstrăm aceeași convenție în fișierele generate.
-  const html = buildPage(section).replace(/\r\n/g, '\n').replace(/\n/g, '\r\n');
+  const html = toCRLF(buildPage(section));
   writeFileSync(join(dir, 'index.html'), html);
   console.log(`  /${section.slug}/  ${section.title}`);
   count++;
