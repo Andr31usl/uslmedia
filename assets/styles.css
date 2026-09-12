@@ -3670,3 +3670,20 @@ body.is-loaded .home-stats   { transition-delay: 400ms; }
 .video-card:hover .video-wrap .video-preview {
   transform: scale(1.05);
 }
+
+
+/* ─── SCROLL-REVEAL ───
+   Elementele intră când ajung în viewport (IntersectionObserver în app.js,
+   care le pune data-reveal și apoi .in-view). Intrarea e o animație, nu o
+   tranziție, tocmai ca transform-ul de la hover să rămână liber după ce
+   animația s-a terminat: cu fill-mode backwards, elementul ține starea de
+   start doar cât durează întârzierea, iar la final revine la stilul lui
+   normal (opacity 1, fără transform), peste care hover-ul poate scrie. */
+html.js [data-reveal]:not(.in-view) { opacity: 0; }
+html.js [data-reveal].in-view {
+  animation: revealUp 600ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+@keyframes revealUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: none; }
+}

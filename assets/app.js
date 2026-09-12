@@ -209,6 +209,10 @@
     setTimeout(() => { tLogo.style.opacity = '0'; }, 550);
 
     setTimeout(() => {
+      // Blocurile deja ajunse în viewport pe pagina nouă intră acum, cât
+      // panoul de tranziție se ridică — observerul nu le mai raportează,
+      // pentru că geometria lor nu s-a schimbat.
+      refreshReveals();
       panel.style.transformOrigin = 'top';
       panel.style.transform = 'scaleY(0)';
       setTimeout(() => {
@@ -559,6 +563,10 @@
 
     const empty = document.getElementById('portoEmpty');
     if (empty) empty.style.display = shown ? 'none' : 'block';
+
+    // Filtrarea rearanjează grila: cardurile urcate în viewport trebuie să
+    // apară, nu să rămână la opacity 0.
+    refreshReveals();
   }
 
   (function initPortfolioCounts() {
@@ -1072,4 +1080,87 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     document.addEventListener('scroll', onScroll, true);
     syncNavScrolled();
+  })();
+
+  // ===== SCROLL-REVEAL =====
+  // Blocurile de conținut intră când ajung în viewport, nu toate odată la
+  // deschiderea paginii. IntersectionObserver, nu listener pe scroll; odată
+  // intrat, elementul nu se mai ascunde (unobserve).
+  //
+  // Ce NU intră aici: elementele cu clasa .anim (au deja animația lor la
+  // schimbarea paginii) și cardurile de recenzii (au observerul lor).
+  var REVEAL_SELECTOR = [
+    '.page-label', '.page-h1', '.servicii-sub', '.journey-title-main',
+    '.despre-photo-row', '.journey-step', '.value-card', '.cert-card',
+    '.despre-cta-strip', '.serv-card', '.process-step', '.servicii-cta',
+    '.video-card', '.pkg', '.contact-info-card', '.contact-form-card'
+  ].join(',');
+
+  var REVEAL_STEP_MS = 110;   // decalajul dintre cardurile din același grup
+  var REVEAL_MAX_STEPS = 5;   // peste atât, ultimele ar aștepta prea mult
+
+  var revealObserver = null;
+
+  function revealNow(el) {
+    el.classList.add('in-view');
+    if (revealObserver) revealObserver.unobserve(el);
+  }
+
+  // Pe desktop paginile inactive stau una peste alta în același loc: ele au
+  // geometrie, deci observerul le-ar raporta ca fiind în viewport și și-ar
+  // consuma intrarea pe ascuns. Așa că le lăsăm observate până când pagina
+  // lor devine activă.
+  function revealAllowed(el) {
+    if (isMobileNav()) return true;
+    var pg = el.closest('.page');
+    return !pg || pg.classList.contains('active');
+  }
+
+  function refreshReveals() {
+    if (isMobileNav()) return;
+    var h = window.innerHeight || document.documentElement.clientHeight;
+    document.querySelectorAll('.page.active [data-reveal]:not(.in-view)').forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.top < h * 0.92 && r.bottom > 0) revealNow(el);
+    });
+  }
+
+  (function initReveals() {
+    var els = [].slice.call(document.querySelectorAll(REVEAL_SELECTOR)).filter(function (el) {
+      // Nimic imbricat: dacă un părinte intră animat, copilul vine cu el.
+      return !el.classList.contains('anim') &&
+             !el.closest('.anim') &&
+             !el.parentElement.closest(REVEAL_SELECTOR);
+    });
+    if (!els.length) return;
+
+    // Decalajul se calculează pe grupuri: cardurile dintr-o grilă intră unul
+    // după altul, dar fiecare grilă pornește de la zero.
+    var seen = new Map();
+    els.forEach(function (el) {
+      var parent = el.parentElement;
+      var i = seen.get(parent) || 0;
+      seen.set(parent, i + 1);
+      el.setAttribute('data-reveal', '');
+      if (i) el.style.animationDelay = Math.min(i, REVEAL_MAX_STEPS) * REVEAL_STEP_MS + 'ms';
+    });
+
+    // Cine a cerut mai puțină mișcare primește conținutul direct, fără intrare.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      els.forEach(function (el) { el.classList.add('in-view'); });
+      return;
+    }
+
+    revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        if (!revealAllowed(entry.target)) return;
+        revealNow(entry.target);
+      });
+    }, { threshold: 0.15 });
+
+    els.forEach(function (el) { revealObserver.observe(el); });
+
+    // După modal layout-ul poate fi altul decât cel văzut de observer.
+    document.addEventListener('modalClosed', refreshReveals);
   })();
