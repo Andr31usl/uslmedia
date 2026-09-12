@@ -3687,3 +3687,50 @@ html.js [data-reveal].in-view {
   from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: none; }
 }
+
+
+/* ─── PREFERS-REDUCED-MOTION ───
+   Pentru cine a cerut din sistem mai puțină mișcare: conținutul rămâne
+   întreg și vizibil, doar mișcarea dispare. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  html { scroll-behavior: auto; }
+
+  /* Stările de start nu mai au ce anima, deci pornesc direct vizibile. */
+  html.js body:not(.is-loaded) .home-eyebrow,
+  html.js body:not(.is-loaded) .home-h1,
+  html.js body:not(.is-loaded) .home-sub,
+  html.js body:not(.is-loaded) .home-btns,
+  html.js body:not(.is-loaded) .home-stats,
+  html.js [data-reveal]:not(.in-view) {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Fără plutire, puls sau glow care respiră. */
+  .hero-dot, .orb, .hf-glow, .sf, .sf-dot,
+  .eyebrow-dot, .clients-label::before, .testimoniale-label::before,
+  .video-play-btn::before, .pkg.custom::after, .pkg-btn-custom,
+  .clients-group {
+    animation: none !important;
+  }
+
+  /* Fără salturi la hover — culorile și bordurile rămân. */
+  .btn-primary:hover, .nav-cta:hover, .colab-btn:hover, .cnf-btn:hover,
+  .submit-btn:hover, .pkg-btn:hover, .pkg-btn-custom:hover,
+  .contact-btn:hover, .contact-btn-solo:hover, .mob-btn-primary:hover,
+  .footer-cta:hover, .btn-ghost:hover, .nav-contact-secondary:hover,
+  .serv-card:hover, .value-card:hover, .video-card:hover, .pkg:hover,
+  .cert-card:hover, .aside-card:hover, .contact-info-card:hover,
+  .testi-card:hover, .footer-social:hover, .footer-links a:hover,
+  .video-card:hover .video-wrap video,
+  .video-card:hover .video-wrap iframe,
+  .video-card:hover .video-wrap .video-preview {
+    transform: none !important;
+  }
+}

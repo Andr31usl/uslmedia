@@ -1123,6 +1123,7 @@
       var r = el.getBoundingClientRect();
       if (r.top < h * 0.92 && r.bottom > 0) revealNow(el);
     });
+    refreshCounters();
   }
 
   (function initReveals() {
@@ -1163,4 +1164,61 @@
 
     // După modal layout-ul poate fi altul decât cel văzut de observer.
     document.addEventListener('modalClosed', refreshReveals);
+  })();
+
+  // ===== NUMERELE DIN STATISTICI =====
+  // "8+" urcă de la 0 când secțiunea intră în viewport. Sufixul stă în
+  // <span> separat, deci atingem doar nodul de text dinaintea lui și
+  // valoarea din HTML rămâne cea corectă dacă JS-ul nu rulează.
+  var COUNT_MS = 1200;
+  var counters = [];
+
+  function runCounter(item) {
+    if (item.done) return;
+    item.done = true;
+    var t0 = 0;
+    function step(now) {
+      if (!t0) t0 = now;
+      var p = Math.min((now - t0) / COUNT_MS, 1);
+      var eased = 1 - Math.pow(1 - p, 3);   // ease-out
+      item.node.nodeValue = String(Math.round(item.target * eased));
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function refreshCounters() {
+    var h = window.innerHeight || document.documentElement.clientHeight;
+    counters.forEach(function (item) {
+      if (item.done) return;
+      if (!revealAllowed(item.el)) return;
+      var r = item.el.getBoundingClientRect();
+      if (r.top < h * 0.92 && r.bottom > 0) runCounter(item);
+    });
+  }
+
+  (function initCounters() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    document.querySelectorAll('.stat-num').forEach(function (el) {
+      var node = el.firstChild;
+      if (!node || node.nodeType !== 3) return;
+      var target = parseInt(node.nodeValue, 10);
+      if (!isFinite(target)) return;
+      counters.push({ el: el, node: node, target: target, done: false });
+      node.nodeValue = '0';
+    });
+    if (!counters.length) return;
+
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        if (!revealAllowed(entry.target)) return;
+        var item = counters.filter(function (c) { return c.el === entry.target; })[0];
+        if (item) runCounter(item);
+        obs.unobserve(entry.target);
+      });
+    }, { threshold: 0.5 });
+
+    counters.forEach(function (item) { obs.observe(item.el); });
   })();
