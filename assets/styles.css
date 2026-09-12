@@ -3734,3 +3734,239 @@ html.js [data-reveal].in-view {
     transform: none !important;
   }
 }
+
+
+/* ============================================================
+   RECENZIE — buton sub testimoniale + fereastra de trimitere
+   Aceeași carte pe fundal întunecat ca popup-ul de audit, ca să
+   nu apară un al treilea limbaj vizual pe site.
+   ============================================================ */
+.testi-cta-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  margin-top: 2.2rem;
+}
+.testi-cta-text {
+  font-size: 0.88rem;
+  font-weight: 300;
+  color: var(--muted);
+  text-align: center;
+}
+.testi-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--blue-glow);
+  background: rgba(37,99,235,0.10);
+  border: 1px solid rgba(37,99,235,0.35);
+  padding: 0.8rem 1.7rem;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: background 200ms ease, border-color 200ms ease,
+              transform 200ms ease, box-shadow 200ms ease;
+}
+.testi-cta:hover {
+  background: rgba(37,99,235,0.18);
+  border-color: rgba(37,99,235,0.6);
+  color: #A0CCFF;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(37,99,235,0.28);
+}
+.testi-cta:active { transform: translateY(-1px); }
+
+.rev-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9600;
+  background: rgba(4,5,14,0.78);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  overflow-y: auto;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.rev-backdrop.rev-open {
+  display: flex;
+  opacity: 1;
+}
+.rev-card {
+  position: relative;
+  background: #08090E;
+  border: 1px solid rgba(37,99,235,0.25);
+  border-radius: 24px;
+  padding: 2.4rem 2.2rem 2rem;
+  max-width: 480px;
+  width: 100%;
+  margin: auto;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.7), 0 0 60px rgba(37,99,235,0.08);
+  animation: nlSlideUp 0.45s cubic-bezier(0.22,1,0.36,1) forwards;
+}
+/* Aceeași pată de lumină sus ca la popup-ul de audit. */
+.rev-card::before {
+  content: '';
+  position: absolute;
+  top: -60px; left: 50%;
+  transform: translateX(-50%);
+  width: 260px; height: 120px;
+  background: radial-gradient(ellipse, rgba(37,99,235,0.28) 0%, transparent 70%);
+  pointer-events: none;
+}
+.rev-close {
+  position: absolute;
+  top: 14px; right: 14px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 50%;
+  width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  z-index: 1;
+}
+.rev-close:hover { background: rgba(255,255,255,0.14); transform: scale(1.1); }
+
+.rev-tag {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--blue-glow);
+  margin-bottom: 0.55rem;
+}
+.rev-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.25;
+  margin-bottom: 0.6rem;
+}
+.rev-title span { color: var(--blue-glow); }
+.rev-sub {
+  font-size: 0.86rem;
+  color: rgba(255,255,255,0.52);
+  line-height: 1.55;
+  margin-bottom: 1.5rem;
+}
+
+.rev-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-bottom: 1rem;
+}
+.rev-field label,
+.rev-field .rev-label {
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: var(--muted);
+}
+.rev-opt { color: rgba(255,255,255,0.28); font-size: 0.76rem; }
+.rev-field input,
+.rev-field textarea {
+  width: 100%;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.93rem;
+  font-weight: 300;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.rev-field input:focus,
+.rev-field textarea:focus {
+  border-color: rgba(37,99,235,0.55);
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.14);
+}
+.rev-field input::placeholder,
+.rev-field textarea::placeholder { color: rgba(255,255,255,0.24); }
+.rev-field textarea { min-height: 130px; resize: vertical; }
+
+.rev-stars { display: flex; gap: 0.25rem; }
+.rev-star {
+  background: none;
+  border: none;
+  padding: 0 0.1rem;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: rgba(255,255,255,0.18);
+  cursor: pointer;
+  transition: color 150ms ease, transform 150ms ease;
+}
+.rev-star.on { color: var(--blue-glow); }
+.rev-star:hover { transform: scale(1.15); }
+
+/* Câmpul-capcană pentru roboți: scos din pagină, nu ascuns cu display:none,
+   ca să rămână completabil automat de un bot și să-l putem prinde. */
+.rev-gotcha {
+  position: absolute;
+  left: -9999px;
+  width: 1px; height: 1px;
+  opacity: 0;
+}
+
+.rev-btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: var(--blue);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  padding: 0.95rem 1.5rem;
+  cursor: pointer;
+  margin-top: 0.4rem;
+  transition: background 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+  box-shadow: 0 6px 20px rgba(37,99,235,0.3);
+}
+.rev-btn:hover { background: var(--blue-bright); transform: translateY(-3px); box-shadow: 0 14px 34px rgba(37,99,235,0.45); }
+.rev-btn:active { transform: translateY(-1px); }
+.rev-btn[disabled] { opacity: 0.6; cursor: default; transform: none; }
+.rev-gdpr {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.3);
+  line-height: 1.5;
+  text-align: center;
+  margin-top: 0.7rem;
+}
+
+.rev-success {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.5rem 0;
+  gap: 0.75rem;
+}
+.rev-success.show { display: flex; }
+.rev-success-icon {
+  width: 56px; height: 56px;
+  background: linear-gradient(135deg, #1A3FBF, #2563EB);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 8px 24px rgba(37,99,235,0.4);
+  animation: nlPop 0.4s cubic-bezier(0.22,1,0.36,1);
+}
+.rev-success strong { font-family: 'Syne', sans-serif; font-size: 1.15rem; color: var(--white); }
+.rev-success p { color: rgba(255,255,255,0.55); font-size: 0.88rem; }
+
+@media (max-width: 480px) {
+  .rev-card { padding: 2rem 1.4rem 1.6rem; border-radius: 20px; }
+  .rev-title { font-size: 1.3rem; }
+}

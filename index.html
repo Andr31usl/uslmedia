@@ -188,7 +188,7 @@
          urmeaza sa intre animat, si o facem din primul cadru desenat, fara
          sa clipeasca. Fara JS pagina ramane vizibila ca pana acum. -->
     <script>document.documentElement.classList.add('js');</script>
-    <link rel="stylesheet" href="/assets/styles.css?v=b2e9d417">
+    <link rel="stylesheet" href="/assets/styles.css?v=c7f1a305">
 </head>
 <body>
 
@@ -560,6 +560,14 @@
             <div class="testi-dots" id="testiDots"></div>
         </div><!-- /testi-track -->
       </div><!-- /testi-track-outer -->
+
+      <div class="testi-cta-row">
+        <p class="testi-cta-text">Am lucrat împreună? Spune-mi cum a fost.</p>
+        <button class="testi-cta" type="button" onclick="openReviewModal()">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.9 6.3 6.6.8-4.9 4.6 1.3 6.8L12 17.3 6.1 20.5l1.3-6.8L2.5 9.1l6.6-.8z"/></svg>
+          Lasă o recenzie
+        </button>
+      </div>
     </div><!-- /testimoniale-section -->
 
     <div class="page-footer">
@@ -1844,7 +1852,7 @@
 
 </div>
 
-<script src="/assets/app.js?v=b2e9d417" defer></script>
+<script src="/assets/app.js?v=c7f1a305" defer></script>
 
 <!-- MODAL VIDEO – în afara page-wrapper, nu e afectat de blur -->
 <div class="video-modal-overlay" id="videoModalOverlay">
@@ -1910,6 +1918,78 @@
           de a lucra cu mine după.
         </p>
       </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- MODAL RECENZIE -->
+<div class="rev-backdrop" id="revBackdrop">
+  <div class="rev-card" role="dialog" aria-modal="true" aria-labelledby="revTitle">
+
+    <button class="rev-close" id="revClose" type="button" aria-label="Închide">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+
+    <div id="revFormContent">
+      <div class="rev-tag">Recenzie</div>
+      <h2 class="rev-title" id="revTitle">Cum a fost <span>colaborarea?</span></h2>
+      <p class="rev-sub">
+        Câteva rânduri sunt de ajuns. Recenzia ajunge la mine pe email și o public
+        pe site după ce o verific.
+      </p>
+
+      <div class="rev-field">
+        <label for="rev-name">Nume</label>
+        <input id="rev-name" type="text" placeholder="Ion Popescu" autocomplete="name" required>
+      </div>
+
+      <div class="rev-field">
+        <label for="rev-business">Business sau rol <span class="rev-opt">(opțional)</span></label>
+        <input id="rev-business" type="text" placeholder="Cafenea, București">
+      </div>
+
+      <div class="rev-field">
+        <label for="rev-email">Email <span class="rev-opt">(opțional, ca să pot răspunde)</span></label>
+        <input id="rev-email" type="email" placeholder="ion@afacere.ro" autocomplete="email">
+      </div>
+
+      <div class="rev-field">
+        <span class="rev-label">Notă</span>
+        <div class="rev-stars" id="revStars" role="group" aria-label="Notă de la 1 la 5 stele">
+          <button type="button" class="rev-star on" data-val="1" aria-label="1 stea">★</button>
+          <button type="button" class="rev-star on" data-val="2" aria-label="2 stele">★</button>
+          <button type="button" class="rev-star on" data-val="3" aria-label="3 stele">★</button>
+          <button type="button" class="rev-star on" data-val="4" aria-label="4 stele">★</button>
+          <button type="button" class="rev-star on" data-val="5" aria-label="5 stele">★</button>
+        </div>
+      </div>
+
+      <div class="rev-field">
+        <label for="rev-text">Recenzia</label>
+        <textarea id="rev-text" placeholder="Cum a decurs colaborarea, ce ți-a plăcut, ce rezultate ai avut…" required></textarea>
+      </div>
+
+      <!-- Capcană pentru roboți: un om nu vede câmpul, deci nu-l completează.
+           Formspree aruncă trimiterile care au _gotcha completat. -->
+      <input class="rev-gotcha" type="text" id="revGotcha" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+      <button class="rev-btn" id="revSubmit" type="button" onclick="submitReview()">Trimite recenzia →</button>
+      <p class="rev-gdpr">
+        Prin trimitere ești de acord să public recenzia pe site, cu numele și
+        businessul scrise mai sus. Emailul rămâne la mine.
+      </p>
+    </div>
+
+    <div class="rev-success" id="revSuccess">
+      <div class="rev-success-icon">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20,6 9,17 4,12"/></svg>
+      </div>
+      <strong>Mulțumesc!</strong>
+      <p>Am primit recenzia. O public pe site după ce o verific.</p>
     </div>
 
   </div>

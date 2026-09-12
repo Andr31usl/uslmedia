@@ -1222,3 +1222,106 @@
 
     counters.forEach(function (item) { obs.observe(item.el); });
   })();
+
+  // ===== RECENZIE DE LA CLIENT =====
+  // Site-ul e static, deci recenzia nu se publică singură: pleacă pe email
+  // prin același formular ca restul (Formspree), iar cardul din secțiunea
+  // "Ce spun clienții" îl adaugă omul, după ce verifică.
+  var revRating = 5;
+
+  function setReviewRating(val) {
+    revRating = val;
+    document.querySelectorAll('#revStars .rev-star').forEach(function (star) {
+      star.classList.toggle('on', Number(star.getAttribute('data-val')) <= val);
+    });
+  }
+
+  function openReviewModal() {
+    var backdrop = document.getElementById('revBackdrop');
+    if (!backdrop) return;
+    backdrop.classList.add('rev-open');
+    document.body.classList.add('modal-open');
+    // Pe telefon pagina de sub fereastră nu trebuie să se miște.
+    document.body.style.overflow = 'hidden';
+    // Pe telefon nu focusăm nimic: ar sări tastatura peste jumătate de
+    // fereastră înainte ca omul să apuce să citească ce i se cere.
+    var first = document.getElementById('rev-name');
+    if (first && !isMobileNav()) setTimeout(function () { first.focus(); }, 60);
+  }
+
+  function closeReviewModal() {
+    var backdrop = document.getElementById('revBackdrop');
+    if (!backdrop || !backdrop.classList.contains('rev-open')) return;
+    backdrop.classList.remove('rev-open');
+    document.body.classList.remove('modal-open');
+    document.body.style.overflow = '';
+  }
+
+  function resetReviewForm() {
+    ['rev-name', 'rev-business', 'rev-email', 'rev-text'].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.value = '';
+    });
+    setReviewRating(5);
+    var btn = document.getElementById('revSubmit');
+    if (btn) { btn.disabled = false; btn.textContent = 'Trimite recenzia →'; }
+    document.getElementById('revFormContent').style.display = '';
+    document.getElementById('revSuccess').classList.remove('show');
+  }
+
+  async function submitReview() {
+    var name = document.getElementById('rev-name').value.trim();
+    var business = document.getElementById('rev-business').value.trim();
+    var email = document.getElementById('rev-email').value.trim();
+    var text = document.getElementById('rev-text').value.trim();
+    var gotcha = document.getElementById('revGotcha').value;
+    var btn = document.getElementById('revSubmit');
+
+    if (!name) { showError('rev-name', 'Numele este obligatoriu.'); return; }
+    if (!text) { showError('rev-text', 'Scrie câteva rânduri despre colaborare.'); return; }
+    if (text.length < 20) { showError('rev-text', 'Mai spune-mi câteva cuvinte (minim 20 de caractere).'); return; }
+
+    btn.disabled = true;
+    btn.textContent = 'Se trimite...';
+
+    // Dacă un bot a completat capcana, ne prefacem că am trimis și nu
+    // chemăm nimic — omul real nu vede diferența, botul nu ajunge în inbox.
+    if (!gotcha) {
+      try {
+        await fetch('https://formspree.io/f/xlgyglbo', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            tip: 'Recenzie site',
+            name: name,
+            business: business || '—',
+            email: email || '—',
+            nota: revRating + '/5',
+            recenzie: text
+          })
+        });
+      } catch (e) {}
+    }
+
+    document.getElementById('revFormContent').style.display = 'none';
+    document.getElementById('revSuccess').classList.add('show');
+    setTimeout(function () { closeReviewModal(); resetReviewForm(); }, 3400);
+  }
+
+  (function initReviewModal() {
+    var backdrop = document.getElementById('revBackdrop');
+    if (!backdrop) return;
+
+    document.getElementById('revClose').addEventListener('click', closeReviewModal);
+    backdrop.addEventListener('click', function (e) {
+      if (e.target === backdrop) closeReviewModal();
+    });
+    document.querySelectorAll('#revStars .rev-star').forEach(function (star) {
+      star.addEventListener('click', function () {
+        setReviewRating(Number(star.getAttribute('data-val')));
+      });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeReviewModal();
+    });
+  })();
