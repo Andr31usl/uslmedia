@@ -682,8 +682,6 @@ a.nav-cta {
   max-width: 1100px;
   margin: 0 auto;
   width: 100%;
-  opacity: 0;
-  animation: fadeUp 0.8s 0.9s ease forwards;
 }
 .home-eyebrow {
   display: inline-flex;
@@ -699,8 +697,6 @@ a.nav-cta {
   padding: 0.5rem 1.1rem;
   border-radius: 100px;
   margin-bottom: 2.5rem;
-  opacity: 0;
-  animation: fadeUp 0.8s 0.3s ease forwards;
   align-self: center;
 }
 .eyebrow-dot {
@@ -725,8 +721,6 @@ a.nav-cta {
   letter-spacing: -0.045em;
   color: var(--white);
   margin-bottom: 1.75rem;
-  opacity: 0;
-  animation: fadeUp 0.8s 0.45s ease forwards;
 }
 .home-h1 .line2 {
   display: block;
@@ -746,16 +740,12 @@ a.nav-cta {
   max-width: 600px;
   line-height: 1.6;
   margin-bottom: 3rem;
-  opacity: 0;
-  animation: fadeUp 0.8s 0.6s ease forwards;
   text-align: center;
 }
 
 .home-btns {
   display: flex;
   gap: 1.5rem;
-  opacity: 0;
-  animation: fadeUp 0.8s 0.75s ease forwards;
   justify-content: center;
   align-items: center;
 }
@@ -827,8 +817,6 @@ a.footer-cta {
   max-width: 1100px;
   margin: 0 auto;
   width: 100%;
-  opacity: 0;
-  animation: fadeUp 0.8s 0.9s ease forwards;
   justify-content: center;
   text-align: center;
 }
@@ -3526,4 +3514,68 @@ body.modal-open .site-floaters {
 
 @media (prefers-reduced-motion: reduce) {
   .hf-glow { animation: none; }
+}
+
+
+/* ============================================================
+   MOTION — intrare în scenă, reveal la scroll, hover
+   Totul pe transform și opacity, ca animațiile să rămână pe
+   compositor (fără width/height/top/left).
+   ============================================================ */
+
+/* ─── HERO: intrare eșalonată ───
+   Starea ascunsă se aplică doar când JS-ul chiar rulează: app.js pune
+   .js pe <html> din prima linie, iar .is-loaded pe <body> la
+   DOMContentLoaded. Fără JS (sau dacă fișierul nu se încarcă) textul
+   rămâne vizibil, nu dispare. */
+.home-eyebrow,
+.home-h1,
+.home-sub,
+.home-btns,
+.home-stats {
+  transition: opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+html.js body:not(.is-loaded) .home-eyebrow,
+html.js body:not(.is-loaded) .home-h1,
+html.js body:not(.is-loaded) .home-sub,
+html.js body:not(.is-loaded) .home-btns,
+html.js body:not(.is-loaded) .home-stats {
+  opacity: 0;
+  transform: translateY(20px);
+}
+body.is-loaded .home-eyebrow { transition-delay: 0ms; }
+body.is-loaded .home-h1      { transition-delay: 100ms; }
+body.is-loaded .home-sub     { transition-delay: 200ms; }
+body.is-loaded .home-btns    { transition-delay: 300ms; }
+body.is-loaded .home-stats   { transition-delay: 400ms; }
+
+/* ─── Puncte decorative care plutesc în hero ───
+   Textură, nu distragere: trei puncte mici, mișcare lentă pe verticală
+   și opacitate care respiră. */
+.hero-dot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--blue-glow);
+  box-shadow: 0 0 12px rgba(37,99,235,0.6);
+  opacity: 0.4;
+  will-change: transform, opacity;
+}
+.hero-dot-1 { top: 24%; left: 11%; animation: heroDotFloat 4.5s ease-in-out infinite; }
+.hero-dot-2 { top: 66%; left: 86%; animation: heroDotFloat 6s   ease-in-out infinite 1.1s; }
+.hero-dot-3 { top: 44%; left: 93%; animation: heroDotFloat 5.2s ease-in-out infinite 2.3s; }
+
+@keyframes heroDotFloat {
+  0%, 100% { transform: translate3d(0, 10px, 0);  opacity: 0.4; }
+  50%      { transform: translate3d(0, -10px, 0); opacity: 1; }
+}
+
+@media (max-width: 768px) {
+  /* Pe telefon hero-ul e îngust: punctele stau mai spre margini, ca să nu
+     cadă peste titlu. */
+  .hero-dot-1 { top: 18%; left: 5%; }
+  .hero-dot-2 { top: 72%; left: 92%; }
+  .hero-dot-3 { display: none; }
 }

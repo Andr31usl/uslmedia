@@ -1,3 +1,27 @@
+  // ===== MARCAJ JS + INTRAREA ÎN SCENĂ =====
+  // .js pe <html> spune CSS-ului că scripturile chiar rulează, deci are voie
+  // să ascundă elementele care urmează să intre animat. Fără el (JS oprit sau
+  // fișierul neîncărcat) pagina rămâne vizibilă, exact ca înainte.
+  // .is-loaded pe <body> pornește intrarea eșalonată din hero.
+  document.documentElement.classList.add('js');
+  (function heroIntro() {
+    // Două cadre de așteptare, ca browserul să apuce să deseneze o dată starea
+    // ascunsă: dacă punem clasa în același cadru, tranziția n-are de unde porni
+    // și elementele apar dintr-o dată.
+    function start() {
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          document.body.classList.add('is-loaded');
+        });
+      });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', start);
+    } else {
+      start();
+    }
+  })();
+
   // CURSOR
   const cursor = document.getElementById('cursor');
   const cursorRing = document.getElementById('cursorRing');

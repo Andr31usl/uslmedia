@@ -184,6 +184,10 @@
     }
     </script>
 
+    <!-- Marcaj pus inainte de CSS: doar cu JS activ ascundem elementele care
+         urmeaza sa intre animat, si o facem din primul cadru desenat, fara
+         sa clipeasca. Fara JS pagina ramane vizibila ca pana acum. -->
+    <script>document.documentElement.classList.add('js');</script>
     <link rel="stylesheet" href="/assets/styles.css?v=6f2b47e0">
     <script type="application/ld+json">
     {
@@ -273,6 +277,9 @@
       <div class="hero-floaters" aria-hidden="true">
         <span class="hf-glow hf-glow-1"></span>
         <span class="hf-glow hf-glow-2"></span>
+        <span class="hero-dot hero-dot-1"></span>
+        <span class="hero-dot hero-dot-2"></span>
+        <span class="hero-dot hero-dot-3"></span>
       </div>
       <div class="home-eyebrow">
         <span class="eyebrow-dot"></span>
