@@ -4053,3 +4053,14 @@ html.js [data-reveal].in-view {
   .clients-label::before,
   .testimoniale-label::before { margin-top: 0.45rem; }
 }
+
+
+/* Titlul de la recenzii stă centrat, fără punct, cu "clienții" pe albastru. */
+.testimoniale-label {
+  /* Fără punct nu mai e nevoie de flex — și, ca bloc, spațiul dinaintea
+     lui <span> rămâne spațiu, nu se pierde între două elemente flex. */
+  display: block;
+  text-align: center;
+}
+.testimoniale-label::before { display: none; }
+.testimoniale-label span { color: var(--blue-glow); }
