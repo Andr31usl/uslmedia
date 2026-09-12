@@ -3970,3 +3970,46 @@ html.js [data-reveal].in-view {
   .rev-card { padding: 2rem 1.4rem 1.6rem; border-radius: 20px; }
   .rev-title { font-size: 1.3rem; }
 }
+
+
+/* ============================================================
+   TELEFON — scroll mai fluid
+   Pe telefon toate secțiunile stau una sub alta, deci tot ce e
+   fix pe ecran (petele difuze, bara, formele plutitoare) se
+   recompune la fiecare cadru de scroll. Aici tăiem exact ce
+   costă mult și se vede puțin pe un ecran de 6 inch.
+   ============================================================ */
+@media (max-width: 768px) {
+  /* blur(140px) pe o pată de 600px e cel mai scump lucru de pe ecran.
+     La dimensiunea telefonului, o pată mai mică și mai puțin difuză
+     arată aproape la fel și costă de câteva ori mai puțin. */
+  .orb-1 { width: 320px; height: 320px; filter: blur(70px); top: -120px; right: -90px; }
+  .orb-2 { width: 240px; height: 240px; filter: blur(60px); bottom: -80px; left: -70px; }
+
+  /* Bara e lipită sus, deci blurul din spatele ei se recalculează cât
+     timp se scrollează. Îl scădem și compensăm cu un fundal mai opac —
+     diferența nu se vede, dar scroll-ul o simte. */
+  nav.is-scrolled {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background: rgba(6,6,8,0.92);
+  }
+
+  /* Mai puține forme care se mișcă în același timp. Rămân cele mari,
+     care dau textura; dispar cele mărunte, care oricum se pierd. */
+  .sf-ring-3, .sf-square-2, .sf-play-2, .sf-dot-4 { display: none; }
+
+  /* Banda de logouri rulează non-stop, inclusiv când e la trei ecrane
+     distanță. O punem pe pauză cât timp nu se vede (clasa vine din JS). */
+  .clients-strip.is-idle .clients-group { animation-play-state: paused; }
+}
+
+/* will-change ține permanent un strat separat pentru fiecare card. Pe
+   desktop e un câștig; pe telefon, cu toate secțiunile pe aceeași pagină,
+   înseamnă zeci de straturi ținute degeaba în memorie. */
+@media (max-width: 768px) {
+  .serv-card, .value-card, .video-card, .pkg, .aside-card,
+  .btn-primary, .btn-ghost, .nav-links a, .nav-cta {
+    will-change: auto;
+  }
+}

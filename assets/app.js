@@ -1325,3 +1325,18 @@
       if (e.key === 'Escape') closeReviewModal();
     });
   })();
+
+  // ===== BANDA DE CLIENȚI — pauză cât timp nu se vede =====
+  // Marchează banda ca inactivă când iese din ecran; CSS-ul oprește
+  // animația doar pe telefon, unde toate secțiunile sunt pe aceeași pagină
+  // și banda ar rula și la trei ecrane distanță.
+  (function idleClientsMarquee() {
+    var strip = document.querySelector('.clients-strip');
+    if (!strip || !window.IntersectionObserver) return;
+
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        strip.classList.toggle('is-idle', !entry.isIntersecting);
+      });
+    }, { rootMargin: '100px 0px' }).observe(strip);
+  })();
