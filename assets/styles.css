@@ -580,6 +580,62 @@ a.nav-cta {
   text-decoration: none;
 }
 
+/* BARA DE SUS — SE STRÂNGE LA SCROLL ÎN JOS
+   Clasa .compact o pune app.js când vizitatorul coboară în pagină şi o scoate
+   când urcă sau când ajunge iar în capul ei. Nu fixăm o înălţime — ar tăia
+   textul la zoom sau pe fonturi de rezervă; micşorăm exact lucrurile care
+   ocupă spaţiu (padding, corpul logoului, butoanele), iar bara se strânge
+   singură după ele. */
+nav {
+  transition:
+    padding 0.35s cubic-bezier(0.22,1,0.36,1),
+    background 0.35s cubic-bezier(0.22,1,0.36,1),
+    box-shadow 0.35s cubic-bezier(0.22,1,0.36,1);
+}
+nav.compact {
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+  /* Mai opacă şi cu umbră: strânsă, bara stă mai aproape de conţinutul care
+     trece pe sub ea şi trebuie să rămână citibilă. */
+  background: rgba(6,6,8,0.92);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.35);
+}
+.logo {
+  transition: font-size 0.35s cubic-bezier(0.22,1,0.36,1);
+}
+nav.compact .logo { font-size: 1.2rem; }
+/* Subtitlul se pliază, nu dispare brusc: max-height duce înălţimea la zero,
+   opacitatea scoate textul înainte să se termine mişcarea. */
+.logo .subtext {
+  overflow: hidden;
+  max-height: 1.6em;
+  transition:
+    max-height 0.35s cubic-bezier(0.22,1,0.36,1),
+    opacity 0.2s ease,
+    margin-top 0.35s cubic-bezier(0.22,1,0.36,1);
+}
+nav.compact .logo .subtext {
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0;
+}
+.nav-links a,
+.nav-cta {
+  transition:
+    color 0.3s cubic-bezier(0.22,1,0.36,1),
+    background 0.3s cubic-bezier(0.22,1,0.36,1),
+    transform 0.3s cubic-bezier(0.22,1,0.36,1),
+    box-shadow 0.3s,
+    padding 0.35s cubic-bezier(0.22,1,0.36,1),
+    font-size 0.35s cubic-bezier(0.22,1,0.36,1);
+}
+nav.compact .nav-links a { padding: 0.35rem 0.9rem; font-size: 0.9rem; }
+nav.compact .nav-cta { padding: 0.55rem 1.4rem; font-size: 0.9rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  nav, .logo, .logo .subtext, .nav-links a, .nav-cta { transition: none; }
+}
+
 /* PAGE SYSTEM */
 .page-wrapper {
   position: fixed;

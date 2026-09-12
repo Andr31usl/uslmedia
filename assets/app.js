@@ -949,6 +949,56 @@
     sections.forEach(function(sec) { spy.observe(sec); });
   })();
 
+  // ===== BARA DE SUS — SE STRÂNGE LA SCROLL ÎN JOS =====
+  // Jos se strânge (mai mult loc pentru conţinut), sus se desface la loc.
+  // Scroll-ul vine din două locuri diferite: pe desktop din .page (containerul
+  // secţiunii active), pe telefon din fereastră. Ascultăm în faza de captare,
+  // fiindcă evenimentul de scroll al unui element nu urcă prin DOM — şi luăm
+  // în seamă doar aceste două surse, ca un carusel scrollat pe orizontală să
+  // nu mişte bara.
+  (function initCompactNav() {
+    const nav = document.querySelector('nav');
+    if (!nav) return;
+
+    const START = 80;  // sub atât suntem în capul paginii: bara stă mare
+    const PRAG  = 6;   // mişcări mai mici sunt tremur de trackpad, nu intenţie
+    let last = 0;
+    let ticking = false;
+
+    function scrollOffset(target) {
+      if (target === document || target === window || target === document.documentElement) {
+        return window.scrollY || document.documentElement.scrollTop || 0;
+      }
+      return target.scrollTop;
+    }
+
+    function update(top) {
+      if (top <= START) {
+        nav.classList.remove('compact');
+        last = top;
+        return;
+      }
+      const delta = top - last;
+      if (Math.abs(delta) < PRAG) return;
+      nav.classList.toggle('compact', delta > 0);
+      last = top;
+    }
+
+    document.addEventListener('scroll', function (e) {
+      const t = e.target;
+      const esteSursa = t === document || t === document.documentElement ||
+        (t.classList && t.classList.contains('page'));
+      if (!esteSursa || ticking) return;
+
+      ticking = true;
+      const top = scrollOffset(t);
+      requestAnimationFrame(function () {
+        ticking = false;
+        update(top);
+      });
+    }, true);
+  })();
+
   // POPUP AUDIT GRATUIT
   (function() {
     var DELAY_MS   = 45000;              // cat asteptam inainte sa-l aratam
