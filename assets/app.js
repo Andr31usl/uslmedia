@@ -179,6 +179,7 @@
       document.getElementById('page-' + page).scrollTop = 0;
 
       setActivePage(page);
+      syncNavScrolled();
     }, 380);
 
     setTimeout(() => { tLogo.style.opacity = '0'; }, 550);
@@ -1013,4 +1014,38 @@
     } else {
       initAuditPopup();
     }
+  })();
+
+  // ===== NAVBAR STICKY =====
+  // Pe desktop nu scrollează fereastra, ci containerul .page (position:absolute
+  // + overflow-y:auto), așa că ascultăm și scroll-ul din faza de captură — doar
+  // așa prindem evenimentul, el nu urcă până la window. Citirea poziției se
+  // face o singură dată pe cadru, prin requestAnimationFrame.
+  var SCROLLED_AT = 50;
+
+  function navScrollTop() {
+    var active = document.querySelector('.page.active');
+    var inner = (!isMobileNav() && active) ? active.scrollTop : 0;
+    return Math.max(window.pageYOffset || 0, inner);
+  }
+
+  function syncNavScrolled() {
+    var navEl = document.querySelector('nav');
+    if (!navEl) return;
+    navEl.classList.toggle('is-scrolled', navScrollTop() > SCROLLED_AT);
+  }
+
+  (function stickyNav() {
+    var ticking = false;
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        ticking = false;
+        syncNavScrolled();
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    document.addEventListener('scroll', onScroll, true);
+    syncNavScrolled();
   })();

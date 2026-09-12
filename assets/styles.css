@@ -491,9 +491,21 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem 3rem;
-  border-bottom: 1px solid var(--border);
+  /* Sus de tot bara e transparenta, ca hero-ul sa curga pana sub ea. Fundalul
+     si blurul apar abia dupa ~50px de scroll, prin clasa .is-scrolled pusa din
+     JS. Bordura ramane declarata mereu, doar transparenta, altfel tranzitia
+     ar sari cu 1px. */
+  border-bottom: 1px solid transparent;
+  background: transparent;
+  transition: background 300ms ease, border-color 300ms ease,
+              backdrop-filter 300ms ease, box-shadow 300ms ease;
+}
+nav.is-scrolled {
   background: rgba(6,6,8,0.80);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom-color: var(--border);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
 }
 /* Logo-ul e un lockup pe două rânduri, deci se ține strâns de două lucruri:
    rândurile au aceeași lățime, iar între ele nu rămâne aer. Numele nu e în
