@@ -525,9 +525,8 @@ nav.is-scrolled {
    numere și alinierea se duce. */
 .logo {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 0.75rem;
+  flex-direction: column;
+  align-items: flex-start;
   /* Acelasi format ca titlurile de sectiune (banda de clienti, recenzii):
      Syne 800 cu tracking strans. Footerul si logoul din tranzitie erau deja
      pe Syne; navigatia era singura ramasa pe DM Sans. */
@@ -541,21 +540,19 @@ nav.is-scrolled {
   cursor: none;
 }
 .logo-mark {
-  width: 89px;
+  /* Semnatura decupata pe fundal transparent: in bara de sus fundalul are
+     gradient, iar un dreptunghi negru s-ar vedea ca o cutie in jurul ei. */
+  /* Latimea o da subtextul de dedesubt: cele doua randuri trebuie sa se
+     termine aproximativ in acelasi loc, ca in logoul scris. */
+  width: 132px;
   height: auto;
   display: block;
-  flex: none;
+  margin-bottom: 2px;
 }
-/* Linia tine marca si numele ca doua blocuri, nu lipite unul de altul. */
-.logo-text {
-  display: flex;
-  flex-direction: column;
-  padding-left: 0.75rem;
-  border-left: 1px solid rgba(255, 255, 255, 0.16);
-}
-/* Albastrul sta acum in marca (triunghiul de play), deci numele ramane alb
-   intreg: doua accente albastre langa ele ar fi concurat. */
-.logo-main { white-space: nowrap; }
+/* Doar cuvantul MEDIA e albastru. Regula nu poate fi pe ".logo span":
+   de cand logoul are si sigla, .logo-text si .logo-main sunt tot span-uri
+   si s-ar colora si ele. */
+.logo-main > span { color: var(--blue-glow); }
 .logo .subtext {
     font-family: 'Syne', sans-serif;
     font-size: 0.345em;
@@ -4088,6 +4085,10 @@ html.js [data-reveal].in-view {
   /* Bara de sus ramane larga, aproape de margini: antetul tine latimea
      ecranului, iar continutul de dedesubt sta strans la mijloc. */
   nav { padding-left: 3rem; padding-right: 3rem; }
+  /* Logoul se mută spre interior, pe aceeași linie verticală cu conținutul
+     paginii. Restul barei — linkurile și butoanele — rămâne pe loc, deci
+     antetul își păstrează lățimea. */
+  .logo { margin-left: max(0px, calc((100vw - var(--lat-lat)) / 2 + 2rem)); }
   .home-hero { padding-left: 5rem; padding-right: 5rem; }
   .despre-wrap,
   .servicii-wrap,
