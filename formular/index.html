@@ -93,26 +93,30 @@
     z-index: 100;
   }
 
+  /* Acelasi logo ca pe restul site-ului: semnatura decupata, cu subtextul
+     dedesubt. Latimile sunt potrivite una cu alta, ca cele doua randuri sa se
+     termine aproximativ in acelasi loc. */
   .logo {
     display: block;
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 18px;
-    letter-spacing: 0.12em;
-    color: var(--white);
-    text-transform: uppercase;
     text-decoration: none;
     transition: opacity 0.2s;
   }
   .logo:hover { opacity: 0.75; }
-  .logo-main span { color: var(--accent); }
+  .logo-mark {
+    width: 112px;
+    height: auto;
+    display: block;
+  }
   .logo-subtext {
-    font-size: 0.5em;
-    font-weight: 400;
-    letter-spacing: 0.1em;
+    font-family: 'Syne', sans-serif;
+    font-size: 8px;
+    /* Pagina asta incarca Syne doar la 400, 700 si 800 — 600 ar fi aproximata
+       de browser, deci luam 700. */
+    font-weight: 700;
+    letter-spacing: 0.085em;
     color: var(--white);
-    margin-top: 2px;
     text-transform: uppercase;
+    line-height: 1;
   }
 
   .progress-wrap {
@@ -586,7 +590,7 @@
 
 <header>
   <a class="logo" href="/" aria-label="USL Media — înapoi la pagina principală">
-    <div class="logo-main">USL <span>MEDIA</span></div>
+    <img class="logo-mark" src="/assets/icoane/semnatura-usl.png" alt="USL Media" width="112" height="40" decoding="async">
     <div class="logo-subtext">DIGITAL GROWTH AGENCY</div>
   </a>
   <div class="progress-wrap">
