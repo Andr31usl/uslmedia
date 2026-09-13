@@ -17,6 +17,7 @@ Regula asta e pentru toate conversațiile, nu doar pentru una.
 ## Despre site
 
 Site static servit de GitHub Pages din `main` (www.uslmedia.ro). Ce ajunge în
-`main` e live în ~1 minut. Aceleași secțiuni sunt copiate în șase fișiere HTML
-(`index.html` + `despre/`, `servicii/`, `portofoliu/`, `pachete/`, `contact/`),
-cu CSS și JS comune în `assets/`.
+`main` e live în ~1 minut. `index.html` e sursa și conține toate secțiunile; din el se generează cinci
+fișiere (`despre/`, `servicii/`, `portofoliu/`, `pachete/`, `contact/`), fiecare
+cu o singură secțiune, prin `node tools/build-pages.mjs`. CSS și JS comune în
+`assets/`.

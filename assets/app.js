@@ -83,7 +83,12 @@
       navFuture.push(navHistory.pop());
       const prev = navHistory[navHistory.length - 1];
       navigateTo(prev, true);
+      return;
     }
+    // Venit direct pe /servicii/: nu avem istoric de sectiuni, dar
+    // navigarea intre pagini e acum reala, deci browserul il are.
+    if (window.history.length > 1) window.history.back();
+    else window.location.href = '/';
   }
 
   function goForward() {
@@ -164,6 +169,13 @@
   }
 
   function navigateTo(page, isBack = false) {
+    // Fiecare URL serveste doar sectiunea lui, deci sectiunea ceruta nu e,
+    // de regula, in pagina curenta. Atunci link-ul din meniu trebuie sa se
+    // poarte ca un link obisnuit: mergem la adresa ei.
+    if (!document.getElementById('page-' + page)) {
+      window.location.href = pathFor(page);
+      return;
+    }
     if (isMobileNav()) {
       if (isMobileFormPage(page) || isMobileFormPage(currentPage)) {
         mobileFormNavigate(page, isBack);
@@ -310,7 +322,8 @@
   }
 
   // PHONE — digits only (colaboram form)
-  document.getElementById('col-phone').addEventListener('input', function() {
+  var col_phoneInput = document.getElementById('col-phone');
+  if (col_phoneInput) col_phoneInput.addEventListener('input', function() {
     this.value = this.value.replace(/[^0-9]/g, '');
   });
 
@@ -442,7 +455,8 @@
     if (e.target === mobileDrawer) closeDrawer();
   });
   // PHONE — digits only (colaboram-custom form)
-  document.getElementById('cc-phone').addEventListener('input', function() {
+  var cc_phoneInput = document.getElementById('cc-phone');
+  if (cc_phoneInput) cc_phoneInput.addEventListener('input', function() {
     this.value = this.value.replace(/[^0-9]/g, '');
   });
 

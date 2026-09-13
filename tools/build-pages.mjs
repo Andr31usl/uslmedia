@@ -105,6 +105,42 @@ function escapeAttr(value) {
   return value.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
 }
 
+/**
+ * Fiecare subpagina pastreaza doar sectiunea ei.
+ *
+ * Cat timp toate sectiunile stateau in fiecare fisier, /despre/ si /servicii/
+ * trimiteau catre Google exact acelasi HTML, deci nu avea cum sa le deosebeasca:
+ * in Search Console cinci pagini stateau la "Descoperita - nu este indexata",
+ * si fara pagini distincte nu apar nici sitelinks in rezultate.
+ *
+ * index.html ramane intreg: e pagina de start, e cea deja indexata si acolo
+ * scroll-ul continuu de pe telefon are sens.
+ */
+function keepOnlySection(html, id) {
+  const START = /^  <div class="page(?: active)?" id="page-([\w-]+)">$/gm;
+  const wrapperEnd = html.indexOf('\n</div>\n\n<script src="/assets/app.js');
+  if (wrapperEnd < 0) {
+    throw new Error('build-pages: nu mai gasesc sfarsitul lui .page-wrapper in index.html.');
+  }
+
+  const starts = [];
+  let m;
+  while ((m = START.exec(html)) !== null) starts.push({ id: m[1], at: m.index });
+  if (!starts.some((s) => s.id === id)) {
+    throw new Error(`build-pages: sectiunea page-${id} nu exista in index.html.`);
+  }
+
+  let out = '';
+  let cursor = 0;
+  starts.forEach((s, i) => {
+    const end = i + 1 < starts.length ? starts[i + 1].at : wrapperEnd + 1;
+    if (s.id === id) return;
+    out += html.slice(cursor, s.at);
+    cursor = end;
+  });
+  return out + html.slice(cursor);
+}
+
 /** Pune (sau actualizează) ?v=… pe foaia de stil și pe scriptul comun. */
 function versionAssets(html, version) {
   html = replaceOnce(
@@ -217,6 +253,8 @@ function buildPage(section) {
     `<div class="page active" id="page-${section.id}">`,
     `page-${section.id}`
   );
+
+  html = keepOnlySection(html, section.id);
 
   // Link-ul de meniu marcat ca activ trebuie să corespundă secțiunii.
   html = replaceOnce(
