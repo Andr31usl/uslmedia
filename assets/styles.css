@@ -525,8 +525,9 @@ nav.is-scrolled {
    numere și alinierea se duce. */
 .logo {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.75rem;
   /* Acelasi format ca titlurile de sectiune (banda de clienti, recenzii):
      Syne 800 cu tracking strans. Footerul si logoul din tranzitie erau deja
      pe Syne; navigatia era singura ramasa pe DM Sans. */
@@ -540,19 +541,21 @@ nav.is-scrolled {
   cursor: none;
 }
 .logo-mark {
-  /* Semnatura decupata pe fundal transparent: in bara de sus fundalul are
-     gradient, iar un dreptunghi negru s-ar vedea ca o cutie in jurul ei. */
-  /* Latimea o da subtextul de dedesubt: cele doua randuri trebuie sa se
-     termine aproximativ in acelasi loc, ca in logoul scris. */
-  width: 132px;
+  width: 89px;
   height: auto;
   display: block;
-  margin-bottom: 2px;
+  flex: none;
 }
-/* Doar cuvantul MEDIA e albastru. Regula nu poate fi pe ".logo span":
-   de cand logoul are si sigla, .logo-text si .logo-main sunt tot span-uri
-   si s-ar colora si ele. */
-.logo-main > span { color: var(--blue-glow); }
+/* Linia tine marca si numele ca doua blocuri, nu lipite unul de altul. */
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  padding-left: 0.75rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.16);
+}
+/* Albastrul sta acum in marca (triunghiul de play), deci numele ramane alb
+   intreg: doua accente albastre langa ele ar fi concurat. */
+.logo-main { white-space: nowrap; }
 .logo .subtext {
     font-family: 'Syne', sans-serif;
     font-size: 0.345em;

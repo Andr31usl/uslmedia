@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="8 8 254 100" role="img" aria-label="USL Media">
+  <!-- Literele sunt construite din dreptunghiuri pe o grila de 22 de unitati:
+       toate barele au aceeasi grosime, toate cele trei litere aceeasi latime. -->
+  <g fill="#ffffff">
+    <!-- U -->
+    <rect x="8" y="8" width="22" height="100"/>
+    <rect x="60" y="8" width="22" height="100"/>
+    <rect x="8" y="86" width="74" height="22"/>
+    <!-- S -->
+    <rect x="98" y="8" width="74" height="22"/>
+    <rect x="98" y="8" width="22" height="58"/>
+    <rect x="98" y="44" width="74" height="22"/>
+    <rect x="150" y="44" width="22" height="64"/>
+    <rect x="98" y="86" width="74" height="22"/>
+    <!-- L -->
+    <rect x="188" y="8" width="22" height="100"/>
+    <rect x="188" y="86" width="74" height="22"/>
+  </g>
+  <!-- Golul lui U tine butonul de play: trimiterea la video nu adauga nimic
+       peste litere, sta in spatiul pe care U il avea oricum. -->
+  <polygon points="38,32 62,58 38,84" fill="#2563EB"/>
+</svg>
