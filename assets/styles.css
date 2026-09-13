@@ -517,7 +517,9 @@ nav.is-scrolled {
    numere și alinierea se duce. */
 .logo {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.62rem;
   /* Acelasi format ca titlurile de sectiune (banda de clienti, recenzii):
      Syne 800 cu tracking strans. Footerul si logoul din tranzitie erau deja
      pe Syne; navigatia era singura ramasa pe DM Sans. */
@@ -530,7 +532,20 @@ nav.is-scrolled {
   text-decoration: none;
   cursor: none;
 }
-.logo span { color: var(--blue-glow); }
+.logo-mark {
+  width: 42px;
+  height: 42px;
+  flex: none;
+  display: block;
+}
+.logo-text {
+  display: flex;
+  flex-direction: column;
+}
+/* Doar cuvantul MEDIA e albastru. Regula nu poate fi pe ".logo span":
+   de cand logoul are si sigla, .logo-text si .logo-main sunt tot span-uri
+   si s-ar colora si ele. */
+.logo-main > span { color: var(--blue-glow); }
 .logo .subtext {
     font-family: 'Syne', sans-serif;
     font-size: 0.375em;
