@@ -200,6 +200,14 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
+  /* Latimile coloanei de continut. Totul sta centrat, iar laturile raman
+     goale: pe ecran mare, textul si grilele nu se mai intind pana aproape
+     de margini. Mobilul nu e atins — acolo latimea o da ecranul. */
+  --lat-lat: 1060px;     /* portofoliu, pachete — grile de trei coloane */
+  --lat-mediu: 1000px;   /* servicii, footer */
+  --lat-strans: 960px;   /* hero, statistici, clienti, recenzii */
+  --lat-text: 820px;     /* despre — coloana de citit */
+  --lat-ingust: 660px;   /* formularul de contact */
   --black: #000000;
   --navy: #04050A;
   --navy-mid: #09090F;
@@ -689,7 +697,7 @@ a.nav-cta {
   align-items: center;
   text-align: center;
   padding: 8rem 3rem 5rem;
-  max-width: 1100px;
+  max-width: var(--lat-strans);
   margin: 0 auto;
   width: 100%;
   position: relative;
@@ -699,7 +707,7 @@ a.nav-cta {
   gap: 3rem;
   padding: 2.5rem 3rem;
   border-top: 1px solid var(--border);
-  max-width: 1100px;
+  max-width: var(--lat-strans);
   margin: 0 auto;
   width: 100%;
 }
@@ -973,7 +981,7 @@ a.footer-cta {
 
 /* ===== DESPRE PAGE ===== */
 .despre-wrap {
-  max-width: 900px;
+  max-width: var(--lat-text);
   margin: 0 auto;
   padding: 6rem 3rem 5rem;
   flex: 1;
@@ -1167,7 +1175,7 @@ a.footer-cta {
 
 /* ===== SERVICII PAGE ===== */
 .servicii-wrap {
-  max-width: 1200px;
+  max-width: var(--lat-mediu);
   margin: 0 auto;
   padding: 6rem 3rem 5rem;
   flex: 1;
@@ -1383,7 +1391,7 @@ a.footer-cta {
 
 /* ===== PORTOFOLIU PAGE ===== */
 .porto-wrap {
-  max-width: 1300px;
+  max-width: var(--lat-lat);
   margin: 0 auto;
   padding: 6rem 3rem 5rem;
   flex: 1;
@@ -1479,7 +1487,7 @@ a.footer-cta {
 
 /* ===== PRETURI PAGE ===== */
 .preturi-wrap {
-  max-width: 1300px;
+  max-width: var(--lat-lat);
   margin: 0 auto;
   padding: 6rem 3rem 5rem;
   flex: 1;
@@ -1540,7 +1548,7 @@ a.pkg-btn, a.pkg-btn-custom { text-decoration: none; }
 
 /* ===== CONTACT PAGE ===== */
 .contact-wrap {
-  max-width: 700px;
+  max-width: var(--lat-ingust);
   margin: 0 auto;
   padding: 6rem 3rem 5rem;
   flex: 1;
@@ -2252,7 +2260,7 @@ a.pkg-btn, a.pkg-btn-custom { text-decoration: none; }
   display: grid;
   grid-template-columns: 1.6fr 1fr 1fr;
   gap: 2.5rem 3rem;
-  max-width: 1180px;
+  max-width: var(--lat-mediu);
   width: 100%;
   margin: 0 auto;
 }
@@ -2389,7 +2397,7 @@ a.pkg-btn, a.pkg-btn-custom { text-decoration: none; }
   justify-content: space-between;
   align-items: center;
   gap: 0.5rem 1.5rem;
-  max-width: 1180px;
+  max-width: var(--lat-mediu);
   width: 100%;
   margin: 0 auto;
   font-size: 0.78rem;
@@ -2816,7 +2824,7 @@ html {
    mută cu exact o grupă (-50%), aşa că reluarea nu se vede. */
 .clients-strip {
   width: 100%;
-  max-width: 1100px;
+  max-width: var(--lat-strans);
   margin: 0 auto;
   padding: 2.5rem 3rem 0;
   border-top: 1px solid var(--border);
@@ -2914,7 +2922,7 @@ html {
 
 .testimoniale-section {
   width: 100%;
-  max-width: 1100px;
+  max-width: var(--lat-strans);
   margin: 0 auto;
   padding: 2.5rem 3rem;
   border-top: 1px solid var(--border);
@@ -4066,4 +4074,25 @@ html.js [data-reveal].in-view {
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
   }
+}
+
+
+/* ===== LATURI ===== */
+/* Pe ecran mare, marginea laterala creste de la 3rem la 5rem. Blocul e limitat
+   la min-width: 900px tocmai ca sa nu atinga nimic din ce s-a stabilit mai sus
+   pentru telefon si tableta. */
+@media (min-width: 900px) {
+  /* Bara de sus pastreaza fundalul pe toata latimea, dar logoul si butoanele
+     intra pe aceeasi linie verticala cu continutul paginii. Fara asta,
+     antetul ramanea lipit de margini in timp ce restul se strangea la mijloc. */
+  nav {
+    padding-left: max(3rem, calc((100% - var(--lat-lat)) / 2 + 5rem));
+    padding-right: max(3rem, calc((100% - var(--lat-lat)) / 2 + 5rem));
+  }
+  .home-hero { padding-left: 5rem; padding-right: 5rem; }
+  .despre-wrap,
+  .servicii-wrap,
+  .porto-wrap,
+  .preturi-wrap,
+  .contact-wrap { padding-left: 5rem; padding-right: 5rem; }
 }
