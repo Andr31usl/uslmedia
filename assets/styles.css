@@ -532,9 +532,12 @@ nav.is-scrolled {
 }
 .logo span { color: var(--blue-glow); }
 .logo .subtext {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Syne', sans-serif;
     font-size: 0.375em;
-    font-weight: 500;       /* Compensează corpul mic: la 400 s-ar stinge. */
+    /* Compensează corpul mic: la 400 s-ar stinge. 600 e cea mai apropiată
+       grosime pe care o încărcăm din Syne — 500 nu există în set și ar fi
+       aproximată de browser. */
+    font-weight: 600;
     letter-spacing: 0.1em;
     line-height: 1;
     color: var(--white);
