@@ -651,6 +651,10 @@
   // Opreşte tot ce rulează în carduri înainte să pornească clipul din modal.
   function stopCardPreviews() {
     document.querySelectorAll('.video-wrap video').forEach(v => {
+      // Cardurile au preload="none" si arata posterul, deci de regula nu s-a
+      // incarcat nimic. Nu le atingem: currentTime ar porni un download
+      // degeaba, clipul ruleaza oricum in modal, nu in card.
+      if (!v.readyState) return;
       v.pause();
       v.currentTime = 0;
     });
