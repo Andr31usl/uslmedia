@@ -4082,13 +4082,9 @@ html.js [data-reveal].in-view {
    la min-width: 900px tocmai ca sa nu atinga nimic din ce s-a stabilit mai sus
    pentru telefon si tableta. */
 @media (min-width: 900px) {
-  /* Bara de sus pastreaza fundalul pe toata latimea, dar logoul si butoanele
-     intra pe aceeasi linie verticala cu continutul paginii. Fara asta,
-     antetul ramanea lipit de margini in timp ce restul se strangea la mijloc. */
-  nav {
-    padding-left: max(3rem, calc((100% - var(--lat-lat)) / 2 + 5rem));
-    padding-right: max(3rem, calc((100% - var(--lat-lat)) / 2 + 5rem));
-  }
+  /* Bara de sus ramane larga, aproape de margini: antetul tine latimea
+     ecranului, iar continutul de dedesubt sta strans la mijloc. */
+  nav { padding-left: 3rem; padding-right: 3rem; }
   .home-hero { padding-left: 5rem; padding-right: 5rem; }
   .despre-wrap,
   .servicii-wrap,
