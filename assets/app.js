@@ -1188,7 +1188,7 @@
   // "8+" urcă de la 0 când secțiunea intră în viewport. Sufixul stă în
   // <span> separat, deci atingem doar nodul de text dinaintea lui și
   // valoarea din HTML rămâne cea corectă dacă JS-ul nu rulează.
-  var COUNT_MS = 1200;
+  var COUNT_MS = 2000;
   var counters = [];
 
   function runCounter(item) {
