@@ -518,11 +518,14 @@ nav.is-scrolled {
 .logo {
   display: flex;
   flex-direction: column;
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 700;
+  /* Acelasi format ca titlurile de sectiune (banda de clienti, recenzii):
+     Syne 800 cu tracking strans. Footerul si logoul din tranzitie erau deja
+     pe Syne; navigatia era singura ramasa pe DM Sans. */
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
   font-size: 1.5rem;
   line-height: 1;
-  letter-spacing: 0.02em;
+  letter-spacing: -0.025em;
   color: var(--white);
   text-decoration: none;
   cursor: none;
