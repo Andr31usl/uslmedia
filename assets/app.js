@@ -47,6 +47,7 @@
     'despre':           '/despre/',
     'servicii':         '/servicii/',
     'portofoliu':       '/portofoliu/',
+    'rezultate':        '/rezultate/',
     'preturi':          '/pachete/',
     'colaboram':        '/colaboram/',
     'colaboram-custom': '/colaboram-custom/',
@@ -985,7 +986,7 @@
   // SCROLL-SPY MOBIL — ține meniul sincronizat în timpul scroll-ului liber
   (function() {
     if (!isMobileNav()) return;
-    const ids = ['home','despre','servicii','portofoliu','preturi','contact'];
+    const ids = ['home','despre','servicii','portofoliu','rezultate','preturi','contact'];
     const sections = ids.map(id => document.getElementById('page-' + id)).filter(Boolean);
     if (!sections.length) return;
 
@@ -1111,7 +1112,8 @@
     '.page-label', '.page-h1', '.servicii-sub', '.journey-title-main',
     '.despre-photo-row', '.journey-step', '.value-card', '.cert-card',
     '.despre-cta-strip', '.serv-card', '.process-step', '.servicii-cta',
-    '.video-card', '.pkg', '.contact-info-card', '.contact-form-card'
+    '.video-card', '.pkg', '.contact-info-card', '.contact-form-card',
+    '.rez-kpi', '.rez-chart-card', '.rez-step', '.rez-cta'
   ].join(',');
 
   var REVEAL_STEP_MS = 110;   // decalajul dintre cardurile din același grup

@@ -9,6 +9,7 @@ Găzduit pe GitHub Pages, domeniu `www.uslmedia.ro` (vezi `CNAME`).
 index.html            sursa de adevăr: markup-ul tuturor secțiunilor
 assets/styles.css     tot CSS-ul
 assets/app.js         navigația, formularele, modalele, newsletterul
+assets/rezultate.js   secțiunea Rezultate: datele (obiectul REZULTATE) și graficele
 despre/               \
 servicii/              |
 portofoliu/            |  generate din index.html — NU se editează manual
@@ -74,6 +75,14 @@ Numărul afișat pe fiecare buton de filtru se calculează singur din pagină, d
 nu trebuie actualizat manual. Dacă vrei o categorie nouă, adaug-o în trei
 locuri: un buton în `.porto-filters`, `data-cat` pe carduri, și atât — funcția
 `filterPortfolio` din `assets/app.js` nu are lista categoriilor codificată în ea.
+
+## Cum schimbi cifrele din Rezultate
+
+Toate cifrele sunt în obiectul `REZULTATE`, la începutul lui
+`assets/rezultate.js` (regulile de completare sunt în comentariul de deasupra).
+Când pui datele reale, setează `demonstrativ: false`. Apoi rulează
+`node tools/build-pages.mjs`, ca `?v=` din URL-ul scriptului să se schimbe și
+vizitatorii să primească cifrele noi imediat, nu după ce le expiră cache-ul.
 
 ## SEO
 

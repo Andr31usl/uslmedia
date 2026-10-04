@@ -54,6 +54,15 @@ const SECTIONS = [
       'Proiecte video realizate de USL Media pentru branduri, restaurante și afaceri din București: filmare cinematică, Reels, TikTok și conținut pentru social media.'
   },
   {
+    id: 'rezultate',
+    slug: 'rezultate',
+    navId: 'nav-rezultate',
+    breadcrumb: 'Rezultate',
+    title: 'Rezultate Social Media — Studiu de Caz pe 3 Luni | USL Media',
+    description:
+      'Ce se schimbă în 3 luni de colaborare cu USL Media: vizualizări, urmăritori, engagement și comenzi, înainte și după, pe Instagram, TikTok și Facebook.'
+  },
+  {
     id: 'preturi',
     slug: 'pachete',
     navId: 'nav-preturi',
@@ -141,7 +150,7 @@ function keepOnlySection(html, id) {
   return out + html.slice(cursor);
 }
 
-/** Pune (sau actualizează) ?v=… pe foaia de stil și pe scriptul comun. */
+/** Pune (sau actualizează) ?v=… pe foaia de stil și pe scripturile comune. */
 function versionAssets(html, version) {
   html = replaceOnce(
     html,
@@ -149,17 +158,23 @@ function versionAssets(html, version) {
     `href="/assets/styles.css?v=${version}"`,
     'link către styles.css'
   );
-  return replaceOnce(
+  html = replaceOnce(
     html,
     /src="\/assets\/app\.js(\?v=[^"]*)?"/,
     `src="/assets/app.js?v=${version}"`,
     'script app.js'
   );
+  return replaceOnce(
+    html,
+    /src="\/assets\/rezultate\.js(\?v=[^"]*)?"/,
+    `src="/assets/rezultate.js?v=${version}"`,
+    'script rezultate.js'
+  );
 }
 
 /* index.html e sursa pentru toate celelalte pagini, deci primește versiunea
    întâi și se rescrie pe disc — altfel doar paginile generate ar fi corecte. */
-const version = assetVersion('assets/styles.css', 'assets/app.js');
+const version = assetVersion('assets/styles.css', 'assets/app.js', 'assets/rezultate.js');
 const src = versionAssets(readFileSync(join(ROOT, 'index.html'), 'utf8'), version);
 writeFileSync(join(ROOT, 'index.html'), src);
 

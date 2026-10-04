@@ -41,6 +41,13 @@
   </url>
 
   <url>
+    <loc>https://www.uslmedia.ro/rezultate/</loc>
+    <lastmod>2026-10-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
     <loc>https://www.uslmedia.ro/despre/</loc>
     <lastmod>2026-09-13</lastmod>
     <changefreq>monthly</changefreq>

@@ -4096,3 +4096,246 @@ html.js [data-reveal].in-view {
   .preturi-wrap,
   .contact-wrap { padding-left: 5rem; padding-right: 5rem; }
 }
+
+/* ===== REZULTATE (#page-rezultate) =====
+   Cifrele vin din assets/rezultate.js. Cardurile urmează stilul .pkg:
+   fundal --navy-card, colțuri de 20px, bordură care se aprinde la hover. */
+.rez-wrap {
+  max-width: var(--lat-lat);
+  margin: 0 auto;
+  padding: 6rem 3rem 5rem;
+  flex: 1;
+  width: 100%;
+  box-sizing: border-box;
+}
+.rez-header { text-align: center; margin-bottom: 2rem; }
+.rez-sub { color: var(--muted); font-weight: 300; font-size: 0.95rem; }
+.rez-demo {
+  display: inline-block;
+  margin-top: 0.9rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.28rem 0.8rem;
+  border-radius: 100px;
+  color: #FCD34D;
+  background: rgba(252,211,77,0.08);
+  border: 1px dashed rgba(252,211,77,0.35);
+}
+.rez-demo[hidden] { display: none; }
+
+/* Taburi de platformă — pastile, ca filtrele din portofoliu. */
+.rez-tabs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+.rez-tabs[hidden] { display: none; }
+.rez-tab {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--white-dim);
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  padding: 0.6rem 1.3rem;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: background 0.3s, border-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+.rez-tab:hover { border-color: var(--border-blue); color: var(--white); }
+.rez-tab.active {
+  background: var(--blue-bright);
+  border-color: var(--blue-bright);
+  color: var(--white);
+  box-shadow: 0 6px 20px rgba(37,99,235,0.35);
+}
+.rez-tab:focus-visible { outline: 2px solid var(--muted); outline-offset: 2px; }
+
+/* Carduri KPI */
+.rez-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+.rez-kpi {
+  position: relative;
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 1.4rem 1.4rem 1.25rem;
+  min-width: 0;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s, box-shadow 0.4s;
+}
+.rez-kpi::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 12%; right: 12%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(37,99,235,0.7), transparent);
+}
+.rez-kpi:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-blue);
+  box-shadow: 0 18px 45px rgba(0,0,0,0.45), 0 0 40px rgba(37,99,235,0.10);
+}
+.rez-kpi-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.6rem;
+}
+.rez-kpi-now {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.7rem, 2.6vw, 2.3rem);
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.rez-kpi-before {
+  margin-top: 0.45rem;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.5);
+  font-variant-numeric: tabular-nums;
+}
+.rez-kpi-growth {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  margin-top: 0.8rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #4ADE80;
+  background: rgba(74,222,128,0.10);
+  border: 1px solid rgba(74,222,128,0.22);
+  padding: 0.22rem 0.6rem;
+  border-radius: 100px;
+  font-variant-numeric: tabular-nums;
+}
+.rez-kpi-growth.down { color: #F87171; background: rgba(248,113,113,0.10); border-color: rgba(248,113,113,0.25); }
+.rez-arrow { font-size: 0.62rem; }
+
+/* Grafice */
+.rez-charts {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  gap: 1rem;
+  margin-bottom: 3.5rem;
+}
+.rez-chart-card {
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 1.4rem 1.4rem 1rem;
+  min-width: 0;
+  box-shadow: 0 0 60px rgba(37,99,235,0.05);
+}
+.rez-chart-head { margin-bottom: 0.75rem; }
+.rez-chart-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--white);
+  margin: 0;
+}
+.rez-chart-note { margin: 0.25rem 0 0; font-size: 0.78rem; color: var(--muted); font-weight: 300; }
+.rez-chart-box { position: relative; height: 300px; }
+.rez-chart-box canvas { display: block; }
+.rez-chart-error {
+  display: flex; align-items: center; justify-content: center;
+  height: 100%; margin: 0;
+  font-size: 0.85rem; color: var(--muted); text-align: center;
+}
+
+/* Ce am făcut */
+.rez-steps { margin-bottom: 3.5rem; }
+.rez-steps-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--white);
+  text-align: center;
+  margin: 0 0 1.5rem;
+}
+.rez-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+.rez-step {
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 1.5rem;
+}
+.rez-step-num {
+  display: inline-block;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--blue-glow);
+  background: rgba(37,99,235,0.12);
+  border: 1px solid rgba(37,99,235,0.3);
+  padding: 0.2rem 0.6rem;
+  border-radius: 100px;
+  margin-bottom: 0.9rem;
+}
+.rez-step h4 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--white);
+  margin: 0 0 0.4rem;
+}
+.rez-step p { margin: 0; font-size: 0.86rem; line-height: 1.5; color: rgba(255,255,255,0.65); font-weight: 300; }
+
+/* CTA */
+.rez-cta { text-align: center; }
+.rez-cta-text {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.2rem, 2.4vw, 1.6rem);
+  font-weight: 700;
+  color: var(--white);
+  margin: 0 0 1.25rem;
+}
+.rez-cta-btn { display: inline-block; text-decoration: none; }
+
+/* Laturile ca la .preturi-wrap: regulile de mai sus pentru ecran mare și
+   telefon vin înaintea acestui bloc, deci le repetăm aici. */
+@media (min-width: 900px) {
+  .rez-wrap { padding-left: 5rem; padding-right: 5rem; }
+}
+@media (max-width: 900px) {
+  .rez-kpis { grid-template-columns: repeat(2, 1fr); }
+  .rez-charts { grid-template-columns: minmax(0, 1fr); }
+  .rez-steps-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .rez-wrap { padding: 2rem 1.25rem 4rem; }
+  .rez-tabs { margin-bottom: 1.25rem; gap: 0.4rem; }
+  .rez-tab { padding: 0.55rem 1rem; font-size: 0.82rem; }
+  .rez-kpis { gap: 0.6rem; }
+  .rez-kpi { padding: 1.1rem 1rem 1rem; border-radius: 16px; }
+  .rez-kpi-label { font-size: 0.66rem; letter-spacing: 0.06em; }
+  .rez-kpi-now { font-size: clamp(1.45rem, 7vw, 1.9rem); }
+  .rez-chart-card { padding: 1.1rem 0.9rem 0.8rem; border-radius: 16px; }
+  .rez-chart-box { height: 250px; }
+  .rez-steps, .rez-charts { margin-bottom: 2.5rem; }
+}
+/* Sub 340px cardurile nu mai încap câte două fără să se taie cifrele. */
+@media (max-width: 340px) {
+  .rez-kpis { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rez-kpi, .rez-tab { transition: none; }
+  .rez-kpi:hover { transform: none; }
+}
