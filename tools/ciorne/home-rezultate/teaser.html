@@ -1,0 +1,47 @@
+    <!-- REZULTATE PE HOME — varianta scurtă; studiul complet e pe /rezultate/.
+         Cifrele vin din obiectul REZULTATE din assets/rezultate.js. -->
+    <div class="home-rez" id="homeRez">
+      <div class="home-rez-label">Rezultate <span>reale</span></div>
+      <div class="home-rez-grid">
+        <div class="home-rez-intro">
+          <h2 class="home-rez-title">Ce se schimbă în <strong>3 luni</strong></h2>
+          <p class="home-rez-sub"><span data-hr="client"></span> · <span data-hr="perioada"></span></p>
+          <span class="rez-demo" data-hr-demo hidden>Date demonstrative</span>
+
+          <div class="home-rez-stats">
+            <div class="home-rez-stat" data-kpi="vizualizari">
+              <div class="home-rez-num">—</div>
+              <div class="home-rez-lbl">vizualizări lunare</div>
+              <div class="home-rez-from"></div>
+            </div>
+            <div class="home-rez-stat" data-kpi="urmaritori">
+              <div class="home-rez-num">—</div>
+              <div class="home-rez-lbl">urmăritori</div>
+              <div class="home-rez-from"></div>
+            </div>
+            <div class="home-rez-stat" data-kpi="vanzari">
+              <div class="home-rez-num">—</div>
+              <div class="home-rez-lbl" data-hr="vanzari-eticheta">comenzi lunare</div>
+              <div class="home-rez-from"></div>
+            </div>
+          </div>
+
+          <div class="home-rez-btns">
+            <a class="btn-primary home-rez-btn" href="/rezultate/" onclick="navigateTo('rezultate'); return false;">Vezi studiul complet</a>
+            <a class="btn-link" href="/formular/">
+              Vreau și eu
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,3 11,8 6,13"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="home-rez-chart">
+          <div class="home-rez-chart-head">
+            <span class="home-rez-chart-title" data-hr="vanzari-titlu">Comenzi pe lună</span>
+            <span class="home-rez-chart-badge" data-hr="vanzari-crestere"></span>
+          </div>
+          <div class="home-rez-chart-box"><canvas id="homeRezChart" role="img" aria-label="Comenzi pe lună, înainte și în timpul colaborării"></canvas></div>
+          <p class="home-rez-chart-note">Luna dinainte de colaborare, apoi lunile 1–3 · toate platformele</p>
+        </div>
+      </div>
+    </div>

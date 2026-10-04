@@ -1,0 +1,147 @@
+/* ===== REZULTATE PE HOME (#homeRez) =====
+   Stă între banda cu clienți și recenzii, pe aceeași lățime (--lat-strans)
+   și cu aceeași etichetă mică deasupra. */
+.home-rez {
+  width: 100%;
+  max-width: var(--lat-strans);
+  margin: 0 auto;
+  padding: 3rem 3rem 3.5rem;
+  border-top: 1px solid var(--border);
+  box-sizing: border-box;
+}
+.home-rez-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--blue-glow);
+  margin-bottom: 1.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.home-rez-label::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--blue-glow);
+  animation: pulse 2s infinite;
+}
+.home-rez-label span { color: var(--white); }
+.home-rez-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 2.5rem;
+  align-items: center;
+}
+.home-rez-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.9rem, 3.4vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  color: var(--white);
+  margin: 0 0 0.7rem;
+}
+.home-rez-title strong { color: var(--blue-glow); font-weight: 800; white-space: nowrap; }
+.home-rez-sub { margin: 0; color: var(--muted); font-weight: 300; font-size: 0.92rem; }
+.home-rez .rez-demo { margin-top: 0.8rem; }
+
+.home-rez-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 1.8rem 0 1.9rem;
+}
+.home-rez-stat {
+  position: relative;
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 1.1rem 1rem 1rem;
+  min-width: 0;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s, box-shadow 0.4s;
+}
+.home-rez-stat::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 14%; right: 14%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(37,99,235,0.75), transparent);
+}
+.home-rez-stat:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-blue);
+  box-shadow: 0 18px 45px rgba(0,0,0,0.45), 0 0 40px rgba(37,99,235,0.12);
+}
+/* Creșterea e cifra mare — e ce vrea să vadă un client nou. */
+.home-rez-num {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.3rem, 2vw, 1.75rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--white);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.home-rez-num .up { color: #4ADE80; font-size: 0.55em; vertical-align: 0.35em; margin-right: 0.15em; }
+.home-rez-lbl {
+  margin-top: 0.45rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.home-rez-from {
+  margin-top: 0.35rem;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.5);
+  font-variant-numeric: tabular-nums;
+}
+.home-rez-btns { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+.home-rez-btn { display: inline-block; text-decoration: none; }
+.home-rez-btns .btn-link { text-decoration: none; }
+
+.home-rez-chart {
+  background: var(--navy-card);
+  border: 1px solid rgba(37,99,235,0.28);
+  border-radius: 20px;
+  padding: 1.3rem 1.3rem 1rem;
+  box-shadow: 0 0 70px rgba(37,99,235,0.10), 0 24px 60px rgba(0,0,0,0.45);
+  min-width: 0;
+}
+.home-rez-chart-head { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; margin-bottom: 0.6rem; }
+.home-rez-chart-title { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--white); }
+.home-rez-chart-badge {
+  font-size: 0.78rem; font-weight: 700; color: #4ADE80;
+  background: rgba(74,222,128,0.10); border: 1px solid rgba(74,222,128,0.22);
+  padding: 0.2rem 0.6rem; border-radius: 100px; white-space: nowrap;
+}
+.home-rez-chart-box { position: relative; height: 260px; }
+.home-rez-chart-note { margin: 0.5rem 0 0; font-size: 0.72rem; color: var(--muted); font-weight: 300; }
+
+@media (max-width: 900px) {
+  .home-rez-grid { grid-template-columns: minmax(0, 1fr); gap: 1.75rem; }
+}
+/* Pe telefon secțiunea Rezultate completă vine oricum mai jos în scroll,
+   deci aici rămân doar cifrele și butonul — fără grafic. */
+@media (max-width: 768px) {
+  .home-rez { padding: 2.25rem 1.25rem 2.5rem; }
+  .home-rez-chart { display: none; }
+  .home-rez-stats { gap: 0.5rem; margin: 1.4rem 0 1.5rem; }
+  .home-rez-stat { padding: 0.9rem 0.7rem 0.8rem; border-radius: 14px; }
+  .home-rez-num { font-size: clamp(1.1rem, 5.6vw, 1.5rem); }
+  .home-rez-lbl { font-size: 0.6rem; letter-spacing: 0.04em; }
+  .home-rez-from { font-size: 0.62rem; white-space: nowrap; }
+  .home-rez-btns { gap: 1rem; }
+}
+@media (max-width: 340px) {
+  .home-rez-stats { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-rez-stat { transition: none; }
+  .home-rez-stat:hover { transform: none; }
+  .home-rez-label::before { animation: none; }
+}
