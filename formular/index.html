@@ -94,36 +94,26 @@
   }
 
   /* Acelasi logo ca in antetul site-ului (assets/styles.css): semnatura USL
-     si „MEDIA” in Syne 800 albastru, mai mic (48px), aliniate pe linia
-     de baza. Logoul e impins spre interior
-     cu 3rem. */
+     si „MEDIA” desenat in acelasi stil (media-usl.svg), aliniate jos, la
+     aceeasi inaltime. Logoul e impins spre interior cu 3rem. */
   .logo {
     display: flex;
-    align-items: baseline;
+    align-items: flex-end;
     gap: 17px;
     margin-left: 3rem;
     text-decoration: none;
     transition: opacity 0.2s;
   }
   .logo:hover { opacity: 0.75; }
-  .logo-mark {
+  .logo-mark,
+  .logo-media {
     height: 47px;
     width: auto;
     display: block;
   }
-  .logo-media {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 48px;
-    letter-spacing: -0.025em;
-    line-height: 1;
-    white-space: nowrap;
-    color: #2563EB;
-  }
   @media (max-width: 768px) {
     .logo { gap: 12px; }
-    .logo-mark { height: 34px; }
-    .logo-media { font-size: 35px; }
+    .logo-mark, .logo-media { height: 34px; }
   }
   @media (max-width: 600px) {
     .logo { margin-left: 0; }
@@ -602,7 +592,7 @@
 <header>
   <a class="logo" href="/" aria-label="USL Media — înapoi la pagina principală">
     <img class="logo-mark" src="/assets/icoane/semnatura-usl.png" alt="" width="132" height="47" decoding="async">
-    <span class="logo-media">MEDIA</span>
+    <img class="logo-media" src="/assets/icoane/media-usl.svg" alt="" width="224" height="47" decoding="async">
   </a>
   <div class="progress-wrap">
     <span id="step-counter">1 / 9</span>

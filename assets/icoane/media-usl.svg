@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 930 195" width="930" height="195" fill="none" stroke-width="40" stroke-linecap="butt" stroke-linejoin="miter">
+  <!-- „MEDIA” desenat în stilul semnăturii USL (semnatura-usl.png, 546×195):
+       aceeași înălțime, linie de 40, colțuri rotunjite la raza 40 pe axă,
+       capete drepte, litere late ca U/S/L, alb cu pătrățele albastre la
+       capetele de linie. -->
+  <g stroke="#ffffff">
+    <path d="M20 195 V63 A40 40 0 0 1 60 23 H160 A40 40 0 0 1 200 63 V195 M110 23 V195"/>
+    <path transform="translate(250 0)" d="M170 23 H60 A40 40 0 0 0 20 63 V135 A40 40 0 0 0 60 175 H170 M20 99 H120"/>
+    <path transform="translate(450 0)" d="M20 23 H130 A40 40 0 0 1 170 63 V135 A40 40 0 0 1 130 175 H20 Z"/>
+    <path transform="translate(670 0)" d="M20 3 V195"/>
+    <path transform="translate(740 0)" d="M20 159 V63 A40 40 0 0 1 60 23 H130 A40 40 0 0 1 170 63 V195 M20 115 H170"/>
+  </g>
+  <g stroke="#1d5cff">
+    <path transform="translate(250 0)" d="M120 99 H155"/>
+    <path transform="translate(740 0)" d="M20 159 V195"/>
+  </g>
+</svg>
