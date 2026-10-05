@@ -517,7 +517,7 @@ nav.is-scrolled {
 }
 /* Logoul e un singur rând: semnătura USL (PNG decupat pe transparent — bara
    de sus are gradient, un dreptunghi negru s-ar vedea ca o cutie) și „MEDIA”
-   în Poppins ExtraBold, albastru, cum a ales clientul pe schiță. Același
+   în Poppins ExtraBold, în culorile semnăturii, cum a ales clientul. Același
    „size” ca USL: literele semnăturii au 46px din cei 47 ai imaginii, iar
    majusculele Poppins au 0.71em, deci 46 / 0.71 ≈ 65px. Aliniere pe linia
    de bază (baza imaginii = baza textului). Fără „DIGITAL GROWTH AGENCY”. */
@@ -541,7 +541,21 @@ nav.is-scrolled {
   font-size: 65px;
   line-height: 1;
   white-space: nowrap;
-  color: #2563EB;
+  /* Culorile semnăturii: litere albe, cu pătrățele albastre la capetele de
+     jos (piciorul stâng al lui M, piciorul drept al lui A), ca la S și L.
+     Trei straturi de fundal decupate pe litere (background-clip: text): doi
+     dreptunghiuri albastre de 0.24em × 0.19em lipite de linia de bază
+     (la line-height 1 baza Poppins e la 0.85em de sus) peste alb. */
+  color: transparent;
+  background-image:
+    linear-gradient(#1d5cff, #1d5cff),
+    linear-gradient(#1d5cff, #1d5cff),
+    linear-gradient(#ffffff, #ffffff);
+  background-size: 0.24em 0.19em, 0.24em 0.19em, 100% 100%;
+  background-position: 0 0.66em, 100% 0.66em, 0 0;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
 }
 .nav-links {
   display: flex;
