@@ -69,7 +69,7 @@ const SECTIONS = [
     breadcrumb: 'Contact',
     title: 'Contact | USL Media — Agenție Marketing Digital București',
     description:
-      'Contactează USL Media, agenție de marketing digital și producție video din București. Telefon 0771 300 127, email uslmedia.contact@gmail.com.'
+      'Contactează USL Media, agenție de marketing digital și producție video din București. Telefon 0771 300 127, email contact@uslmedia.ro.'
   }
 ];
 
