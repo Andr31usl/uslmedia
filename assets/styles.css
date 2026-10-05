@@ -515,72 +515,35 @@ nav.is-scrolled {
   border-bottom-color: var(--border);
   box-shadow: 0 10px 30px rgba(0,0,0,0.35);
 }
-/* Logo-ul e un lockup pe două rânduri, deci se ține strâns de două lucruri:
-   rândurile au aceeași lățime, iar între ele nu rămâne aer. Numele nu e în
-   Syne, ca restul titlurilor, ci în DM Sans 700 — clientul a cerut explicit
-   literele rotunde, neutre, nu grotescul îngust al lui Syne.
-
-   130.3px numele, 129.9px subtitlul, la fonturile chiar încărcate. Măsoară
-   întotdeauna cu Syne și DM Sans încărcate: pe fonturile de rezervă ies alte
-   numere și alinierea se duce. */
-/* Lockup-ul (semnatura + subtext) e coloana din stanga; langa el, centrat pe
-   verticala, sta numele scris "USL MEDIA", cerut de client pe tot site-ul. */
+/* Logoul e un singur rând: semnătura USL (PNG decupat pe transparent — bara
+   de sus are gradient, un dreptunghi negru s-ar vedea ca o cutie) și „MEDIA”
+   scris în Syne 800, albastru, la aceeași înălțime cu literele semnăturii.
+   Literele USL ocupă 191 din cei 195px ai desenului (46px din 47), iar
+   majusculele Syne au 0.65em, deci MEDIA are 46 / 0.65 ≈ 71px. Aliniere pe
+   linia de bază: baza imaginii = baza textului. Clientul a cerut doar
+   „USL MEDIA”, fără subtitlul „DIGITAL GROWTH AGENCY”. */
 .logo {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 0.9rem;
-  /* Fara asta, cand bara se strange, lockup-ul se ingusteaza si subtextul
-     se rupe pe doua randuri. */
+  align-items: baseline;
+  gap: 17px;
+  /* Fara asta, cand bara se strange, logoul se ingusteaza. */
   flex-shrink: 0;
-  /* Acelasi format ca titlurile de sectiune (banda de clienti, recenzii):
-     Syne 800 cu tracking strans. Footerul si logoul din tranzitie erau deja
-     pe Syne; navigatia era singura ramasa pe DM Sans. */
-  font-family: 'Syne', sans-serif;
-  font-weight: 800;
-  font-size: 1.5rem;
-  line-height: 1;
-  letter-spacing: -0.025em;
-  color: var(--white);
   text-decoration: none;
   cursor: none;
 }
 .logo-mark {
-  /* Semnatura decupata pe fundal transparent: in bara de sus fundalul are
-     gradient, iar un dreptunghi negru s-ar vedea ca o cutie in jurul ei. */
-  /* Latimea o da subtextul de dedesubt: cele doua randuri trebuie sa se
-     termine aproximativ in acelasi loc, ca in logoul scris. */
-  width: 132px;
-  height: auto;
+  height: 47px;
+  width: auto;
   display: block;
-  margin-bottom: 2px;
 }
-/* Doar cuvantul MEDIA e albastru. Regula nu poate fi pe ".logo span":
-   de cand logoul are si sigla, .logo-text si .logo-main sunt tot span-uri
-   si s-ar colora si ele. */
-.logo-main > span { color: var(--blue-glow); }
-.logo-lockup {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-.logo-name {
-  font-size: 1.3rem;
+.logo-media {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 71px;
+  letter-spacing: -0.025em;
+  line-height: 1;
   white-space: nowrap;
-}
-.logo-name > span { color: var(--blue-glow); }
-.logo .subtext {
-    font-family: 'Syne', sans-serif;
-    font-size: 0.345em;
-    /* Compensează corpul mic: la 400 s-ar stinge. 600 e cea mai apropiată
-       grosime pe care o încărcăm din Syne — 500 nu există în set și ar fi
-       aproximată de browser. */
-    font-weight: 600;
-    letter-spacing: 0.085em;
-    line-height: 1;
-    color: var(--white);
-    margin-top: 0;
-    text-transform: uppercase;
+  color: #2563EB;
 }
 .nav-links {
   display: flex;
@@ -2543,8 +2506,11 @@ a.pkg-btn, a.pkg-btn-custom { text-decoration: none; }
   }
   .nav-links { display: none !important; }
   .nav-cta { display: none !important; }
-  .logo { gap: 0.6rem; }
-  .logo-name { font-size: 1.05rem; }
+  /* Pe telefon logoul se micsoreaza pe tot, cu aceleasi proportii, ca sa
+     incapa langa hamburger: 26px semnatura, 39px MEDIA (~300px in total). */
+  .logo { gap: 10px; }
+  .logo-mark { height: 26px; }
+  .logo-media { font-size: 39px; }
   .hamburger { display: flex; }
   .mobile-drawer { display: flex; }
 
@@ -4106,12 +4072,13 @@ html.js [data-reveal].in-view {
   /* Logoul se mută spre interior, pe aceeași linie verticală cu conținutul
      paginii. Restul barei — linkurile și butoanele — rămâne pe loc, deci
      antetul își păstrează lățimea. */
-  /* +3rem fata de linia continutului: clientul a cerut logoul mai la dreapta.
+  /* +5rem fata de linia continutului: clientul a cerut logoul mai la dreapta
+     (pe 1910px incepe la x≈585, unde l-a marcat pe schita).
      Plafonul 100vw - 1270px tine loc pentru restul barei, masurat cu fonturile
-     incarcate: logo cu nume 333px, linkuri 453px, butoane 178 + 129px, padding
-     2 × 48px si ~24px intre elemente. Peste ~1530px conteaza doar formula;
+     incarcate: logo 537px, linkuri 453px, butoane 178 + 129px, padding
+     2 × 48px si ~24px intre elemente. Peste ~2100px conteaza doar formula;
      sub, logoul se opreste unde inca nu atinge meniul. */
-  .logo { margin-left: max(0px, min(calc((100vw - var(--lat-lat)) / 2 + 5rem), calc(100vw - 1270px))); }
+  .logo { margin-left: max(0px, min(calc((100vw - var(--lat-lat)) / 2 + 7rem), calc(100vw - 1470px))); }
   .home-hero { padding-left: 5rem; padding-right: 5rem; }
   .despre-wrap,
   .servicii-wrap,
@@ -4119,12 +4086,12 @@ html.js [data-reveal].in-view {
   .preturi-wrap,
   .contact-wrap { padding-left: 5rem; padding-right: 5rem; }
 }
-/* Intre telefon si ~1280px numele scris nu mai incape langa meniu fara sa
-   impinga butoanele pe doua randuri, deci ramane doar semnatura. Fara nume,
+/* Intre telefon si ~1600px „MEDIA” nu mai incape langa meniu fara sa
+   impinga butoanele pe doua randuri, deci ramane doar semnatura. Fara el,
    logoul are nevoie de ~1080px pentru restul barei. */
-@media (min-width: 769px) and (max-width: 1279px) {
-  .logo-name { display: none; }
+@media (min-width: 769px) and (max-width: 1599px) {
+  .logo-media { display: none; }
 }
-@media (min-width: 900px) and (max-width: 1279px) {
+@media (min-width: 900px) and (max-width: 1599px) {
   .logo { margin-left: max(0px, min(calc((100vw - var(--lat-lat)) / 2 + 5rem), calc(100vw - 1080px))); }
 }

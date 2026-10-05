@@ -93,59 +93,41 @@
     z-index: 100;
   }
 
-  /* Acelasi logo ca pe restul site-ului: semnatura decupata, cu subtextul
-     dedesubt. Latimile sunt potrivite una cu alta, ca cele doua randuri sa se
-     termine aproximativ in acelasi loc. */
-  /* Langa semnatura sta si numele scris, ca in antetul site-ului. Logoul e
-     impins spre interior cu 3rem fata de marginea barei. */
+  /* Acelasi logo ca in antetul site-ului (assets/styles.css): semnatura USL
+     si „MEDIA” in Syne 800 albastru, la aceeasi inaltime cu literele
+     semnaturii, aliniate pe linia de baza. Logoul e impins spre interior
+     cu 3rem. */
   .logo {
     display: flex;
-    align-items: center;
-    gap: 0.9rem;
+    align-items: baseline;
+    gap: 17px;
     margin-left: 3rem;
     text-decoration: none;
     transition: opacity 0.2s;
   }
-  .logo-lockup { display: block; }
-  .logo-subtext { display: block; }
-  .logo-name {
+  .logo:hover { opacity: 0.75; }
+  .logo-mark {
+    height: 47px;
+    width: auto;
+    display: block;
+  }
+  .logo-media {
     font-family: 'Syne', sans-serif;
     font-weight: 800;
-    font-size: 1.3rem;
+    font-size: 71px;
     letter-spacing: -0.025em;
     line-height: 1;
-    color: var(--white);
     white-space: nowrap;
+    color: #2563EB;
   }
-  .logo-name > span { color: var(--blue-glow, #2563EB); }
   @media (max-width: 768px) {
-    .logo { gap: 0.6rem; }
-    .logo-name { font-size: 1.05rem; }
+    .logo { gap: 10px; }
+    .logo-mark { height: 26px; }
+    .logo-media { font-size: 39px; }
   }
   @media (max-width: 600px) {
     .logo { margin-left: 0; }
-    .logo-name { display: none; }
-  }
-  .logo:hover { opacity: 0.75; }
-  /* Dimensiunile sunt cele din antetul site-ului (assets/styles.css): semnatura
-     132px, subtextul 0.345 × 1.5rem, numele 1.3rem — logoul arata la fel pe
-     toate paginile. */
-  .logo-mark {
-    width: 132px;
-    height: auto;
-    display: block;
-    margin-bottom: 2px;
-  }
-  .logo-subtext {
-    font-family: 'Syne', sans-serif;
-    font-size: 0.5175rem;
-    /* Pagina asta incarca Syne doar la 400, 700 si 800 — 600 ar fi aproximata
-       de browser, deci luam 700. */
-    font-weight: 700;
-    letter-spacing: 0.085em;
-    color: var(--white);
-    text-transform: uppercase;
-    line-height: 1;
+    .logo-media { display: none; }
   }
 
   .progress-wrap {
@@ -619,11 +601,8 @@
 
 <header>
   <a class="logo" href="/" aria-label="USL Media — înapoi la pagina principală">
-    <span class="logo-lockup">
-      <img class="logo-mark" src="/assets/icoane/semnatura-usl.png" alt="" width="132" height="47" decoding="async">
-      <span class="logo-subtext">DIGITAL GROWTH AGENCY</span>
-    </span>
-    <span class="logo-name">USL <span>MEDIA</span></span>
+    <img class="logo-mark" src="/assets/icoane/semnatura-usl.png" alt="" width="132" height="47" decoding="async">
+    <span class="logo-media">MEDIA</span>
   </a>
   <div class="progress-wrap">
     <span id="step-counter">1 / 9</span>
