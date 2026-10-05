@@ -517,24 +517,31 @@ nav.is-scrolled {
 }
 /* Logoul e un singur rând: semnătura USL (PNG decupat pe transparent — bara
    de sus are gradient, un dreptunghi negru s-ar vedea ca o cutie) și „MEDIA”
-   desenat în același stil (media-usl.svg: aceeași înălțime de 195px pe
-   desen, aceeași linie, alb cu pătrățele albastre), cum a cerut clientul:
-   „același size și design cu USL”. Aliniate jos; spațiul dintre ele e cel
-   dintre cuvinte, 70px pe desen. Fără subtitlul „DIGITAL GROWTH AGENCY”. */
+   în Poppins ExtraBold, albastru, cum a ales clientul pe schiță. Același
+   „size” ca USL: literele semnăturii au 46px din cei 47 ai imaginii, iar
+   majusculele Poppins au 0.71em, deci 46 / 0.71 ≈ 65px. Aliniere pe linia
+   de bază (baza imaginii = baza textului). Fără „DIGITAL GROWTH AGENCY”. */
 .logo {
   display: flex;
-  align-items: flex-end;
+  align-items: baseline;
   gap: 17px;
   /* Fara asta, cand bara se strange, logoul se ingusteaza. */
   flex-shrink: 0;
   text-decoration: none;
   cursor: none;
 }
-.logo-mark,
-.logo-media {
+.logo-mark {
   height: 47px;
   width: auto;
   display: block;
+}
+.logo-media {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 800;
+  font-size: 65px;
+  line-height: 1;
+  white-space: nowrap;
+  color: #2563EB;
 }
 .nav-links {
   display: flex;
@@ -2498,9 +2505,10 @@ a.pkg-btn, a.pkg-btn-custom { text-decoration: none; }
   .nav-links { display: none !important; }
   .nav-cta { display: none !important; }
   /* Pe telefon logoul se micsoreaza pe tot, cu aceleasi proportii, ca sa
-     incapa langa hamburger: 34px inaltime (~270px in total). */
+     incapa langa hamburger: 34px semnatura, 47px MEDIA (~262px in total). */
   .logo { gap: 12px; }
-  .logo-mark, .logo-media { height: 34px; }
+  .logo-mark { height: 34px; }
+  .logo-media { font-size: 47px; }
   .hamburger { display: flex; }
   .mobile-drawer { display: flex; }
 
@@ -4065,10 +4073,10 @@ html.js [data-reveal].in-view {
   /* +5rem fata de linia continutului: clientul a cerut logoul mai la dreapta
      (pe 1910px incepe la x≈585, unde l-a marcat pe schita).
      Plafonul 100vw - 1270px tine loc pentru restul barei, masurat cu fonturile
-     incarcate: logo 373px, linkuri 453px, butoane 178 + 129px, padding
+     incarcate: logo 362px, linkuri 453px, butoane 178 + 129px, padding
      2 × 48px si ~24px intre elemente. Peste ~1850px conteaza doar formula;
      sub, logoul se opreste unde inca nu atinge meniul. */
-  .logo { margin-left: max(0px, min(calc((100vw - var(--lat-lat)) / 2 + 7rem), calc(100vw - 1310px))); }
+  .logo { margin-left: max(0px, min(calc((100vw - var(--lat-lat)) / 2 + 7rem), calc(100vw - 1300px))); }
   .home-hero { padding-left: 5rem; padding-right: 5rem; }
   .despre-wrap,
   .servicii-wrap,
@@ -4076,12 +4084,12 @@ html.js [data-reveal].in-view {
   .preturi-wrap,
   .contact-wrap { padding-left: 5rem; padding-right: 5rem; }
 }
-/* Intre telefon si ~1320px „MEDIA” nu mai incape langa meniu fara sa
+/* Intre telefon si ~1310px „MEDIA” nu mai incape langa meniu fara sa
    impinga butoanele pe doua randuri, deci ramane doar semnatura. Fara el,
    logoul are nevoie de ~1080px pentru restul barei. */
-@media (min-width: 769px) and (max-width: 1319px) {
+@media (min-width: 769px) and (max-width: 1309px) {
   .logo-media { display: none; }
 }
-@media (min-width: 900px) and (max-width: 1319px) {
+@media (min-width: 900px) and (max-width: 1309px) {
   .logo { margin-left: max(0px, min(calc((100vw - var(--lat-lat)) / 2 + 5rem), calc(100vw - 1080px))); }
 }

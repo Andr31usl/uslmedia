@@ -24,7 +24,7 @@
 <link rel="apple-touch-icon" href="/assets/icoane/sigla-180.png">
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500&family=Poppins:wght@800&display=swap');
 
   :root {
     --black: #000000;
@@ -94,26 +94,35 @@
   }
 
   /* Acelasi logo ca in antetul site-ului (assets/styles.css): semnatura USL
-     si „MEDIA” desenat in acelasi stil (media-usl.svg), aliniate jos, la
-     aceeasi inaltime. Logoul e impins spre interior cu 3rem. */
+     si „MEDIA” in Poppins ExtraBold albastru, la aceeasi inaltime cu literele
+     semnaturii, aliniate pe linia de baza. Logoul e impins spre interior
+     cu 3rem. */
   .logo {
     display: flex;
-    align-items: flex-end;
+    align-items: baseline;
     gap: 17px;
     margin-left: 3rem;
     text-decoration: none;
     transition: opacity 0.2s;
   }
   .logo:hover { opacity: 0.75; }
-  .logo-mark,
-  .logo-media {
+  .logo-mark {
     height: 47px;
     width: auto;
     display: block;
   }
+  .logo-media {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 65px;
+    line-height: 1;
+    white-space: nowrap;
+    color: #2563EB;
+  }
   @media (max-width: 768px) {
     .logo { gap: 12px; }
-    .logo-mark, .logo-media { height: 34px; }
+    .logo-mark { height: 34px; }
+    .logo-media { font-size: 47px; }
   }
   @media (max-width: 600px) {
     .logo { margin-left: 0; }
@@ -592,7 +601,7 @@
 <header>
   <a class="logo" href="/" aria-label="USL Media — înapoi la pagina principală">
     <img class="logo-mark" src="/assets/icoane/semnatura-usl.png" alt="" width="132" height="47" decoding="async">
-    <img class="logo-media" src="/assets/icoane/media-usl.svg" alt="" width="224" height="47" decoding="async">
+    <span class="logo-media">MEDIA</span>
   </a>
   <div class="progress-wrap">
     <span id="step-counter">1 / 9</span>
