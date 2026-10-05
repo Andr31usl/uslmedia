@@ -523,10 +523,13 @@ nav.is-scrolled {
    130.3px numele, 129.9px subtitlul, la fonturile chiar încărcate. Măsoară
    întotdeauna cu Syne și DM Sans încărcate: pe fonturile de rezervă ies alte
    numere și alinierea se duce. */
+/* Lockup-ul (semnatura + subtext) e coloana din stanga; langa el, centrat pe
+   verticala, sta numele scris "USL MEDIA", cerut de client pe tot site-ul. */
 .logo {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.9rem;
   /* Acelasi format ca titlurile de sectiune (banda de clienti, recenzii):
      Syne 800 cu tracking strans. Footerul si logoul din tranzitie erau deja
      pe Syne; navigatia era singura ramasa pe DM Sans. */
@@ -553,6 +556,16 @@ nav.is-scrolled {
    de cand logoul are si sigla, .logo-text si .logo-main sunt tot span-uri
    si s-ar colora si ele. */
 .logo-main > span { color: var(--blue-glow); }
+.logo-lockup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.logo-name {
+  font-size: 1.3rem;
+  white-space: nowrap;
+}
+.logo-name > span { color: var(--blue-glow); }
 .logo .subtext {
     font-family: 'Syne', sans-serif;
     font-size: 0.345em;
@@ -2527,6 +2540,8 @@ a.pkg-btn, a.pkg-btn-custom { text-decoration: none; }
   }
   .nav-links { display: none !important; }
   .nav-cta { display: none !important; }
+  .logo { gap: 0.6rem; }
+  .logo-name { font-size: 1.05rem; }
   .hamburger { display: flex; }
   .mobile-drawer { display: flex; }
 
@@ -4088,7 +4103,8 @@ html.js [data-reveal].in-view {
   /* Logoul se mută spre interior, pe aceeași linie verticală cu conținutul
      paginii. Restul barei — linkurile și butoanele — rămâne pe loc, deci
      antetul își păstrează lățimea. */
-  .logo { margin-left: max(0px, calc((100vw - var(--lat-lat)) / 2 + 2rem)); }
+  /* +3rem fata de linia continutului: clientul a cerut logoul mai la dreapta. */
+  .logo { margin-left: max(0px, calc((100vw - var(--lat-lat)) / 2 + 5rem)); }
   .home-hero { padding-left: 5rem; padding-right: 5rem; }
   .despre-wrap,
   .servicii-wrap,

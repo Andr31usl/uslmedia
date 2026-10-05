@@ -96,10 +96,31 @@
   /* Acelasi logo ca pe restul site-ului: semnatura decupata, cu subtextul
      dedesubt. Latimile sunt potrivite una cu alta, ca cele doua randuri sa se
      termine aproximativ in acelasi loc. */
+  /* Langa semnatura sta si numele scris, ca in antetul site-ului. Logoul e
+     impins spre interior cu 3rem fata de marginea barei. */
   .logo {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-left: 3rem;
     text-decoration: none;
     transition: opacity 0.2s;
+  }
+  .logo-lockup { display: block; }
+  .logo-subtext { display: block; }
+  .logo-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: -0.025em;
+    line-height: 1;
+    color: var(--white);
+    white-space: nowrap;
+  }
+  .logo-name > span { color: var(--blue-glow, #2563EB); }
+  @media (max-width: 600px) {
+    .logo { margin-left: 0; }
+    .logo-name { display: none; }
   }
   .logo:hover { opacity: 0.75; }
   .logo-mark {
@@ -590,8 +611,11 @@
 
 <header>
   <a class="logo" href="/" aria-label="USL Media — înapoi la pagina principală">
-    <img class="logo-mark" src="/assets/icoane/semnatura-usl.png" alt="USL Media" width="112" height="40" decoding="async">
-    <div class="logo-subtext">DIGITAL GROWTH AGENCY</div>
+    <span class="logo-lockup">
+      <img class="logo-mark" src="/assets/icoane/semnatura-usl.png" alt="" width="112" height="40" decoding="async">
+      <span class="logo-subtext">DIGITAL GROWTH AGENCY</span>
+    </span>
+    <span class="logo-name">USL <span>MEDIA</span></span>
   </a>
   <div class="progress-wrap">
     <span id="step-counter">1 / 9</span>
