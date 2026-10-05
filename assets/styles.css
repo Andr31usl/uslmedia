@@ -530,6 +530,9 @@ nav.is-scrolled {
   flex-direction: row;
   align-items: center;
   gap: 0.9rem;
+  /* Fara asta, cand bara se strange, lockup-ul se ingusteaza si subtextul
+     se rupe pe doua randuri. */
+  flex-shrink: 0;
   /* Acelasi format ca titlurile de sectiune (banda de clienti, recenzii):
      Syne 800 cu tracking strans. Footerul si logoul din tranzitie erau deja
      pe Syne; navigatia era singura ramasa pe DM Sans. */
@@ -4103,12 +4106,25 @@ html.js [data-reveal].in-view {
   /* Logoul se mută spre interior, pe aceeași linie verticală cu conținutul
      paginii. Restul barei — linkurile și butoanele — rămâne pe loc, deci
      antetul își păstrează lățimea. */
-  /* +3rem fata de linia continutului: clientul a cerut logoul mai la dreapta. */
-  .logo { margin-left: max(0px, calc((100vw - var(--lat-lat)) / 2 + 5rem)); }
+  /* +3rem fata de linia continutului: clientul a cerut logoul mai la dreapta.
+     Plafonul 100vw - 1270px tine loc pentru restul barei, masurat cu fonturile
+     incarcate: logo cu nume 333px, linkuri 453px, butoane 178 + 129px, padding
+     2 × 48px si ~24px intre elemente. Peste ~1530px conteaza doar formula;
+     sub, logoul se opreste unde inca nu atinge meniul. */
+  .logo { margin-left: max(0px, min(calc((100vw - var(--lat-lat)) / 2 + 5rem), calc(100vw - 1270px))); }
   .home-hero { padding-left: 5rem; padding-right: 5rem; }
   .despre-wrap,
   .servicii-wrap,
   .porto-wrap,
   .preturi-wrap,
   .contact-wrap { padding-left: 5rem; padding-right: 5rem; }
+}
+/* Intre telefon si ~1280px numele scris nu mai incape langa meniu fara sa
+   impinga butoanele pe doua randuri, deci ramane doar semnatura. Fara nume,
+   logoul are nevoie de ~1080px pentru restul barei. */
+@media (min-width: 769px) and (max-width: 1279px) {
+  .logo-name { display: none; }
+}
+@media (min-width: 900px) and (max-width: 1279px) {
+  .logo { margin-left: max(0px, min(calc((100vw - var(--lat-lat)) / 2 + 5rem), calc(100vw - 1080px))); }
 }
