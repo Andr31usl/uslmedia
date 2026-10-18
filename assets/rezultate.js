@@ -1,207 +1,147 @@
 /* ============================================================
-   SECȚIUNEA „REZULTATE” (#page-rezultate)
+   REZULTATE — pagina /rezultate/ (#page-rezultate) și blocul scurt de pe
+   Home (#homeRez).
 
-   Toate cifrele stau în obiectul REZULTATE de mai jos. Ca să pui datele
-   reale, schimbi doar valorile de aici — markup-ul, cardurile și graficele
-   se construiesc singure din ele. Când cifrele sunt reale, pune
-   `demonstrativ: false` și dispare eticheta „Date demonstrative”.
+   Toate cifrele stau în obiectul REZULTATE de mai jos. În HTML aceleași
+   cifre sunt scrise și ca text de rezervă (pentru cine n-are JS și pentru
+   motoarele de căutare), dar la încărcare JS le rescrie din REZULTATE — deci
+   când vin date noi, se schimbă doar aici.
+
+   Legătura cu HTML:
+   - data-rez="cale"      → textul elementului devine valoarea de la „cale”
+                            (ex. "instagram.cont"; numerele ies cu punct: 14.344);
+   - data-rez-num="cale"  → la fel, dar cifra urcă de la 0 când intră în ecran;
+                            data-suffix="%" adaugă un sufix.
+   Căile care încep cu „calc.” sunt valori calculate mai jos din REZULTATE.
 
    Reguli pentru date:
-   - numerele se scriu simplu, fără puncte: 12500, nu 12.500;
-   - engagement-ul e în procente, cu zecimală cu punct: 4.8 (afișat „4,8%”);
-   - `saptamanal` are câte o valoare pe săptămână, de la prima la ultima
-     (13 valori pentru 3 luni; merge și cu 12);
-   - `vanzariLunare` are 4 valori: luna dinainte de colaborare, apoi lunile 1–3;
-   - o platformă se scoate ștergând-o din `platforme`; ordinea de aici e
-     ordinea butoanelor.
+   - numerele se scriu simplu, fără puncte: 14344, nu 14.344;
+   - tot ce e aici trebuie să vină din capturi reale (Instagram Insights,
+     profilul TikTok). Ce nu avem, nu inventăm — se scoate din pagină.
    ============================================================ */
 const REZULTATE = {
-  demonstrativ: true,
-  client: 'Cafenea de specialitate din București',
-  perioada: 'Iulie – Septembrie 2026',
+  client: 'La Paninoteca',
+  descriere: 'sandwich shop, București',
+  perioada: 'octombrie 2026',
+  durata: '2 săptămâni',              // „Studiu de caz · primele …”, „Primele … ” pe Home
+  start: '2 octombrie 2026',          // ziua primului clip postat
+  startScurt: '2 oct',
 
-  // Etichetele de sub graficul cu bare (prima = luna dinainte de colaborare).
-  luni: ['Iunie (înainte)', 'Iulie', 'August', 'Septembrie'],
+  instagram: {
+    cont: 'paninoteca_bucuresti',
+    // Insights, „ultimele 30 de zile”, citit pe 18 oct. Înainte de 2 oct
+    // graficul e plat pe 0, deci totalul e practic tot ce s-a strâns de la start.
+    interval: '18 sep – 17 oct',
+    vizualizari: 14344,
+    conturiAtinse: 3816,              // „Viewers” în Insights
+    interactiuni: 322,
+    urmaritoriNoi: 8,
+    // Defalcarea pe formate, aceeași perioadă. Reels apare în aplicație ca „14K”.
+    formate: [
+      { nume: 'Reels', vizualizari: 14000, rotunjit: true },
+      { nume: 'Postări', vizualizari: 293 },
+      { nume: 'Stories', vizualizari: 39 }
+    ],
+    // Totalul pe 30 de zile, citit la date diferite (capturi din Insights).
+    // `rotunjit`: aplicația a arătat doar „9,6K”.
+    evolutie: [
+      { data: '5 oct', vizualizari: 5999 },
+      { data: '7 oct', vizualizari: 7152 },
+      { data: '8 oct', vizualizari: 9600, rotunjit: true },
+      { data: '17 oct', vizualizari: 14344 }
+    ],
+    crestere: '×2 în 10 zile'         // 7 oct: 7.152 → 17 oct: 14.344
+  },
 
-  // Ce înseamnă „vânzări” în carduri și în graficul cu bare. Pentru venit:
-  // { eticheta: 'Venit lunar', unitate: ' lei' }
-  vanzari: { eticheta: 'Comenzi lunare', unitate: '' },
-
-  platforme: {
-    instagram: {
-      nume: 'Instagram',
-      kpi: {                       // [înainte, acum]
-        vizualizari: [18500, 96400],   // vizualizări pe lună
-        urmaritori:  [2340, 6870],
-        engagement:  [1.9, 5.4],       // %
-        vanzari:     [48, 152]         // pe lună
-      },
-      saptamanal: {
-        urmaritori:  [2340, 2410, 2560, 2790, 3020, 3380, 3710, 4150, 4590, 5120, 5640, 6260, 6870],
-        vizualizari: [4300, 4900, 6200, 7400, 8900, 10800, 12400, 14100, 15600, 17300, 19200, 20900, 22400]
-      },
-      vanzariLunare: [48, 79, 118, 152]
-    },
-    tiktok: {
-      nume: 'TikTok',
-      kpi: {
-        vizualizari: [6200, 184000],
-        urmaritori:  [410, 5320],
-        engagement:  [3.1, 8.7],
-        vanzari:     [9, 61]
-      },
-      saptamanal: {
-        urmaritori:  [410, 520, 780, 1050, 1490, 1870, 2310, 2760, 3240, 3790, 4260, 4810, 5320],
-        vizualizari: [1400, 3100, 6800, 11200, 15900, 19400, 24800, 28300, 31900, 35600, 38400, 41200, 42800]
-      },
-      vanzariLunare: [9, 22, 41, 61]
-    },
-    facebook: {
-      nume: 'Facebook',
-      kpi: {
-        vizualizari: [9800, 31200],
-        urmaritori:  [3150, 4080],
-        engagement:  [0.9, 2.3],
-        vanzari:     [21, 47]
-      },
-      saptamanal: {
-        urmaritori:  [3150, 3180, 3240, 3300, 3390, 3460, 3550, 3630, 3720, 3810, 3890, 3990, 4080],
-        vizualizari: [2300, 2500, 3000, 3400, 3900, 4500, 5000, 5500, 6000, 6400, 6800, 7000, 7300]
-      },
-      vanzariLunare: [21, 29, 38, 47]
-    }
+  tiktok: {
+    cont: 'lapaninotecauniversitate',
+    // Vizualizările fiecărui clip de pe profil (toate cele 6), 18 oct.
+    clipuri: [820, 381, 7322, 1509, 1118, 1038],
+    aprecieri: 415,
+    urmaritori: 36
   }
 };
 
 (function rezultate() {
   'use strict';
 
-  var section = document.getElementById('page-rezultate');
-  if (!section) return;
+  var page = document.getElementById('page-rezultate');
+  var home = document.getElementById('homeRez');
+  if (!page && !home) return;
 
   // Versiune fixă, ca un update al bibliotecii să nu schimbe graficele pe ascuns.
   var CHART_JS = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.js';
 
-  // Culorile seriilor, verificate pentru contrast pe #08090E și pentru
-  // daltonism: albastrul site-ului pentru vizualizări, teal pentru urmăritori
-  // (plus linie întreruptă, ca seriile să nu se deosebească doar prin culoare).
-  var C_VIEWS = '#3B82F6';
-  var C_FOLLOW = '#0FA89A';
-  var C_BEFORE = 'rgba(147,184,240,0.28)';
-  var C_TEXT = 'rgba(255,255,255,0.85)';
+  // Albastrul site-ului; barele mai vechi sunt mai stinse, ultima e starea de acum.
+  var C_BAR = '#3B82F6';
+  var C_BAR_OLD = 'rgba(59,130,246,0.55)';
+  var C_BAR_HOVER = '#60A5FA';
+  var C_TEXT = 'rgba(255,255,255,0.88)';
   var C_MUTED = '#93B8F0';
   var C_GRID = 'rgba(255,255,255,0.06)';
 
   var COUNT_MS = 1600;
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var isPhone = function () { return window.matchMedia('(max-width: 768px)').matches; };
+  var fmt = new Intl.NumberFormat('ro-RO', { maximumFractionDigits: 0 });
+  var fmtDec = new Intl.NumberFormat('ro-RO', { maximumFractionDigits: 1 });
 
-  var fmtInt = new Intl.NumberFormat('ro-RO', { maximumFractionDigits: 0 });
-  var fmtDec = new Intl.NumberFormat('ro-RO', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
-
-  var KPI_FORMAT = {
-    vizualizari: function (v) { return fmtInt.format(v); },
-    urmaritori:  function (v) { return fmtInt.format(v); },
-    engagement:  function (v) { return fmtDec.format(v) + '%'; },
-    vanzari:     function (v) { return fmtInt.format(v) + REZULTATE.vanzari.unitate; }
+  // ─── VALORI CALCULATE ───
+  var ig = REZULTATE.instagram;
+  var tt = REZULTATE.tiktok;
+  var reels = ig.formate.filter(function (f) { return f.nume === 'Reels'; })[0];
+  var rounded = ig.evolutie.filter(function (p) { return p.rotunjit; });
+  var CALC = {
+    reels: reels ? reels.vizualizari : 0,
+    reelsProcent: reels ? Math.round(reels.vizualizari / ig.vizualizari * 100) : 0,
+    masuratori: ig.evolutie.length,
+    tiktokClipuri: tt.clipuri.length,
+    tiktokVizualizari: tt.clipuri.reduce(function (s, v) { return s + v; }, 0),
+    tiktokTop: Math.max.apply(null, tt.clipuri),
+    notaRotunjire: rounded.length
+      ? ' Pe ' + rounded.map(function (p) { return p.data; }).join(', ') +
+        ' Instagram afișează valoarea rotunjită (' + rounded.map(function (p) { return fmtDec.format(p.vizualizari / 1000) + 'K'; }).join(', ') + ').'
+      : ''
   };
 
-  function growth(before, now) {
-    return before ? Math.round((now - before) / before * 100) : 0;
+  function lookup(path) {
+    var parts = path.split('.');
+    var v = parts[0] === 'calc' ? CALC : REZULTATE;
+    for (var i = parts[0] === 'calc' ? 1 : 0; i < parts.length && v != null; i++) v = v[parts[i]];
+    return v;
   }
-  function fmtGrowth(p) {
-    return (p > 0 ? '+' : p < 0 ? '−' : '') + fmtInt.format(Math.abs(Math.round(p))) + '%';
-  }
+  function show(v) { return typeof v === 'number' ? fmt.format(v) : v; }
 
-  var keys = Object.keys(REZULTATE.platforme);
-  var current = keys[0];
-
-  // ─── TEXTE FIXE ───
-  section.querySelectorAll('[data-rez="client"]').forEach(function (el) { el.textContent = REZULTATE.client; });
-  section.querySelectorAll('[data-rez="perioada"]').forEach(function (el) { el.textContent = REZULTATE.perioada; });
-  section.querySelectorAll('[data-rez="vanzari-eticheta"]').forEach(function (el) { el.textContent = REZULTATE.vanzari.eticheta; });
-  var demo = section.querySelector('[data-rez-demo]');
-  if (demo) demo.hidden = !REZULTATE.demonstrativ;
-
-  // ─── TABURI ───
-  var tabs = section.querySelector('.rez-tabs');
-  if (keys.length < 2) {
-    tabs.hidden = true;
-  } else {
-    keys.forEach(function (key) {
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'rez-tab';
-      b.setAttribute('role', 'tab');
-      b.dataset.platforma = key;
-      b.textContent = REZULTATE.platforme[key].nume;
-      b.addEventListener('click', function () { select(key); });
-      tabs.appendChild(b);
-    });
-    // Săgețile stânga/dreapta mută selecția, ca la orice tablist.
-    tabs.addEventListener('keydown', function (e) {
-      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
-      var i = keys.indexOf(current) + (e.key === 'ArrowRight' ? 1 : -1);
-      var key = keys[(i + keys.length) % keys.length];
-      select(key);
-      tabs.querySelector('[data-platforma="' + key + '"]').focus();
-      e.preventDefault();
+  function fillTexts(root) {
+    root.querySelectorAll('[data-rez]').forEach(function (el) {
+      var v = lookup(el.dataset.rez);
+      if (v != null) el.textContent = show(v);
     });
   }
 
-  function syncTabs() {
-    tabs.querySelectorAll('.rez-tab').forEach(function (b) {
-      var on = b.dataset.platforma === current;
-      b.classList.toggle('active', on);
-      b.setAttribute('aria-selected', on ? 'true' : 'false');
-      b.tabIndex = on ? 0 : -1;
+  // ─── CIFRE CARE URCĂ ───
+  function prepCounters(root) {
+    var els = [].slice.call(root.querySelectorAll('[data-rez-num]'));
+    els.forEach(function (el) {
+      el._to = +lookup(el.dataset.rezNum) || 0;
+      el._suf = el.dataset.suffix || '';
+      el.textContent = fmt.format(reduceMotion ? el._to : 0) + el._suf;
     });
+    return els;
   }
-
-  // ─── CARDURI KPI ───
-  // Fiecare număr își ține valoarea afișată, ca la schimbarea platformei să
-  // urce/coboare de la cifra de acum, nu de la zero.
-  var kpiCards = [].slice.call(section.querySelectorAll('.rez-kpi'));
-  var shown = new Map();
-  var kpisStarted = false;
-
-  function tween(el, to, format) {
-    var from = shown.has(el) ? shown.get(el) : 0;
-    shown.set(el, to);
-    if (el._raf) cancelAnimationFrame(el._raf);
-    if (reduceMotion || from === to) { el.textContent = format(to); return; }
+  function countUp(els) {
+    if (reduceMotion) return;
     var t0 = 0;
     (function step(now) {
       if (!t0) t0 = now;
-      var p = Math.min((now - t0) / COUNT_MS, 1);
-      var eased = 1 - Math.pow(1 - p, 3);
-      el.textContent = format(from + (to - from) * eased);
-      if (p < 1) el._raf = requestAnimationFrame(step);
+      var p = Math.min((now - t0) / COUNT_MS, 1), e = 1 - Math.pow(1 - p, 3);
+      els.forEach(function (el) { el.textContent = fmt.format(Math.round(el._to * e)) + el._suf; });
+      if (p < 1) requestAnimationFrame(step);
     })(performance.now());
   }
 
-  function paintKpis() {
-    var data = REZULTATE.platforme[current].kpi;
-    kpiCards.forEach(function (card) {
-      var key = card.dataset.kpi;
-      var pair = data[key];
-      if (!pair) return;
-      var format = KPI_FORMAT[key];
-      var g = growth(pair[0], pair[1]);
-      tween(card.querySelector('[data-val="inainte"]'), pair[0], format);
-      tween(card.querySelector('[data-val="acum"]'), pair[1], format);
-      tween(card.querySelector('[data-val="crestere"]'), g, fmtGrowth);
-      var badge = card.querySelector('.rez-kpi-growth');
-      badge.classList.toggle('down', g < 0);
-      badge.querySelector('.rez-arrow').textContent = g < 0 ? '▼' : '▲';
-    });
-  }
-
-  // ─── GRAFICE ───
-  var lineChart = null;
-  var barChart = null;
-  var chartsStarted = false;
+  // ─── GRAFICUL CU BARE (aceeași funcție pe pagină și pe Home) ───
   var chartLib = null;
-
   function loadChartJs() {
     if (window.Chart) return Promise.resolve(window.Chart);
     if (chartLib) return chartLib;
@@ -216,186 +156,23 @@ const REZULTATE = {
     return chartLib;
   }
 
-  function weekLabels(n) {
-    var out = [];
-    for (var i = 1; i <= n; i++) out.push('Săpt. ' + i);
-    return out;
+  function pointLabel(p) { return (p.rotunjit ? '~' : '') + fmt.format(p.vizualizari); }
+
+  function chartAria(canvas) {
+    canvas.setAttribute('aria-label', 'Vizualizări Instagram pe 30 de zile: ' +
+      ig.evolutie.map(function (p) { return p.data + ' ' + pointLabel(p); }).join(', ') + '.');
   }
 
-  // Urmăritorii și vizualizările au ordine de mărime diferite. În loc de
-  // două axe Y (care se citesc greșit), ambele linii arată creșterea față de
-  // prima săptămână; cifrele absolute apar în tooltip.
-  function indexed(values) {
-    var base = values[0] || 1;
-    return values.map(function (v) { return Math.round((v / base - 1) * 1000) / 10; });
-  }
-
-  function lineData() {
-    var w = REZULTATE.platforme[current].saptamanal;
-    return { views: indexed(w.vizualizari), follow: indexed(w.urmaritori), raw: w };
-  }
-
-  function chartAria() {
-    var p = REZULTATE.platforme[current];
-    var w = p.saptamanal;
-    lineCanvas.setAttribute('aria-label',
-      p.nume + ': urmăritori de la ' + fmtInt.format(w.urmaritori[0]) + ' la ' + fmtInt.format(w.urmaritori[w.urmaritori.length - 1]) +
-      ', vizualizări pe săptămână de la ' + fmtInt.format(w.vizualizari[0]) + ' la ' + fmtInt.format(w.vizualizari[w.vizualizari.length - 1]) + '.');
-    barCanvas.setAttribute('aria-label',
-      p.nume + ', ' + REZULTATE.vanzari.eticheta.toLowerCase() + ': ' + p.vanzariLunare.map(function (v, i) {
-        return REZULTATE.luni[i] + ' ' + fmtInt.format(v) + REZULTATE.vanzari.unitate;
-      }).join(', ') + '.');
-  }
-
-  var lineCanvas = section.querySelector('#rezLineChart');
-  var barCanvas = section.querySelector('#rezBarChart');
-
-  // Valorile scrise deasupra barelor — sunt doar patru, deci încap toate.
-  var barLabels = {
-    id: 'rezBarLabels',
-    afterDatasetsDraw: function (chart) {
-      var ctx = chart.ctx;
-      var meta = chart.getDatasetMeta(0);
-      ctx.save();
-      ctx.font = '700 13px "DM Sans", sans-serif';
-      ctx.fillStyle = C_TEXT;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'bottom';
-      meta.data.forEach(function (bar, i) {
-        var v = chart.data.datasets[0].data[i];
-        if (v == null) return;
-        ctx.fillText(fmtInt.format(v), bar.x, bar.y - 6);
-      });
-      ctx.restore();
-    }
-  };
-
-  function tooltipStyle() {
-    return {
-      backgroundColor: 'rgba(8,9,14,0.96)',
-      borderColor: 'rgba(37,99,235,0.45)',
-      borderWidth: 1,
-      titleColor: '#fff',
-      bodyColor: C_TEXT,
-      titleFont: { family: '"Syne", sans-serif', weight: '700', size: 13 },
-      bodyFont: { family: '"DM Sans", sans-serif', size: 13 },
-      padding: 12,
-      cornerRadius: 10,
-      boxPadding: 4,
-      usePointStyle: true
-    };
-  }
-
-  function buildCharts(Chart) {
-    Chart.defaults.font.family = '"DM Sans", sans-serif';
-    Chart.defaults.color = C_MUTED;
-
-    var d = lineData();
-    var first = true;   // întârzierea pe puncte doar la prima desenare
-
-    lineChart = new Chart(lineCanvas, {
-      type: 'line',
-      data: {
-        labels: weekLabels(d.views.length),
-        datasets: [
-          {
-            label: 'Vizualizări',
-            data: d.views,
-            borderColor: C_VIEWS,
-            backgroundColor: 'rgba(59,130,246,0.12)',
-            fill: 'origin',
-            borderWidth: 2.5,
-            tension: 0.35,
-            pointRadius: 0,
-            pointHoverRadius: 6,
-            pointHitRadius: 18,
-            pointBackgroundColor: C_VIEWS,
-            pointBorderColor: '#08090E',
-            pointBorderWidth: 2,
-            pointStyle: 'circle'
-          },
-          {
-            label: 'Urmăritori',
-            data: d.follow,
-            borderColor: C_FOLLOW,
-            backgroundColor: C_FOLLOW,
-            borderDash: [6, 4],
-            borderWidth: 2.5,
-            tension: 0.35,
-            pointRadius: 0,
-            pointHoverRadius: 6,
-            pointHitRadius: 18,
-            pointBackgroundColor: C_FOLLOW,
-            pointBorderColor: '#08090E',
-            pointBorderWidth: 2,
-            pointStyle: 'rectRounded'
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        interaction: { mode: 'index', intersect: false },
-        animation: reduceMotion ? false : {
-          duration: 900,
-          easing: 'easeOutQuart',
-          // Punctele pornesc unul după altul, de la stânga la dreapta,
-          // ca linia să pară că se desenează.
-          delay: function (ctx) {
-            return first && ctx.type === 'data' ? ctx.dataIndex * 90 + ctx.datasetIndex * 150 : 0;
-          },
-          onComplete: function () { first = false; }
-        },
-        animations: reduceMotion ? {} : {
-          y: { from: function (ctx) { return ctx.chart.scales && ctx.chart.scales.y ? ctx.chart.scales.y.getPixelForValue(0) : undefined; } }
-        },
-        scales: {
-          x: {
-            grid: { display: false },
-            border: { color: C_GRID },
-            ticks: { maxRotation: 0, autoSkip: true, autoSkipPadding: 14, font: { size: 11 } }
-          },
-          y: {
-            beginAtZero: true,
-            grid: { color: C_GRID },
-            border: { display: false },
-            ticks: {
-              maxTicksLimit: 5,
-              font: { size: 11 },
-              callback: function (v) { return (v > 0 ? '+' : '') + fmtInt.format(v) + '%'; }
-            }
-          }
-        },
-        plugins: {
-          legend: {
-            position: 'top',
-            align: 'start',
-            labels: { usePointStyle: true, boxWidth: 8, boxHeight: 8, padding: 16, color: C_TEXT, font: { size: 12, weight: '600' } }
-          },
-          tooltip: Object.assign(tooltipStyle(), {
-            callbacks: {
-              label: function (item) {
-                var raw = lineData().raw;
-                var series = item.datasetIndex === 0 ? raw.vizualizari : raw.urmaritori;
-                var name = item.datasetIndex === 0 ? 'Vizualizări' : 'Urmăritori';
-                return ' ' + name + ': ' + fmtInt.format(series[item.dataIndex]) + '  (' + fmtGrowth(item.parsed.y) + ')';
-              }
-            }
-          })
-        }
-      }
-    });
-
-    barChart = new Chart(barCanvas, {
+  function barChart(Chart, canvas, withAxis) {
+    var last = ig.evolutie.length - 1;
+    return new Chart(canvas, {
       type: 'bar',
       data: {
-        labels: REZULTATE.luni,
+        labels: ig.evolutie.map(function (p) { return p.data; }),
         datasets: [{
-          label: REZULTATE.vanzari.eticheta,
-          data: REZULTATE.platforme[current].vanzariLunare.slice(),
-          // Luna dinainte e mai stinsă: e punctul de plecare, nu un rezultat.
-          backgroundColor: function (ctx) { return ctx.dataIndex === 0 ? C_BEFORE : C_VIEWS; },
-          hoverBackgroundColor: function (ctx) { return ctx.dataIndex === 0 ? 'rgba(147,184,240,0.4)' : '#60A5FA'; },
+          data: ig.evolutie.map(function (p) { return p.vizualizari; }),
+          backgroundColor: function (c) { return c.dataIndex === last ? C_BAR : C_BAR_OLD; },
+          hoverBackgroundColor: C_BAR_HOVER,
           borderRadius: { topLeft: 8, topRight: 8 },
           borderSkipped: 'bottom',
           maxBarThickness: 56,
@@ -405,129 +182,144 @@ const REZULTATE = {
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        layout: { padding: { top: 24 } },
+        layout: { padding: { top: 26 } },
         animation: reduceMotion ? false : {
           duration: 900,
           easing: 'easeOutQuart',
-          delay: function (ctx) { return ctx.type === 'data' && ctx.mode === 'default' ? ctx.dataIndex * 140 + 300 : 0; }
+          delay: function (c) { return c.type === 'data' && c.mode === 'default' ? c.dataIndex * 150 + 250 : 0; }
         },
         scales: {
           x: {
             grid: { display: false },
             border: { color: C_GRID },
-            ticks: {
-              font: { size: 11 },
-              maxRotation: 0,
-              autoSkip: false,   // sunt doar patru luni; toate trebuie să se vadă
-              // „Iunie (înainte)” se rupe pe două rânduri, ca să încapă pe telefon.
-              callback: function (v) {
-                var l = this.getLabelForValue(v);
-                var m = l.match(/^(.*?)\s+(\(.*\))$/);
-                return m ? [m[1], m[2]] : l;
-              }
-            }
+            ticks: { color: C_MUTED, font: { family: '"DM Sans", sans-serif', size: 12 }, maxRotation: 0, autoSkip: false }
           },
-          y: {
+          y: withAxis ? {
             beginAtZero: true,
             grid: { color: C_GRID },
             border: { display: false },
-            ticks: { maxTicksLimit: 5, font: { size: 11 }, callback: function (v) { return fmtInt.format(v); } }
-          }
+            ticks: { color: C_MUTED, maxTicksLimit: 5, font: { family: '"DM Sans", sans-serif', size: 11 }, callback: function (v) { return fmt.format(v); } }
+          } : { display: false, beginAtZero: true }
         },
         plugins: {
           legend: { display: false },
-          tooltip: Object.assign(tooltipStyle(), {
+          tooltip: {
+            backgroundColor: 'rgba(8,9,14,0.96)',
+            borderColor: 'rgba(37,99,235,0.45)',
+            borderWidth: 1,
+            titleColor: '#fff',
+            bodyColor: C_TEXT,
+            titleFont: { family: '"Syne", sans-serif', weight: '700', size: 13 },
+            bodyFont: { family: '"DM Sans", sans-serif', size: 13 },
+            padding: 12,
+            cornerRadius: 10,
             displayColors: false,
             callbacks: {
-              label: function (item) {
-                var data = item.dataset.data;
-                var txt = REZULTATE.vanzari.eticheta + ': ' + fmtInt.format(item.parsed.y) + REZULTATE.vanzari.unitate;
-                if (item.dataIndex > 0) txt += '  (' + fmtGrowth(growth(data[0], item.parsed.y)) + ' față de început)';
-                return txt;
+              title: function (it) { return 'Pe 30 de zile, la ' + it[0].label; },
+              label: function (it) {
+                var p = ig.evolutie[it.dataIndex];
+                return pointLabel(p) + ' vizualizări' + (p.rotunjit ? ' (rotunjit de Instagram)' : '');
               }
             }
-          })
+          }
         }
       },
-      plugins: [barLabels]
+      // Valorile scrise deasupra barelor — sunt doar patru, deci încap toate.
+      plugins: [{
+        id: 'rezBarLabels',
+        afterDatasetsDraw: function (chart) {
+          var ctx = chart.ctx;
+          ctx.save();
+          ctx.font = '700 13px "DM Sans", sans-serif';
+          ctx.fillStyle = C_TEXT;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'bottom';
+          chart.getDatasetMeta(0).data.forEach(function (bar, i) {
+            ctx.fillText(pointLabel(ig.evolutie[i]), bar.x, bar.y - 6);
+          });
+          ctx.restore();
+        }
+      }]
     });
   }
 
-  function paintCharts() {
-    chartAria();
-    if (!lineChart) return;
-    var d = lineData();
-    lineChart.data.labels = weekLabels(d.views.length);
-    lineChart.data.datasets[0].data = d.views;
-    lineChart.data.datasets[1].data = d.follow;
-    lineChart.update();
-    barChart.data.datasets[0].data = REZULTATE.platforme[current].vanzariLunare.slice();
-    barChart.update();
-  }
-
-  function startCharts() {
-    if (chartsStarted) return;
-    chartsStarted = true;
-    loadChartJs().then(buildCharts, function () {
-      section.querySelectorAll('.rez-chart-box').forEach(function (box) {
-        box.innerHTML = '<p class="rez-chart-error">Graficul nu s-a putut încărca. Reîncarcă pagina.</p>';
-      });
+  function drawChart(canvas, withAxis) {
+    loadChartJs().then(function (Chart) { barChart(Chart, canvas, withAxis); }, function () {
+      var box = canvas.parentNode;
+      box.innerHTML = '<p class="rez-chart-error">Graficul nu s-a putut încărca. Reîncarcă pagina.</p>';
     });
   }
-
-  function startKpis() {
-    if (kpisStarted) return;
-    kpisStarted = true;
-    paintKpis();
-  }
-
-  function select(key) {
-    if (key === current || !REZULTATE.platforme[key]) return;
-    current = key;
-    syncTabs();
-    if (kpisStarted) paintKpis();
-    paintCharts();
-  }
-
-  syncTabs();
-  chartAria();
 
   // ─── PORNIREA LA SCROLL ───
   // Pe desktop secțiunile inactive stau suprapuse în același loc, deci
   // observerul le-ar vedea „în ecran” și animațiile s-ar consuma pe ascuns.
-  // Pornim doar când secțiunea e cea activă (pe telefon e mereu vizibilă).
-  function sectionVisible() {
-    return window.matchMedia('(max-width: 768px)').matches || section.classList.contains('active');
+  // Pornim doar când pagina lor e cea activă (pe telefon e mereu vizibilă).
+  // Când pagina devine activă, geometria nu se schimbă și observerul nu mai
+  // raportează nimic, deci re-observăm după ce panoul de tranziție s-a ridicat.
+  function whenShown(el, cb) {
+    if (!el) return;
+    var pg = el.closest('.page');
+    var visible = function () { return isPhone() || !pg || pg.classList.contains('active'); };
+    if (!('IntersectionObserver' in window)) { cb(); return; }
+    var done = false;
+    var io = new IntersectionObserver(function (entries) {
+      if (done || !entries.some(function (e) { return e.isIntersecting; }) || !visible()) return;
+      done = true;
+      io.disconnect();
+      cb();
+    }, { threshold: 0.2 });
+    io.observe(el);
+    if (pg) new MutationObserver(function () {
+      if (!done && pg.classList.contains('active')) setTimeout(function () { io.unobserve(el); io.observe(el); }, 600);
+    }).observe(pg, { attributes: true, attributeFilter: ['class'] });
   }
 
-  if (reduceMotion || !('IntersectionObserver' in window)) {
-    startKpis();
-    // Fără animații, dar tot nu cerem Chart.js până nu e nevoie de el.
-    if (!('IntersectionObserver' in window)) { startCharts(); return; }
-  }
+  // ─── PAGINA /rezultate/ ───
+  if (page) {
+    fillTexts(page);
 
-  var targets = {
-    kpis: section.querySelector('.rez-kpis'),
-    charts: section.querySelector('.rez-charts')
-  };
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (!entry.isIntersecting || !sectionVisible()) return;
-      if (entry.target === targets.kpis) startKpis();
-      if (entry.target === targets.charts) startCharts();
-      io.unobserve(entry.target);
+    var noteRound = page.querySelector('[data-rez-nota]');
+    if (noteRound) noteRound.textContent = CALC.notaRotunjire;
+
+    // Barele pe formate se construiesc din `formate`; lățimea pornește de la 0.
+    var split = page.querySelector('.rez-split');
+    if (split) {
+      split.innerHTML = ig.formate.map(function (f, i) {
+        var pct = f.vizualizari / ig.vizualizari * 100;
+        var pctTxt = pct >= 10 ? fmtDec.format(pct) : pct >= 1 ? fmt.format(pct) : fmtDec.format(pct);
+        return '<div class="rez-split-row">' +
+          '<span class="rez-split-name">' + f.nume + '</span>' +
+          '<span class="rez-split-val">' + (f.rotunjit ? '~' : '') + fmt.format(f.vizualizari) + '<span>' + pctTxt + '%</span></span>' +
+          '<div class="rez-split-track"><div class="rez-split-fill' + (i ? ' dim' : '') + '" data-w="' + Math.max(pct, 0.8) + '"></div></div>' +
+          '</div>';
+      }).join('');
+    }
+
+    var pageCanvas = page.querySelector('#rezBarChart');
+    if (pageCanvas) chartAria(pageCanvas);
+
+    var kpiNums = prepCounters(page.querySelector('.rez-kpis') || page);
+    whenShown(page.querySelector('.rez-kpis'), function () { countUp(kpiNums); });
+
+    var bigNums = prepCounters(page.querySelector('.rez-chart-split') || document.createElement('div'));
+    whenShown(page.querySelector('.rez-charts'), function () {
+      if (pageCanvas) drawChart(pageCanvas, true);
+      countUp(bigNums);
+      if (split) split.querySelectorAll('.rez-split-fill').forEach(function (f) { f.style.width = f.dataset.w + '%'; });
     });
-  }, { threshold: 0.2 });
-  Object.keys(targets).forEach(function (k) { if (targets[k]) io.observe(targets[k]); });
+  }
 
-  // Când secțiunea devine activă pe desktop, geometria nu se schimbă, deci
-  // observerul nu mai raportează nimic. Re-observăm, după ce panoul de
-  // tranziție s-a ridicat, ca animația să se vadă.
-  new MutationObserver(function () {
-    if (!section.classList.contains('active')) return;
-    setTimeout(function () {
-      if (!kpisStarted && targets.kpis) { io.unobserve(targets.kpis); io.observe(targets.kpis); }
-      if (!chartsStarted && targets.charts) { io.unobserve(targets.charts); io.observe(targets.charts); }
-    }, 600);
-  }).observe(section, { attributes: true, attributeFilter: ['class'] });
+  // ─── BLOCUL DE PE HOME ───
+  // Pe telefon graficul e ascuns din CSS (secțiunea completă vine oricum mai
+  // jos în scroll), deci nici nu cerem Chart.js acolo.
+  if (home) {
+    fillTexts(home);
+    var homeCanvas = home.querySelector('#homeRezChart');
+    if (homeCanvas) chartAria(homeCanvas);
+    var homeNums = prepCounters(home);
+    whenShown(home, function () {
+      countUp(homeNums);
+      if (homeCanvas && !isPhone()) drawChart(homeCanvas, false);
+    });
+  }
 })();

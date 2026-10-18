@@ -1113,7 +1113,7 @@
     '.despre-photo-row', '.journey-step', '.value-card', '.cert-card',
     '.despre-cta-strip', '.serv-card', '.process-step', '.servicii-cta',
     '.video-card', '.pkg', '.contact-info-card', '.contact-form-card',
-    '.rez-kpi', '.rez-chart-card', '.rez-step', '.rez-cta'
+    '.rez-kpi', '.rez-chart-card', '.rez-tt', '.rez-step', '.rez-cta'
   ].join(',');
 
   var REVEAL_STEP_MS = 110;   // decalajul dintre cardurile din același grup

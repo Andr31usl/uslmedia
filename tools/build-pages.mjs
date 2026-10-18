@@ -58,9 +58,9 @@ const SECTIONS = [
     slug: 'rezultate',
     navId: 'nav-rezultate',
     breadcrumb: 'Rezultate',
-    title: 'Rezultate Social Media — Studiu de Caz pe 3 Luni | USL Media',
+    title: 'Rezultate Reale Social Media — Studiu de Caz La Paninoteca | USL Media',
     description:
-      'Ce se schimbă în 3 luni de colaborare cu USL Media: vizualizări, urmăritori, engagement și comenzi, înainte și după, pe Instagram, TikTok și Facebook.'
+      'Studiu de caz real: La Paninoteca, sandwich shop din București. În primele 2 săptămâni de conținut: 14.344 vizualizări pe Instagram, 3.816 conturi atinse, 322 interacțiuni, 98% din Reels.'
   },
   {
     id: 'preturi',

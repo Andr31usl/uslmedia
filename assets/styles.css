@@ -4108,54 +4108,33 @@ html.js [data-reveal].in-view {
   width: 100%;
   box-sizing: border-box;
 }
-.rez-header { text-align: center; margin-bottom: 2rem; }
-.rez-sub { color: var(--muted); font-weight: 300; font-size: 0.95rem; }
-.rez-demo {
-  display: inline-block;
-  margin-top: 0.9rem;
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 0.28rem 0.8rem;
-  border-radius: 100px;
-  color: #FCD34D;
-  background: rgba(252,211,77,0.08);
-  border: 1px dashed rgba(252,211,77,0.35);
+.rez-header { text-align: center; margin-bottom: 2.25rem; }
+.rez-sub { color: var(--muted); font-weight: 300; font-size: 0.95rem; margin: 0; }
+.rez-context {
+  max-width: 560px;
+  margin: 0.9rem auto 0;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: rgba(255,255,255,0.6);
+  font-weight: 300;
 }
-.rez-demo[hidden] { display: none; }
 
-/* Taburi de platformă — pastile, ca filtrele din portofoliu. */
-.rez-tabs {
+/* Titlul de platformă (Instagram / TikTok), cu iconița din footer. */
+.rez-platform {
   display: flex;
-  justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 2rem;
-}
-.rez-tabs[hidden] { display: none; }
-.rez-tab {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--white-dim);
-  background: var(--navy-card);
-  border: 1px solid var(--border);
-  padding: 0.6rem 1.3rem;
-  border-radius: 100px;
-  cursor: pointer;
-  transition: background 0.3s, border-color 0.3s, color 0.3s, box-shadow 0.3s;
-}
-.rez-tab:hover { border-color: var(--border-blue); color: var(--white); }
-.rez-tab.active {
-  background: var(--blue-bright);
-  border-color: var(--blue-bright);
+  gap: 0.3rem 0.55rem;
+  margin: 0 0 0.9rem;
+  font-family: 'Syne', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
   color: var(--white);
-  box-shadow: 0 6px 20px rgba(37,99,235,0.35);
 }
-.rez-tab:focus-visible { outline: 2px solid var(--muted); outline-offset: 2px; }
+.rez-platform svg { width: 18px; height: 18px; flex: none; }
+.rez-platform small { font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 400; color: var(--muted); }
 
-/* Carduri KPI */
+/* Carduri KPI — cifre absolute; creșterea în % de la ~0 n-ar avea sens. */
 .rez-kpis {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -4183,6 +4162,11 @@ html.js [data-reveal].in-view {
   border-color: var(--border-blue);
   box-shadow: 0 18px 45px rgba(0,0,0,0.45), 0 0 40px rgba(37,99,235,0.10);
 }
+/* Primul card (vizualizările) e cifra principală. */
+.rez-kpi-accent {
+  border-color: var(--border-blue);
+  background: linear-gradient(180deg, rgba(37,99,235,0.10), var(--navy-card) 70%);
+}
 .rez-kpi-label {
   font-size: 0.72rem;
   font-weight: 600;
@@ -4201,45 +4185,29 @@ html.js [data-reveal].in-view {
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
-.rez-kpi-before {
-  margin-top: 0.45rem;
+.rez-kpi-note {
+  margin-top: 0.5rem;
   font-size: 0.8rem;
+  line-height: 1.4;
   color: rgba(255,255,255,0.5);
-  font-variant-numeric: tabular-nums;
 }
-.rez-kpi-growth {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.15rem;
-  margin-top: 0.8rem;
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: #4ADE80;
-  background: rgba(74,222,128,0.10);
-  border: 1px solid rgba(74,222,128,0.22);
-  padding: 0.22rem 0.6rem;
-  border-radius: 100px;
-  font-variant-numeric: tabular-nums;
-}
-.rez-kpi-growth.down { color: #F87171; background: rgba(248,113,113,0.10); border-color: rgba(248,113,113,0.25); }
-.rez-arrow { font-size: 0.62rem; }
 
 /* Grafice */
 .rez-charts {
   display: grid;
-  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
   gap: 1rem;
-  margin-bottom: 3.5rem;
+  margin-bottom: 1rem;
 }
 .rez-chart-card {
   background: var(--navy-card);
   border: 1px solid var(--border);
   border-radius: 20px;
-  padding: 1.4rem 1.4rem 1rem;
+  padding: 1.4rem 1.4rem 1.1rem;
   min-width: 0;
   box-shadow: 0 0 60px rgba(37,99,235,0.05);
 }
-.rez-chart-head { margin-bottom: 0.75rem; }
+.rez-chart-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.75rem; margin-bottom: 0.75rem; }
 .rez-chart-title {
   font-family: 'Syne', sans-serif;
   font-size: 1.05rem;
@@ -4248,13 +4216,66 @@ html.js [data-reveal].in-view {
   margin: 0;
 }
 .rez-chart-note { margin: 0.25rem 0 0; font-size: 0.78rem; color: var(--muted); font-weight: 300; }
-.rez-chart-box { position: relative; height: 300px; }
+.rez-chart-box { position: relative; height: 280px; }
 .rez-chart-box canvas { display: block; }
 .rez-chart-error {
   display: flex; align-items: center; justify-content: center;
   height: 100%; margin: 0;
   font-size: 0.85rem; color: var(--muted); text-align: center;
 }
+.rez-badge {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #4ADE80;
+  background: rgba(74,222,128,0.10);
+  border: 1px solid rgba(74,222,128,0.22);
+  padding: 0.22rem 0.6rem;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+
+/* Defalcarea pe formate — bare orizontale în CSS, fără Chart.js. */
+.rez-big {
+  font-family: 'Syne', sans-serif;
+  font-size: 2.6rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--white);
+  font-variant-numeric: tabular-nums;
+}
+.rez-big-lbl { margin-top: 0.35rem; font-size: 0.82rem; color: var(--muted); }
+.rez-split { display: flex; flex-direction: column; gap: 1.1rem; margin-top: 1.4rem; }
+.rez-split-row { display: grid; grid-template-columns: 1fr auto; gap: 0.35rem 0.75rem; align-items: baseline; }
+.rez-split-name { font-size: 0.9rem; font-weight: 600; color: var(--white); }
+.rez-split-val { font-size: 0.85rem; color: var(--white-dim); font-variant-numeric: tabular-nums; }
+.rez-split-val span { color: var(--muted); margin-left: 0.4rem; }
+.rez-split-track { grid-column: 1 / -1; height: 10px; border-radius: 100px; background: rgba(255,255,255,0.06); overflow: hidden; }
+.rez-split-fill { height: 100%; width: 0; border-radius: 100px; background: #3B82F6; transition: width 1.1s cubic-bezier(0.22, 1, 0.36, 1); }
+.rez-split-fill.dim { background: rgba(147,184,240,0.45); }
+
+.rez-foot { margin: 0.25rem 0 3rem; font-size: 0.78rem; color: rgba(255,255,255,0.45); }
+
+/* TikTok — bloc secundar, fără grafic. */
+.rez-tt {
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 1.4rem;
+  margin-bottom: 3.5rem;
+}
+.rez-tt .rez-platform { margin-bottom: 1rem; }
+.rez-tt-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
+.rez-tt-stat { border-left: 2px solid rgba(37,99,235,0.45); padding: 0.15rem 0 0.15rem 0.85rem; min-width: 0; }
+.rez-tt-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  font-variant-numeric: tabular-nums;
+}
+.rez-tt-lbl { margin-top: 0.25rem; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); }
 
 /* Ce am făcut */
 .rez-steps { margin-bottom: 3.5rem; }
@@ -4318,24 +4339,162 @@ html.js [data-reveal].in-view {
   .rez-kpis { grid-template-columns: repeat(2, 1fr); }
   .rez-charts { grid-template-columns: minmax(0, 1fr); }
   .rez-steps-grid { grid-template-columns: 1fr; }
+  .rez-tt-grid { grid-template-columns: repeat(2, 1fr); row-gap: 1.1rem; }
 }
 @media (max-width: 768px) {
   .rez-wrap { padding: 2rem 1.25rem 4rem; }
-  .rez-tabs { margin-bottom: 1.25rem; gap: 0.4rem; }
-  .rez-tab { padding: 0.55rem 1rem; font-size: 0.82rem; }
   .rez-kpis { gap: 0.6rem; }
   .rez-kpi { padding: 1.1rem 1rem 1rem; border-radius: 16px; }
   .rez-kpi-label { font-size: 0.66rem; letter-spacing: 0.06em; }
-  .rez-kpi-now { font-size: clamp(1.45rem, 7vw, 1.9rem); }
+  .rez-kpi-now { font-size: clamp(1.3rem, 6vw, 1.9rem); }   /* „14.344” încape în card la 375px */
+  .rez-kpi-note { font-size: 0.72rem; }
   .rez-chart-card { padding: 1.1rem 0.9rem 0.8rem; border-radius: 16px; }
-  .rez-chart-box { height: 250px; }
-  .rez-steps, .rez-charts { margin-bottom: 2.5rem; }
+  .rez-chart-box { height: 240px; }
+  .rez-tt { padding: 1.1rem 1rem; border-radius: 16px; }
+  .rez-tt-num { font-size: 1.3rem; }
+  .rez-tt-lbl { font-size: 0.64rem; letter-spacing: 0.05em; }
+  .rez-steps, .rez-tt { margin-bottom: 2.5rem; }
 }
 /* Sub 340px cardurile nu mai încap câte două fără să se taie cifrele. */
 @media (max-width: 340px) {
   .rez-kpis { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .rez-kpi, .rez-tab { transition: none; }
+  .rez-kpi, .rez-split-fill { transition: none; }
   .rez-kpi:hover { transform: none; }
+}
+
+/* ===== REZULTATE PE HOME (#homeRez) =====
+   Stă între banda cu clienți și recenzii, pe aceeași lățime (--lat-strans)
+   și cu aceeași etichetă mică deasupra. Folosește .rez-badge de mai sus. */
+.home-rez {
+  width: 100%;
+  max-width: var(--lat-strans);
+  margin: 0 auto;
+  padding: 3rem 3rem 3.5rem;
+  border-top: 1px solid var(--border);
+  box-sizing: border-box;
+}
+.home-rez-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--blue-glow);
+  margin-bottom: 1.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.home-rez-label::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--blue-glow);
+  animation: pulse 2s infinite;
+}
+.home-rez-label span { color: var(--white); }
+.home-rez-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 2.5rem;
+  align-items: center;
+}
+.home-rez-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.9rem, 3.4vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  color: var(--white);
+  margin: 0 0 0.7rem;
+}
+.home-rez-title strong { color: var(--blue-glow); font-weight: 800; white-space: nowrap; }
+.home-rez-sub { margin: 0; color: var(--muted); font-weight: 300; font-size: 0.92rem; }
+
+.home-rez-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 1.8rem 0 0.8rem;
+}
+.home-rez-stat {
+  position: relative;
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 1.1rem 1rem 1rem;
+  min-width: 0;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s, box-shadow 0.4s;
+}
+.home-rez-stat::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 14%; right: 14%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(37,99,235,0.75), transparent);
+}
+.home-rez-stat:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-blue);
+  box-shadow: 0 18px 45px rgba(0,0,0,0.45), 0 0 40px rgba(37,99,235,0.12);
+}
+.home-rez-num {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.3rem, 2vw, 1.75rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--white);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.home-rez-lbl {
+  margin-top: 0.45rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.home-rez-from { margin: 0 0 1.9rem; font-size: 0.78rem; color: rgba(255,255,255,0.5); }
+.home-rez-btns { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+.home-rez-btn { display: inline-block; text-decoration: none; }
+.home-rez-btns .btn-link { text-decoration: none; }
+
+.home-rez-chart {
+  background: var(--navy-card);
+  border: 1px solid rgba(37,99,235,0.28);
+  border-radius: 20px;
+  padding: 1.3rem 1.3rem 1rem;
+  box-shadow: 0 0 70px rgba(37,99,235,0.10), 0 24px 60px rgba(0,0,0,0.45);
+  min-width: 0;
+}
+.home-rez-chart-head { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; margin-bottom: 0.6rem; }
+.home-rez-chart-title { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--white); }
+.home-rez-chart-box { position: relative; height: 240px; }
+.home-rez-chart-note { margin: 0.5rem 0 0; font-size: 0.72rem; color: var(--muted); font-weight: 300; }
+
+@media (max-width: 900px) {
+  .home-rez-grid { grid-template-columns: minmax(0, 1fr); gap: 1.75rem; }
+}
+/* Pe telefon secțiunea Rezultate completă vine oricum mai jos în scroll,
+   deci aici rămân doar cifrele și butonul — fără grafic. */
+@media (max-width: 768px) {
+  .home-rez { padding: 2.25rem 1.25rem 2.5rem; }
+  .home-rez-chart { display: none; }
+  .home-rez-stats { gap: 0.5rem; margin: 1.4rem 0 0.7rem; }
+  .home-rez-stat { padding: 0.9rem 0.55rem 0.8rem; border-radius: 14px; }
+  .home-rez-num { font-size: clamp(1rem, 4.8vw, 1.4rem); }   /* „14.344” trebuie să încapă la 375px */
+  .home-rez-lbl { font-size: 0.6rem; letter-spacing: 0.04em; }
+  .home-rez-from { margin-bottom: 1.5rem; }
+  .home-rez-btns { gap: 1rem; }
+}
+@media (max-width: 340px) {
+  .home-rez-stats { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-rez-stat { transition: none; }
+  .home-rez-stat:hover { transform: none; }
+  .home-rez-label::before { animation: none; }
 }
