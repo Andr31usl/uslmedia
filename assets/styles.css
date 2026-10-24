@@ -543,9 +543,12 @@ nav.is-scrolled {
   /* Logoul complet (USL / MEDIA / DIGITAL GROWTH AGENCY) decupat pe fundal
      transparent: in bara de sus fundalul are gradient, iar un dreptunghi
      negru s-ar vedea ca o cutie in jurul lui. Subtitlul e deja in imagine. */
-  width: 118px;
+  width: 150px;
   height: auto;
   display: block;
+}
+@media (max-width: 768px) {
+  .logo-mark { width: 130px; }
 }
 /* Doar cuvantul MEDIA e albastru. Regula nu poate fi pe ".logo span":
    de cand logoul are si sigla, .logo-text si .logo-main sunt tot span-uri
