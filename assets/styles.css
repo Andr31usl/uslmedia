@@ -540,32 +540,17 @@ nav.is-scrolled {
   cursor: none;
 }
 .logo-mark {
-  /* Semnatura decupata pe fundal transparent: in bara de sus fundalul are
-     gradient, iar un dreptunghi negru s-ar vedea ca o cutie in jurul ei. */
-  /* Latimea o da subtextul de dedesubt: cele doua randuri trebuie sa se
-     termine aproximativ in acelasi loc, ca in logoul scris. */
-  width: 132px;
+  /* Logoul complet (USL / MEDIA / DIGITAL GROWTH AGENCY) decupat pe fundal
+     transparent: in bara de sus fundalul are gradient, iar un dreptunghi
+     negru s-ar vedea ca o cutie in jurul lui. Subtitlul e deja in imagine. */
+  width: 118px;
   height: auto;
   display: block;
-  margin-bottom: 2px;
 }
 /* Doar cuvantul MEDIA e albastru. Regula nu poate fi pe ".logo span":
    de cand logoul are si sigla, .logo-text si .logo-main sunt tot span-uri
    si s-ar colora si ele. */
 .logo-main > span { color: var(--blue-glow); }
-.logo .subtext {
-    font-family: 'Syne', sans-serif;
-    font-size: 0.345em;
-    /* Compensează corpul mic: la 400 s-ar stinge. 600 e cea mai apropiată
-       grosime pe care o încărcăm din Syne — 500 nu există în set și ar fi
-       aproximată de browser. */
-    font-weight: 600;
-    letter-spacing: 0.085em;
-    line-height: 1;
-    color: var(--white);
-    margin-top: 0;
-    text-transform: uppercase;
-}
 .nav-links {
   display: flex;
   align-items: center;
