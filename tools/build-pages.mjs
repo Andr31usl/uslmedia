@@ -60,7 +60,7 @@ const SECTIONS = [
     breadcrumb: 'Rezultate',
     title: 'Rezultate Reale Social Media — Studiu de Caz La Paninoteca | USL Media',
     description:
-      'Studiu de caz real: La Paninoteca, sandwich shop din București. În primele 20 de zile de la primul clip: 14.344 vizualizări pe Instagram, 3.816 conturi atinse, 322 interacțiuni, 98% din Reels.'
+      'Studiu de caz real: La Paninoteca, sandwich shop din București. În primele 20 de zile de la primul clip: 26.860 vizualizări pe Instagram, 8.327 conturi atinse, 693 interacțiuni, 97% din Reels.'
   },
   {
     id: 'preturi',

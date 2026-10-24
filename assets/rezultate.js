@@ -24,25 +24,25 @@ const REZULTATE = {
   descriere: 'sandwich shop, București',
   perioada: 'octombrie 2026',
   // „Studiu de caz · primele …”, „Primele …” pe Home. Capturile acoperă
-  // 2–17 oct (16 zile de la primul clip); „20 de zile” e formularea aleasă.
+  // 2–22 oct: 20 de zile de la primul clip.
   durata: '20 de zile',
   start: '2 octombrie 2026',          // ziua primului clip postat
   startScurt: '2 oct',
 
   instagram: {
     cont: 'paninoteca_bucuresti',
-    // Insights, „ultimele 30 de zile”, citit pe 18 oct. Înainte de 2 oct
+    // Insights, „ultimele 30 de zile”, până pe 22 oct. Înainte de 2 oct
     // graficul e plat pe 0, deci totalul e practic tot ce s-a strâns de la start.
-    interval: '18 sep – 17 oct',
-    vizualizari: 14344,
-    conturiAtinse: 3816,              // „Viewers” în Insights
-    interactiuni: 322,
-    urmaritoriNoi: 8,
-    // Defalcarea pe formate, aceeași perioadă. Reels apare în aplicație ca „14K”.
+    interval: '23 sep – 22 oct',
+    vizualizari: 26860,
+    conturiAtinse: 8327,              // „Viewers” în Insights
+    interactiuni: 693,
+    urmaritoriNoi: 10,
+    // Defalcarea pe formate, aceeași perioadă. Reels apare în aplicație ca „26K”.
     formate: [
-      { nume: 'Reels', vizualizari: 14000, rotunjit: true },
-      { nume: 'Postări', vizualizari: 293 },
-      { nume: 'Stories', vizualizari: 39 }
+      { nume: 'Reels', vizualizari: 26000, rotunjit: true },
+      { nume: 'Postări', vizualizari: 349 },
+      { nume: 'Stories', vizualizari: 60 }
     ],
     // Totalul pe 30 de zile, citit la date diferite (capturi din Insights).
     // `rotunjit`: aplicația a arătat doar „9,6K”.
@@ -50,9 +50,10 @@ const REZULTATE = {
       { data: '5 oct', vizualizari: 5999 },
       { data: '7 oct', vizualizari: 7152 },
       { data: '8 oct', vizualizari: 9600, rotunjit: true },
-      { data: '17 oct', vizualizari: 14344 }
+      { data: '17 oct', vizualizari: 14344 },
+      { data: '22 oct', vizualizari: 26860 }
     ],
-    crestere: '×2 în 10 zile'         // 7 oct: 7.152 → 17 oct: 14.344
+    crestere: '×4,5 în 17 zile'       // 5 oct: 5.999 → 22 oct: 26.860 (×4,48)
   },
 
   tiktok: {
