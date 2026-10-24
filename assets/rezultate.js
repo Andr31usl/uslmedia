@@ -23,7 +23,9 @@ const REZULTATE = {
   client: 'La Paninoteca',
   descriere: 'sandwich shop, București',
   perioada: 'octombrie 2026',
-  durata: '2 săptămâni',              // „Studiu de caz · primele …”, „Primele … ” pe Home
+  // „Studiu de caz · primele …”, „Primele …” pe Home. Capturile acoperă
+  // 2–17 oct (16 zile de la primul clip); „20 de zile” e formularea aleasă.
+  durata: '20 de zile',
   start: '2 octombrie 2026',          // ziua primului clip postat
   startScurt: '2 oct',
 
