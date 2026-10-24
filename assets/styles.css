@@ -805,19 +805,28 @@ a.footer-cta {
   text-align: center;
   text-decoration: none;
 }
+/* Butonul secundar de lângă .btn-primary (ex. „Vezi pachetele” din hero):
+   aceeași formă și mărime, dar contur albastru în loc de fundal plin. */
 .btn-ghost {
   font-family: 'DM Sans', sans-serif;
   font-size: 0.95rem;
-  font-weight: 400;
-  color: var(--muted);
-  background: transparent;
-  border: 1px solid var(--border);
-  padding: 1rem 2.4rem;
+  font-weight: 500;
+  color: var(--white);
+  background: rgba(37,99,235,0.06);
+  border: 1px solid rgba(37,99,235,0.55);
+  padding: calc(1rem - 1px) 2.2rem;   /* minus bordura, ca să aibă fix înălțimea lui .btn-primary */
   border-radius: 100px;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  letter-spacing: 0.01em;
   transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.btn-ghost:hover { color: var(--white); border-color: rgba(255,255,255,0.2); transform: translateY(-3px); }
+.btn-ghost svg { width: 14px; height: 14px; transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
+.btn-ghost:hover { background: rgba(37,99,235,0.14); border-color: var(--blue-bright); transform: translateY(-3px); }
+.btn-ghost:hover svg { transform: translateX(2px); }
 
 .btn-link {
   font-family: 'DM Sans', sans-serif;
