@@ -58,10 +58,10 @@ const REZULTATE = {
 
   tiktok: {
     cont: 'lapaninotecauniversitate',
-    // Vizualizările fiecărui clip de pe profil (toate cele 6), 18 oct.
-    clipuri: [820, 381, 7322, 1509, 1118, 1038],
-    aprecieri: 415,
-    urmaritori: 36
+    // Vizualizările fiecărui clip de pe profil (toate cele 8), 24 oct.
+    clipuri: [720, 656, 863, 438, 7589, 1633, 1144, 1046],
+    aprecieri: 497,
+    urmaritori: 37
   }
 };
 
