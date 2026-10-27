@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lasă-ne datele tale | USL Media</title>
+<!-- Pagină ascunsă: se ajunge aici doar din codul QR (qr/qr-uslmedia.png).
+     Nu e legată din site, nu e în sitemap și nu se indexează. -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#000000">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/icoane/sigla-32.png">
+<link rel="apple-touch-icon" href="/assets/icoane/sigla-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@300;400;500&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+  :root {
+    --black: #000000;
+    --white: #eef2f8;
+    --accent: #2563eb;
+    --accent-glow: #1d4ed8;
+    --grey: #101624;
+    --text-dim: #6b7a99;
+    --border: #1e2d4a;
+    --error: #f87171;
+    --green: #34d399;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 20px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 420px;
+  }
+
+  .logo {
+    display: block;
+    width: 130px;
+    height: auto;
+    margin: 0 auto 32px;
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 28px;
+    line-height: 1.15;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .sub {
+    color: var(--text-dim);
+    font-size: 15px;
+    line-height: 1.5;
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+
+  input {
+    width: 100%;
+    background: var(--grey);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--white);
+    font-family: inherit;
+    font-size: 16px; /* sub 16px, iOS face zoom pe câmp */
+    padding: 15px 16px;
+    margin-bottom: 18px;
+    outline: none;
+    transition: border-color .2s;
+  }
+  input:focus { border-color: var(--accent); }
+  input.invalid { border-color: var(--error); }
+
+  button {
+    width: 100%;
+    background: var(--accent);
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 17px;
+    margin-top: 6px;
+    cursor: pointer;
+    transition: background .2s;
+  }
+  button:hover { background: var(--accent-glow); }
+  button:disabled { opacity: .6; cursor: default; }
+
+  .err {
+    display: none;
+    color: var(--error);
+    font-size: 14px;
+    text-align: center;
+    margin-top: 14px;
+  }
+
+  .done {
+    display: none;
+    text-align: center;
+  }
+  .done .check {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 2px solid var(--green);
+    color: var(--green);
+    font-size: 30px;
+    line-height: 60px;
+    margin: 0 auto 20px;
+  }
+
+  .sent form, .sent .intro { display: none; }
+  .sent .done { display: block; }
+</style>
+</head>
+<body>
+<main class="card" id="card">
+  <img class="logo" src="/assets/icoane/logo-usl-media.png" alt="USL Media" width="150" height="85">
+
+  <div class="intro">
+    <h1>Hai să ținem legătura</h1>
+    <p class="sub">Lasă-ne datele și te sunăm noi.</p>
+  </div>
+
+  <form id="form" novalidate>
+    <label for="nume">Nume</label>
+    <input id="nume" name="nume" type="text" autocomplete="name" required>
+
+    <label for="telefon">Telefon</label>
+    <input id="telefon" name="telefon" type="tel" autocomplete="tel" inputmode="tel" required>
+
+    <label for="firma">Numele afacerii</label>
+    <input id="firma" name="firma" type="text" autocomplete="organization" required>
+
+    <button type="submit" id="btn">Trimite</button>
+    <p class="err" id="err">Nu s-a putut trimite. Încearcă din nou.</p>
+  </form>
+
+  <div class="done">
+    <div class="check">✓</div>
+    <h1>Mulțumim!</h1>
+    <p class="sub">Te contactăm în curând.</p>
+  </div>
+</main>
+
+<script>
+  // Același cont EmailJS și același șablon ca /formular/: mailul ajunge în
+  // uslmedia.contact@gmail.com cu subiectul „Cerere noua client — <nume>”,
+  // deci scriptul tools/gmail-in-notion.gs îl trece și în Notion.
+  var EMAILJS_PUBLIC_KEY  = 'Qq3cNQFw--KVvQi-J';
+  var EMAILJS_SERVICE_ID  = 'service_kdn656c';
+  var EMAILJS_TEMPLATE_ID = 'template_o03spgs';
+
+  try {
+    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+  } catch (e) {
+    console.warn('EmailJS indisponibil.', e);
+  }
+
+  var form = document.getElementById('form');
+  var btn  = document.getElementById('btn');
+  var err  = document.getElementById('err');
+
+  form.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    err.style.display = 'none';
+
+    var campuri = ['nume', 'telefon', 'firma'].map(function (id) {
+      return document.getElementById(id);
+    });
+    var gol = campuri.filter(function (c) {
+      var ok = c.value.trim() !== '';
+      c.classList.toggle('invalid', !ok);
+      return !ok;
+    });
+    if (gol.length) { gol[0].focus(); return; }
+
+    var nume = campuri[0].value.trim();
+    var tel  = campuri[1].value.trim();
+    var firma = campuri[2].value.trim();
+
+    // Cheile din full_body („Nume:”, „Firma / Brand:”, „Telefon:”) sunt cele
+    // pe care le recunoaște gmail-in-notion.gs.
+    var params = {
+      to_email:   'uslmedia.contact@gmail.com',
+      from_name:  nume,
+      from_phone: tel,
+      from_email: '—',
+      firma:      firma,
+      business:   '—',
+      servicii:   '—',
+      platform:   '—',
+      obiectiv:   '—',
+      prezenta:   '—',
+      filmare:    '—',
+      volum:      '—',
+      script:     '—',
+      site_tip:       '—',
+      site_existent:  '—',
+      ads_obiectiv:   '—',
+      ads_buget:      '—',
+      budget:     '—',
+      context:    'Venit din codul QR',
+      full_body:  'Nume: ' + nume + '\nFirma / Brand: ' + firma + '\nTelefon: ' + tel +
+                  '\nContext: Venit din codul QR'
+    };
+
+    if (typeof emailjs === 'undefined') { err.style.display = 'block'; return; }
+
+    btn.disabled = true;
+    btn.textContent = 'Se trimite...';
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params)
+      .then(function () {
+        document.getElementById('card').classList.add('sent');
+      })
+      .catch(function (e) {
+        console.error('EmailJS error:', e);
+        btn.disabled = false;
+        btn.textContent = 'Trimite';
+        err.style.display = 'block';
+      });
+  });
+
+  document.querySelectorAll('input').forEach(function (i) {
+    i.addEventListener('input', function () { i.classList.remove('invalid'); });
+  });
+</script>
+</body>
+</html>
