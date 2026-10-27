@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cod QR | USL Media</title>
+<!-- Pagină ascunsă pentru Andrei: o deschide pe telefon și o arată clienților
+     să scaneze. Codul duce la /qr/ (formularul scurt). Nu e legată din site. -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/icoane/sigla-32.png">
+<link rel="apple-touch-icon" href="/assets/icoane/sigla-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@800&display=swap">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  /* Fundal alb: camerele citesc mai sigur un cod negru pe alb, mai ales cu
+     ecranul pe luminozitate mare. */
+  body {
+    background: #ffffff;
+    color: #000000;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    padding: 24px 16px;
+    text-align: center;
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 26px;
+    line-height: 1.15;
+  }
+
+  img {
+    width: min(86vw, 70vh, 520px);
+    height: auto;
+    image-rendering: pixelated;
+  }
+</style>
+</head>
+<body>
+  <h1>Scanează și lasă-ne datele</h1>
+  <img src="/qr/qr-uslmedia.png" alt="Cod QR către www.uslmedia.ro/qr/" width="1200" height="1200">
+</body>
+</html>
