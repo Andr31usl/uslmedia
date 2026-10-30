@@ -540,15 +540,30 @@ nav.is-scrolled {
   cursor: none;
 }
 .logo-mark {
-  /* Logoul complet (USL / MEDIA / DIGITAL GROWTH AGENCY) decupat pe fundal
-     transparent: in bara de sus fundalul are gradient, iar un dreptunghi
-     negru s-ar vedea ca o cutie in jurul lui. Subtitlul e deja in imagine. */
+  /* USL / MEDIA decupat pe fundal transparent: in bara de sus fundalul are
+     gradient, iar un dreptunghi negru s-ar vedea ca o cutie in jurul lui. */
   width: 150px;
   height: auto;
   display: block;
 }
+/* Subtitlul era in imagine, gri si mic (~6px inaltimea literelor, acum ~8px); clientul
+   l-a vrut alb si mai mare, deci e text. Se intinde cat MEDIA (de la 1px la
+   146px din cei 150), la DM Sans incarcat — masoara din nou daca schimbi
+   fontul, marimea sau latimea logoului. */
+.logo-tag {
+  margin-top: 6px;
+  font-family: "DM Sans", sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--white);
+}
 @media (max-width: 768px) {
   .logo-mark { width: 130px; }
+  .logo-tag { margin-top: 5px; font-size: 9.5px; }
 }
 /* Doar cuvantul MEDIA e albastru. Regula nu poate fi pe ".logo span":
    de cand logoul are si sigla, .logo-text si .logo-main sunt tot span-uri

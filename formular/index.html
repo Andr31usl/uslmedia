@@ -24,7 +24,7 @@
 <link rel="apple-touch-icon" href="/assets/icoane/sigla-180.png">
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@600&family=Inter:wght@300;400;500&display=swap');
 
   :root {
     --black: #000000;
@@ -94,7 +94,7 @@
   }
 
   /* Acelasi logo ca pe restul site-ului (assets/icoane/logo-usl-media.png),
-     cu subtitlul inclus in imagine. */
+     fara subtitlu; subtitlul e text, dedesubt. */
   .logo {
     display: block;
     text-decoration: none;
@@ -105,6 +105,20 @@
     width: 125px;
     height: auto;
     display: block;
+  }
+  /* Subtitlul, alb, cat latimea lui MEDIA; ca .logo-tag din styles.css,
+     scalat la 125px. */
+  .logo-tag {
+    display: block;
+    margin-top: 5px;
+    font-family: "DM Sans", sans-serif;
+    font-weight: 600;
+    font-size: 9.2px;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--white);
   }
 
   .progress-wrap {
@@ -578,7 +592,8 @@
 
 <header>
   <a class="logo" href="/" aria-label="USL Media — înapoi la pagina principală">
-    <img class="logo-mark" src="/assets/icoane/logo-usl-media.png" alt="USL Media — Digital Growth Agency" width="125" height="71" decoding="async">
+    <img class="logo-mark" src="/assets/icoane/logo-usl-media-nume.png" alt="USL Media" width="125" height="59" decoding="async">
+    <span class="logo-tag">Digital Growth Agency</span>
   </a>
   <div class="progress-wrap">
     <span id="step-counter">1 / 9</span>
