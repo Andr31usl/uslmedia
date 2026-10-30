@@ -135,6 +135,38 @@
     margin: 0 auto 20px;
   }
 
+  /* Datele lui Andrei + butonul care descarcă vCard-ul (qr/andrei-usurelu.vcf);
+     pe iPhone și Android fișierul se deschide direct în „Adaugă contact”. */
+  .contact {
+    margin-top: 36px;
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+  .contact .nume {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 4px;
+  }
+  .contact .rol { color: var(--text-dim); font-size: 14px; margin-bottom: 14px; }
+  .contact .linie { font-size: 15px; line-height: 1.8; }
+  .contact .linie a { color: var(--white); text-decoration: none; }
+  .salveaza {
+    display: block;
+    border: 1px solid var(--accent);
+    border-radius: 12px;
+    color: var(--white);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 16px;
+    margin-top: 18px;
+    text-decoration: none;
+    transition: background .2s;
+  }
+  .salveaza:hover { background: rgba(37, 99, 235, .15); }
+
   .sent form, .sent .intro { display: none; }
   .sent .done { display: block; }
 </style>
@@ -167,6 +199,14 @@
     <h1>Mulțumim!</h1>
     <p class="sub">Te contactăm în curând.</p>
   </div>
+
+  <section class="contact">
+    <p class="nume">Andrei Ușurelu</p>
+    <p class="rol">Fondator USL Media</p>
+    <p class="linie"><a href="tel:+40771300127">0771 300 127</a></p>
+    <p class="linie"><a href="mailto:contact@uslmedia.ro">contact@uslmedia.ro</a></p>
+    <a class="salveaza" href="/qr/andrei-usurelu.vcf" download="Andrei Usurelu - USL Media.vcf">Salvează în contacte</a>
+  </section>
 </main>
 
 <script>

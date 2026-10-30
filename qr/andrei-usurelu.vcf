@@ -1,0 +1,12 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Ușurelu;Andrei;Radu;;
+FN:Andrei Ușurelu
+ORG:USL Media
+TITLE:Fondator
+TEL;TYPE=CELL,VOICE:+40771300127
+EMAIL;TYPE=INTERNET,WORK:contact@uslmedia.ro
+URL:https://www.uslmedia.ro
+X-SOCIALPROFILE;TYPE=instagram:https://www.instagram.com/andreiusurelu.ro/
+X-SOCIALPROFILE;TYPE=linkedin:https://www.linkedin.com/in/usurelu-andrei-radu-a38b69391
+END:VCARD
