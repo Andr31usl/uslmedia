@@ -47,11 +47,23 @@
     max-width: 420px;
   }
 
+  /* Logo-ul e link spre pagina principală; sub el, poza lui Andrei
+     (aceeași ca în secțiunea Despre), rotundă. */
+  .logo-link { display: block; width: 130px; margin: 0 auto 20px; }
   .logo {
     display: block;
     width: 130px;
     height: auto;
-    margin: 0 auto 32px;
+  }
+  .poza {
+    display: block;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top center;
+    border: 2px solid var(--accent);
+    margin: 0 auto 28px;
   }
 
   h1 {
@@ -184,7 +196,10 @@
 </head>
 <body>
 <main class="card" id="card">
-  <img class="logo" src="/assets/icoane/logo-usl-media.png" alt="USL Media" width="150" height="85">
+  <a class="logo-link" href="/" aria-label="USL Media — pagina principală">
+    <img class="logo" src="/assets/icoane/logo-usl-media.png" alt="USL Media" width="150" height="85">
+  </a>
+  <img class="poza" src="/portofoliu%20site/poza%20eu.png" alt="Andrei Ușurelu, fondator USL Media" width="415" height="421">
 
   <div class="intro">
     <h1>Hai să ținem legătura</h1>
