@@ -169,6 +169,21 @@
   }
   .salveaza:hover { background: var(--accent-glow); }
 
+  /* Pe ecranul de după trimitere: „acum hai să ne cunoști și tu” + buton
+     către site, contur ca să nu concureze cu „Salvează în contacte”. */
+  .done .cunoaste {
+    color: var(--white);
+    font-size: 16px;
+    line-height: 1.5;
+    margin-top: 22px;
+  }
+  .salveaza.contur {
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--white);
+  }
+  .salveaza.contur:hover { background: var(--accent); }
+
   .sent form, .sent .intro { display: none; }
   .sent .done { display: block; }
 </style>
@@ -202,6 +217,8 @@
     <div class="check">✓</div>
     <h1>Mulțumim!</h1>
     <p class="sub">Te contactăm în curând.</p>
+    <p class="cunoaste">Noi te-am cunoscut pe tine.<br>Acum hai să ne cunoști și tu.</p>
+    <a class="salveaza contur" href="/">Descoperă USL Media</a>
   </div>
 
   <section class="contact">
