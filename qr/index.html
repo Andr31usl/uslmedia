@@ -79,7 +79,7 @@
     margin-bottom: 8px;
   }
 
-  input {
+  input, textarea {
     width: 100%;
     background: var(--grey);
     border: 1px solid var(--border);
@@ -92,8 +92,10 @@
     outline: none;
     transition: border-color .2s;
   }
-  input:focus { border-color: var(--accent); }
-  input.invalid { border-color: var(--error); }
+  /* Câmpul „despre afacere”: trei rânduri, se poate mări doar pe verticală. */
+  textarea { resize: vertical; min-height: 96px; line-height: 1.4; }
+  input:focus, textarea:focus { border-color: var(--accent); }
+  input.invalid, textarea.invalid { border-color: var(--error); }
 
   button {
     width: 100%;
@@ -187,8 +189,10 @@
     <label for="telefon">Telefon</label>
     <input id="telefon" name="telefon" type="tel" autocomplete="tel" inputmode="tel" required>
 
-    <label for="firma">Numele afacerii</label>
-    <input id="firma" name="firma" type="text" autocomplete="organization" required>
+    <!-- Un singur câmp liber: numele afacerii + câteva cuvinte despre ce face. -->
+    <label for="firma">Cum se numește afacerea și ce faceți?</label>
+    <textarea id="firma" name="firma" rows="3" autocomplete="organization" required
+              placeholder="Ex.: Cafeneaua Aroma — cafea de specialitate și deserturi în Iași"></textarea>
 
     <button type="submit" id="btn">Trimite</button>
     <p class="err" id="err">Nu s-a putut trimite. Încearcă din nou.</p>
@@ -245,6 +249,8 @@
     var tel  = campuri[1].value.trim();
     var firma = campuri[2].value.trim();
 
+    // Câmpul „firma” conține acum numele afacerii și o scurtă descriere; merge
+    // și în „Firma / Brand:” (pentru Notion), și în „business”.
     // Cheile din full_body („Nume:”, „Firma / Brand:”, „Telefon:”) sunt cele
     // pe care le recunoaște gmail-in-notion.gs.
     var params = {
@@ -253,7 +259,7 @@
       from_phone: tel,
       from_email: '—',
       firma:      firma,
-      business:   '—',
+      business:   firma,
       servicii:   '—',
       platform:   '—',
       obiectiv:   '—',
@@ -287,7 +293,7 @@
       });
   });
 
-  document.querySelectorAll('input').forEach(function (i) {
+  document.querySelectorAll('input, textarea').forEach(function (i) {
     i.addEventListener('input', function () { i.classList.remove('invalid'); });
   });
 </script>
